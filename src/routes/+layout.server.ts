@@ -1,6 +1,4 @@
-export const prerender = true;
-
-import { compile, type MdsvexCompileOptions } from "mdsvex";
+import { type MdsvexCompileOptions } from "mdsvex";
 import type { LayoutServerLoad } from "./$types";
 import remarkWikiLink, { getPermalinks } from "@portaljs/remark-wiki-link";
 import remarkMath from "remark-math";
