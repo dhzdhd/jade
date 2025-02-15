@@ -1,14 +1,13 @@
 <script lang="ts">
 	import '../app.css';
 	import { ModeWatcher } from 'mode-watcher';
-	import type { Snippet } from 'svelte';
-	import type { LayoutServerData } from './$types';
+	import type { LayoutProps } from './$types';
 	import Header from '$lib/components/layout/Header.svelte';
 
-	let { children, data }: { children: Snippet<[]>; data: LayoutServerData } = $props();
+	let { children, data }: LayoutProps = $props();
 	console.log(data);
 </script>
 
 <ModeWatcher />
-<Header />
+<Header config={data.config} />
 {@render children()}
