@@ -6,29 +6,18 @@ import remarkWikiLink, { getPermalinks } from "@portaljs/remark-wiki-link";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 import config from '../../.config/config';
+import { unified } from "unified";
+import remarkParse from "remark-parse";
+import remarkRehype from "remark-rehype";
+import rehypeStringify from "rehype-stringify";
+import rehypePrettyCode from "rehype-pretty-code";
+import remarkToc from "remark-toc";
+import rehypeSlug from "rehype-slug";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
 
 export const load: LayoutServerLoad = async () => {
     const rawPosts = Object.entries(import.meta.glob<any>('../../posts/**.md', { eager: true, query: '?raw', }),);
-    const mdsvexOptions: MdsvexCompileOptions = {
-        remarkPlugins: [
-            remarkMath, [
-                remarkWikiLink,
-                {
-                    pathFormat: "obsidian-short",
-                    permalinks: getPermalinks("./posts"),
-                    hrefTemplate: (permalink: string) => {
-                        if (permalink.endsWith(".excalidraw")) {
-                            const link = permalink.split("posts/").pop();
-                            return `/excalidraw/${link!.split(".excalidraw")[0]}`;
-                        }
-
-                        return permalink.split("src/posts").pop();
-                    },
-                },
-            ],
-        ],
-        rehypePlugins: [rehypeKatex]
-    };
+    const mdsvexOptions: MdsvexCompileOptions = {};
 
     const getSlug = (fileName: string): string => {
         return fileName.replace('.md', '').replace('../../posts/', '');
@@ -37,13 +26,37 @@ export const load: LayoutServerLoad = async () => {
     const posts = await Promise.all(rawPosts.map(async ([fileName, file], idx) => {
         const content = file.default;
 
-        const md = await compile(content, mdsvexOptions)
-        console.log(JSON.stringify(md));
-
+        // const md = await compile(content, mdsvexOptions)
         const slug = getSlug(fileName);
 
+        const md = await unified()
+            .use(remarkParse)
+            .use(remarkWikiLink,
+                //     {
+                //     pathFormat: 'obsidian-short',
+                //     permalinks: getPermalinks("../../posts"),
+                //     hrefTemplate: (permalink: string) => {
+                //         if (permalink.endsWith(".excalidraw")) {
+                //             const link = permalink.split("posts/").pop();
+                //             return `/excalidraw/${link!.split(".excalidraw")[0]}`;
+                //         }
+
+                //         return permalink.split("posts").pop()!.toString();
+                //     }
+                // }
+            )
+            .use(remarkMath)
+            .use(remarkToc)
+            .use(remarkRehype)
+            .use(rehypeKatex)
+            .use(rehypePrettyCode, { theme: "tokyo-night", keepBackground: false })
+            .use(rehypeSlug)
+            .use(rehypeAutolinkHeadings)
+            .use(rehypeStringify)
+            .process(content)
+
         return {
-            content: md,
+            content: md.toString(),
             fileName,
             slug,
         }

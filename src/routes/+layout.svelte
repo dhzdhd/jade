@@ -5,9 +5,10 @@
 	import Header from '$lib/components/layout/Header.svelte';
 
 	let { children, data }: LayoutProps = $props();
-	console.log(data);
 </script>
 
 <ModeWatcher />
 <Header config={data.config} />
-{@render children()}
+<main class="flex w-screen justify-center">
+	{@render children()}
+</main>

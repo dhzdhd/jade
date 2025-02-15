@@ -5,7 +5,6 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
 	plugins: [sveltekit(), tailwindcss()],
-
 	test: {
 		workspace: [
 			{

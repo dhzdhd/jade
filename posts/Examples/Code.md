@@ -17,3 +17,10 @@ Hello `lambda a: a + 5` world
 def fn() -> int:
     return 5
 ```
+
+## Codeblock with line numbers
+
+```python showLineNumbers
+def fn() -> int:
+    return 5
+```
