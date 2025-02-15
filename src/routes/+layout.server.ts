@@ -49,7 +49,7 @@ export const load: LayoutServerLoad = async () => {
             .use(remarkToc)
             .use(remarkRehype)
             .use(rehypeKatex)
-            .use(rehypePrettyCode, { theme: "tokyo-night", keepBackground: false })
+            .use(rehypePrettyCode, { theme: "tokyo-night", keepBackground: true })
             .use(rehypeSlug)
             .use(rehypeAutolinkHeadings)
             .use(rehypeStringify)
