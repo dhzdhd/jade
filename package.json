@@ -27,12 +27,14 @@
 		"@tailwindcss/vite": "^4.0.0",
 		"@testing-library/jest-dom": "^6.6.3",
 		"@testing-library/svelte": "^5.2.4",
+		"bits-ui": "^1.1.0",
 		"clsx": "^2.1.1",
 		"eslint": "^9.18.0",
 		"eslint-config-prettier": "^10.0.1",
 		"eslint-plugin-svelte": "^2.46.1",
 		"globals": "^15.14.0",
 		"jsdom": "^25.0.1",
+		"lucide-svelte": "^0.475.0",
 		"mdsvex": "^0.12.3",
 		"prettier": "^3.4.2",
 		"prettier-plugin-svelte": "^3.3.3",
@@ -50,6 +52,7 @@
 	},
 	"dependencies": {
 		"@portaljs/remark-wiki-link": "^1.2.0",
+		"mode-watcher": "^0.5.1",
 		"patch-package": "^8.0.0"
 	}
 }
