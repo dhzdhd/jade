@@ -1,5 +1,7 @@
 <script lang="ts">
 	import * as Dialog from '$lib/components/ui/dialog/index';
+	import Button from '../ui/button/button.svelte';
+	import Graph from 'lucide-svelte/icons/git-graph';
 
 	let container: HTMLDivElement;
 	let N = 5;
@@ -35,7 +37,11 @@
 </script>
 
 <Dialog.Root bind:open>
-	<Dialog.Trigger class="animate-none transition-none">Open</Dialog.Trigger>
+	<Dialog.Trigger class="animate-none transition-none">
+		<Button size="icon" variant="outline">
+			<Graph />
+		</Button>
+	</Dialog.Trigger>
 	<Dialog.Content class="min-w-[35rem] animate-none transition-none">
 		<Dialog.Header>
 			<Dialog.Title>Graph View</Dialog.Title>

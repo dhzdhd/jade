@@ -7,7 +7,7 @@
 	const code = content;
 </script>
 
-<article class="typography prose w-[50rem] max-w-[50rem] px-2 py-20">
+<article class="prose w-[50rem] max-w-[50rem] px-2 py-20">
 	{@html code}
 </article>
 
@@ -16,11 +16,24 @@
 
 	article :global {
 		* {
-			@apply text-primary;
+			@apply text-primary font-normal;
+		}
+
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6 {
+			@apply font-title;
 		}
 
 		a {
 			@apply text-accent no-underline hover:underline;
+		}
+
+		p {
+			@apply text-lg;
 		}
 
 		pre {
@@ -34,6 +47,14 @@
 
 		figcaption[data-rehype-pretty-code-title] {
 			@apply bg-accent px-2 text-black;
+		}
+
+		code {
+			@apply font-mono;
+		}
+
+		span {
+			@apply font-mono;
 		}
 
 		code[data-line-numbers] {
