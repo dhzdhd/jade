@@ -12,7 +12,7 @@
 	const initGraph = async () => {
 		const ForceGraph3D = await import('3d-force-graph');
 
-		new ForceGraph3D.default(container)
+		const inst = new ForceGraph3D.default(container)
 			.graphData({
 				nodes: [...Array(N).keys()].map((i) => ({ id: i })),
 				links: [...Array(N).keys()]
@@ -25,8 +25,13 @@
 			.height(500)
 			.showNavInfo(false)
 			.zoomToFit(1000 * 5)
+			.backgroundColor('#23252F')
 			.width(500)
 			.nodeAutoColorBy('group');
+
+		inst.onLinkHover((link, prev) => {
+			inst.linkWidth(2);
+		});
 	};
 
 	$effect(() => {

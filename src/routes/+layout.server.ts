@@ -27,7 +27,7 @@ export const load: LayoutServerLoad = async () => {
         const content = file.default;
         const slug = getSlug(fileName);
 
-        const md = await unified()
+        const processor = unified()
             .use(remarkParse)
             .use(remarkWikiLink,
                 //     {
@@ -56,8 +56,13 @@ export const load: LayoutServerLoad = async () => {
                 }
             })
             .use(rehypeMermaid)
-            .use(rehypeStringify)
-            .process(content)
+            .use(rehypeStringify);
+
+        const md = await processor.process(content)
+        const tree = processor.parse(md)
+
+        // get headings from tree
+
 
         return {
             content: md.toString(),

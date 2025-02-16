@@ -52,6 +52,7 @@
 		"vitest": "^3.0.0"
 	},
 	"dependencies": {
+		"@icons-pack/svelte-simple-icons": "^4.0.2",
 		"@jsdevtools/rehype-url-inspector": "^2.0.2",
 		"@portaljs/remark-wiki-link": "^1.2.0",
 		"@types/d3": "^7.4.3",
