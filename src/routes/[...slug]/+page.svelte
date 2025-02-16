@@ -7,7 +7,7 @@
 	const code = content;
 </script>
 
-<article class="typography prose w-[60rem] max-w-[60rem] px-2 pt-16">
+<article class="typography prose w-[50rem] max-w-[50rem] px-2 py-20">
 	{@html code}
 </article>
 

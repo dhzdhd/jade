@@ -4,5 +4,5 @@ export interface Config {
 }
 
 export default {
-    title: 'Test title'
+    title: 'Jade'
 } satisfies Config;

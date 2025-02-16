@@ -10,7 +10,7 @@
 </script>
 
 <header class="bg-background fixed z-20 flex h-16 w-screen items-center justify-between px-2">
-	<h1>{config.title}</h1>
+	<h1 class="font-title pl-3 text-xl">{config.title}</h1>
 	<div>
 		<ThemeSwitcher />
 	</div>
