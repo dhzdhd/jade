@@ -12,6 +12,8 @@ import rehypePrettyCode from "rehype-pretty-code";
 import remarkToc from "remark-toc";
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import inspectUrls from "@jsdevtools/rehype-url-inspector";
+import rehypeMermaid from "rehype-mermaid";
 
 export const load: LayoutServerLoad = async () => {
     const rawPosts = Object.entries(import.meta.glob<any>('../../posts/**.md', { eager: true, query: '?raw', }),);
@@ -23,8 +25,6 @@ export const load: LayoutServerLoad = async () => {
 
     const posts = await Promise.all(rawPosts.map(async ([fileName, file], idx) => {
         const content = file.default;
-
-        // const md = await compile(content, mdsvexOptions)
         const slug = getSlug(fileName);
 
         const md = await unified()
@@ -50,6 +50,12 @@ export const load: LayoutServerLoad = async () => {
             .use(rehypePrettyCode, { theme: "tokyo-night", keepBackground: true })
             .use(rehypeSlug)
             .use(rehypeAutolinkHeadings)
+            .use(inspectUrls, {
+                inspectEach({ url }) {
+                    console.log(url);
+                }
+            })
+            .use(rehypeMermaid)
             .use(rehypeStringify)
             .process(content)
 
