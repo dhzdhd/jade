@@ -61,11 +61,16 @@ export const load: LayoutServerLoad = async () => {
         const md = await processor.process(content)
         const tree = processor.parse(md)
 
-        // get headings from tree
-
+        let headings = tree.children.filter((node) => node.type === 'heading').map((node) => {
+            return {
+                level: node.depth,
+                text: node.children.filter((child) => child.type === 'text').map((child) => child.value).at(0)
+            }
+        });
 
         return {
             content: md.toString(),
+            headings,
             fileName,
             slug,
         }
@@ -73,6 +78,7 @@ export const load: LayoutServerLoad = async () => {
 
     return {
         posts: posts,
+        files: rawPosts.map(([fileName]) => getSlug(fileName)),
         config: config,
     };
 };

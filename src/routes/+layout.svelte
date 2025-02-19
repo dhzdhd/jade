@@ -13,7 +13,7 @@
 <ModeWatcher />
 <Header config={data.config} />
 <Sidebar.Provider class="max-h-0 max-w-0">
-	<TreeSidebar />
+	<TreeSidebar files={data.files} />
 	<Sidebar.Inset>
 		<main class="flex w-screen justify-center">
 			{@render children()}
