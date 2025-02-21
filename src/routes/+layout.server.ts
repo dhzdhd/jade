@@ -13,7 +13,6 @@ import remarkToc from "remark-toc";
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import inspectUrls from "@jsdevtools/rehype-url-inspector";
-import rehypeMermaid from "rehype-mermaid";
 import jsdom from 'jsdom';
 
 export const load: LayoutServerLoad = async () => {
@@ -56,7 +55,6 @@ export const load: LayoutServerLoad = async () => {
                     // console.log(url);
                 }
             })
-            .use(rehypeMermaid)
             .use(rehypeStringify);
 
         const md = await processor.process(content)
