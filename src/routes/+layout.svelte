@@ -21,3 +21,6 @@
 	</Sidebar.Inset>
 </Sidebar.Provider>
 <!-- Fixed because it takes unnecessary space -->
+<Sidebar.Provider class="fixed">
+	<TOCSidebar />
+</Sidebar.Provider>

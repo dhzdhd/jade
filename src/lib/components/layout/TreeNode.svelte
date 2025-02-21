@@ -23,11 +23,23 @@
 			class="hover:bg-accent active:bg-accent flex flex-row justify-between py-5"
 		>
 			{#snippet child({ props })}
+				<!-- <Button
+					onclick={toggleExpansion}
+					variant="ghost"
+					class="w-full px-2"
+					style={`padding-left: ${0.5 + depth * 0.6}rem`}
+				>
+					<span class="w-full text-left">
+						{id}
+					</span>
+				</Button> -->
 				<button onclick={toggleExpansion} {...props}>
 					<span>{id}</span>
-					<ArrowRight
-						style="transition: transform 200ms; transform: rotate({expanded ? '90deg' : '0deg'});"
-					/>
+					{#if expanded}
+						<ArrowDown />
+					{:else}
+						<ArrowRight />
+					{/if}
 				</button>
 			{/snippet}
 		</Sidebar.MenuButton>
@@ -42,6 +54,18 @@
 	<Sidebar.MenuItem>
 		<Sidebar.MenuButton onclick={toggleExpansion} class="hover:bg-accent active:bg-accent py-5">
 			{#snippet child({ props })}
+				<!-- <a href="/">
+					<Button
+						onclick={toggleExpansion}
+						variant="ghost"
+						class="w-full px-2"
+						style={`padding-left: ${0.5 + depth * 0.6}rem`}
+					>
+						<span class="w-full text-left">
+							{id}
+						</span>
+					</Button>
+				</a> -->
 				<a
 					href={url}
 					onclick={toggleExpansion}

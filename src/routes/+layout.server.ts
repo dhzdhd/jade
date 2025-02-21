@@ -14,7 +14,6 @@ import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import inspectUrls from "@jsdevtools/rehype-url-inspector";
 import rehypeMermaid from "rehype-mermaid";
-import jsdom from 'jsdom';
 
 export const load: LayoutServerLoad = async () => {
     const rawPosts = Object.entries(import.meta.glob<any>('../../posts/**.md', { eager: true, query: '?raw', }),);
@@ -53,7 +52,7 @@ export const load: LayoutServerLoad = async () => {
             .use(rehypeAutolinkHeadings)
             .use(inspectUrls, {
                 inspectEach({ url }) {
-                    // console.log(url);
+                    console.log(url);
                 }
             })
             .use(rehypeMermaid)
@@ -62,14 +61,12 @@ export const load: LayoutServerLoad = async () => {
         const md = await processor.process(content)
         const tree = processor.parse(md)
 
-        const parser = new jsdom.JSDOM(md.toString());
-        const document = parser.window.document;
-        const headingNodes = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
-        const headings = Array.from(headingNodes).map((heading) => ({
-            level: parseInt(heading.tagName.substring(1), 10),
-            text: heading.textContent || '',
-            url: `#${heading.id}`,
-        }));
+        let headings = tree.children.filter((node) => node.type === 'heading').map((node) => {
+            return {
+                level: node.depth,
+                text: node.children.filter((child) => child.type === 'text').map((child) => child.value).at(0)
+            }
+        });
 
         return {
             content: md.toString(),

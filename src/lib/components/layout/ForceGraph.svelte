@@ -7,6 +7,7 @@
 	let N = 5;
 
 	let open = $state(false);
+	$inspect(open);
 
 	const initGraph = async () => {
 		const ForceGraph3D = await import('3d-force-graph');

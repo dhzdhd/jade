@@ -1,32 +1,54 @@
 <script lang="ts">
+	import Calendar from 'lucide-svelte/icons/calendar';
+	import House from 'lucide-svelte/icons/house';
+	import Inbox from 'lucide-svelte/icons/inbox';
+	import Search from 'lucide-svelte/icons/search';
+	import Settings from 'lucide-svelte/icons/settings';
 	import * as Sidebar from '$lib/components/ui/sidebar/index.js';
 	import PanelLeft from 'lucide-svelte/icons/panel-left';
 
-	interface TOCSidebarProps {
-		headings: {
-			level: number;
-			text: string;
-			url: string;
-		}[];
-	}
-
-	const { headings }: TOCSidebarProps = $props();
+	const items = [
+		{
+			title: 'Home',
+			url: '#',
+			icon: House
+		},
+		{
+			title: 'Inbox',
+			url: '#',
+			icon: Inbox
+		},
+		{
+			title: 'Calendar',
+			url: '#',
+			icon: Calendar
+		},
+		{
+			title: 'Search',
+			url: '#',
+			icon: Search
+		},
+		{
+			title: 'Settings',
+			url: '#',
+			icon: Settings
+		}
+	];
 </script>
 
 <Sidebar.Root collapsible="offcanvas" side="right" class="fixed top-0 right-0">
-	<Sidebar.Content class="bg-background w-52 max-w-52 pt-16">
+	<Sidebar.Content class="bg-background">
 		<Sidebar.Group>
-			<Sidebar.GroupLabel>Table Of Contents</Sidebar.GroupLabel>
+			<Sidebar.GroupLabel>Application</Sidebar.GroupLabel>
 			<Sidebar.GroupContent>
 				<Sidebar.Menu>
-					{#each headings as heading}
+					{#each items as item (item.title)}
 						<Sidebar.MenuItem>
-							<Sidebar.MenuButton
-								class="hover:bg-accent active:bg-accent flex flex-row justify-between py-5"
-							>
+							<Sidebar.MenuButton>
 								{#snippet child({ props })}
-									<a href={heading.url} {...props} style={`padding-left: ${heading.level * 1}rem`}>
-										<span>{heading.text}</span>
+									<a href={item.url} {...props}>
+										<item.icon />
+										<span>{item.title}</span>
 									</a>
 								{/snippet}
 							</Sidebar.MenuButton>

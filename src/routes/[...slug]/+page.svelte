@@ -1,21 +1,15 @@
 <script lang="ts">
-	import TocSidebar from '$lib/components/layout/TOCSidebar.svelte';
 	import type { PageProps } from './$types';
-	import * as Sidebar from '$lib/components/ui/sidebar/index';
 
 	const { data }: PageProps = $props();
 
 	const content = data.post.content;
-	const headings = data.post.headings;
 	const code = content;
 </script>
 
 <article class="prose w-[50rem] max-w-[50rem] px-2 py-20">
 	{@html code}
 </article>
-<Sidebar.Provider class="fixed max-w-52">
-	<TocSidebar {headings} />
-</Sidebar.Provider>
 
 <style>
 	@reference "../../app.css";
