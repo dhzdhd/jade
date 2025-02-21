@@ -15,6 +15,8 @@ import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import inspectUrls from "@jsdevtools/rehype-url-inspector";
 import jsdom from 'jsdom';
 
+export const prerender = true;
+
 export const load: LayoutServerLoad = async () => {
     const rawPosts = Object.entries(import.meta.glob<any>('../../posts/**.md', { eager: true, query: '?raw', }),);
     const mdsvexOptions: MdsvexCompileOptions = {};
