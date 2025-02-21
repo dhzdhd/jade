@@ -17,6 +17,23 @@
 		"test:e2e": "playwright test",
 		"postinstall": "patch-package"
 	},
+	"overrides": {
+		"jsdom": {
+			"canvas": "*"
+		},
+		"ws": {
+			"bufferutil": "*",
+			"utf-8-validate": "*"
+		},
+		"playwright-core": {
+			"electron": "*",
+			"ws": {
+				"bufferutil": "*",
+				"utf-8-validate": "*"
+			},
+			"chromium-bidi": "*"
+		}
+	},
 	"devDependencies": {
 		"@eslint/compat": "^1.2.5",
 		"@eslint/js": "^9.18.0",
