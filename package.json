@@ -14,25 +14,7 @@
 		"lint": "prettier --check . && eslint .",
 		"test:unit": "vitest",
 		"test": "npm run test:unit -- --run && npm run test:e2e",
-		"test:e2e": "playwright test",
 		"postinstall": "patch-package"
-	},
-	"overrides": {
-		"jsdom": {
-			"canvas": "*"
-		},
-		"ws": {
-			"bufferutil": "*",
-			"utf-8-validate": "*"
-		},
-		"playwright-core": {
-			"electron": "*",
-			"ws": {
-				"bufferutil": "*",
-				"utf-8-validate": "*"
-			},
-			"chromium-bidi": "*"
-		}
 	},
 	"devDependencies": {
 		"@eslint/compat": "^1.2.5",
@@ -75,7 +57,6 @@
 		"@types/d3": "^7.4.3",
 		"3d-force-graph": "^1.76.1",
 		"d3": "^7.9.0",
-		"mdast-util-toc": "^7.1.0",
 		"melt": "^0.14.1",
 		"mermaid": "^11.4.1",
 		"mode-watcher": "^0.5.1",
