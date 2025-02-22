@@ -5,16 +5,16 @@ export const load: PageServerLoad = async ({ params, parent }) => {
     const slug = params.slug
     const { posts } = await parent();
 
-    // return posts.then((postsData) => {
-    //     const post = postsData.filter((post) => post.slug === slug);
+    return posts.then((postsData) => {
+        const post = postsData.filter((post) => post.slug === slug);
 
-    //     if (post.length !== 1) {
-    //         error(404, "Page not found");
-    //     }
+        if (post.length !== 1) {
+            error(404, "Page not found");
+        }
 
-    //     return {
-    //         post: post.at(0)
-    //     }
-    // });
-    return { posts, slug }
+        return {
+            post: post.at(0)!
+        }
+    });
+    // return { posts, slug }
 }

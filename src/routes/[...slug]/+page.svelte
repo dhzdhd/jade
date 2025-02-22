@@ -5,27 +5,28 @@
 
 	const { data }: PageProps = $props();
 
-	// const content = data.post.content;
-	// const headings = data.post.headings;
-	// const code = content;
+	const content = data.post.content;
+	const headings = data.post.headings;
+	const code = content;
 
-	function getPost(posts: any) {
-		return posts.filter((post: any) => post.slug === data.slug)[0];
-	}
+	// function getPost(posts: any) {
+	// 	return posts.filter((post: any) => post.slug === data.slug)[0];
+	// }
 </script>
 
-{#await data.posts}
+<!-- {#await data.posts}
 	<div class="flex h-screen w-screen items-center justify-center">
 		<h1>Loading</h1>
 	</div>
-{:then posts}
-	<article class="prose w-[50rem] max-w-[50rem] px-2 py-20">
-		{@html getPost(posts).content}
-	</article>
-	<Sidebar.Provider class="fixed max-w-52">
-		<TocSidebar headings={getPost(posts).headings} />
-	</Sidebar.Provider>
-{/await}
+{:then posts} -->
+<article class="prose w-[50rem] max-w-[50rem] px-2 py-20">
+	{@html content}
+</article>
+<Sidebar.Provider class="fixed max-w-52">
+	<TocSidebar {headings} />
+</Sidebar.Provider>
+
+<!-- {/await} -->
 
 <style>
 	@reference "../../app.css";
