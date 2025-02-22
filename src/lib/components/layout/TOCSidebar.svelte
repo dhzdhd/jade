@@ -11,6 +11,7 @@
 	}
 
 	const { headings }: TOCSidebarProps = $props();
+	let open = $state(false);
 </script>
 
 <Sidebar.Root collapsible="offcanvas" side="right" class="fixed top-0 right-0">

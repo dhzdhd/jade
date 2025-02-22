@@ -5,14 +5,29 @@
 	import * as Sidebar from '$lib/components/ui/sidebar/index';
 	import TreeSidebar from '$lib/components/layout/TreeSidebar.svelte';
 	import Header from '$lib/components/layout/Header.svelte';
+	import { PersistedState, onClickOutside } from 'runed';
+	import { useSidebar } from '$lib/components/ui/sidebar/index.js';
 
 	let { children, data }: LayoutProps = $props();
+
+	let container = $state<HTMLElement>()!;
+	// onClickOutside(
+	// 	() => container,
+	// 	() => (open.current = false)
+	// );
+
+	const open = new PersistedState('treeOpen', true);
 </script>
 
 <ModeWatcher />
 <Header config={data.config} />
-<Sidebar.Provider class="max-h-0 max-w-0">
-	<TreeSidebar files={data.files} />
+<Sidebar.Provider
+	bind:open={() => open.current, (newOpen) => (open.current = newOpen)}
+	class="max-h-0 max-w-0"
+>
+	<div bind:this={container}>
+		<TreeSidebar files={data.files} />
+	</div>
 	<Sidebar.Inset>
 		<main class="flex w-screen justify-center">
 			{@render children()}
