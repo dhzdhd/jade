@@ -13,7 +13,6 @@ export const entries: EntryGenerator = async () => {
     })
 };
 
-
 export const load: PageServerLoad = async ({ params, parent }) => {
     const slug = params.slug
     const { posts } = await parent();
@@ -29,5 +28,4 @@ export const load: PageServerLoad = async ({ params, parent }) => {
             post: post.at(0)!
         }
     });
-    // return { posts, slug }
 }
