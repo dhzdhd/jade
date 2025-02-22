@@ -29,7 +29,12 @@ jobs:
         with:
           node-version: 22.x
           cache: 'npm'
-      - run: npm run build
+      
+      - name: Setup dependencies
+        run: npm install
+      
+      - name: Build
+        run: npm run build
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
