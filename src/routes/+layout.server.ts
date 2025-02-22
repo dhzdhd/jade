@@ -16,15 +16,15 @@ import inspectUrls from "@jsdevtools/rehype-url-inspector";
 import jsdom from 'jsdom';
 
 export const load: LayoutServerLoad = async () => {
-    const rawPosts = Object.entries(import.meta.glob<any>('../../posts/**.md', { eager: true, query: '?raw', }),);
+    const rawPosts = Object.entries(import.meta.glob<any>('../../posts/**.md', { query: '?raw' }),);
     const mdsvexOptions: MdsvexCompileOptions = {};
 
     const getSlug = (fileName: string): string => {
         return fileName.replace('.md', '').replace('../../posts/', '');
     }
 
-    const posts = await Promise.all(rawPosts.map(async ([fileName, file], idx) => {
-        const content = file.default;
+    const posts = Promise.all(rawPosts.map(async ([fileName, file], idx) => {
+        const content = (await file()).default;
         const slug = getSlug(fileName);
 
         const processor = unified()
