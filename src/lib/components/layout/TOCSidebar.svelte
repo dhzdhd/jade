@@ -22,10 +22,14 @@
 					{#each headings as heading}
 						<Sidebar.MenuItem>
 							<Sidebar.MenuButton
-								class="hover:bg-accent active:bg-accent flex flex-row justify-between py-5"
+								class="hover:bg-accent active:bg-accent flex flex-row justify-between px-0 py-5"
 							>
 								{#snippet child({ props })}
-									<a href={heading.url} {...props} style={`padding-left: ${heading.level * 1}rem`}>
+									<a
+										href={heading.url}
+										{...props}
+										style={`padding-left: ${heading.level - 0.5 * 1}rem`}
+									>
 										<span>{heading.text}</span>
 									</a>
 								{/snippet}
