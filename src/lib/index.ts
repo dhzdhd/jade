@@ -8,3 +8,18 @@ export interface TreeItem {
     depth: number;
     url: string;
 }
+
+export interface Node {
+    id: string;
+    label: string;
+}
+
+export interface Link {
+    source: string;
+    target: string;
+}
+
+export interface GraphData {
+    nodes: Node[];
+    links: Link[];
+}

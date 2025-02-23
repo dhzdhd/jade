@@ -6,7 +6,6 @@
 	import TreeSidebar from '$lib/components/layout/TreeSidebar.svelte';
 	import Header from '$lib/components/layout/Header.svelte';
 	import { PersistedState, onClickOutside } from 'runed';
-	import { useSidebar } from '$lib/components/ui/sidebar/index.js';
 
 	let { children, data }: LayoutProps = $props();
 
@@ -20,7 +19,7 @@
 </script>
 
 <ModeWatcher />
-<Header config={data.config} />
+<Header config={data.config} graphData={data.graphData} />
 <Sidebar.Provider
 	bind:open={() => open.current, (newOpen) => (open.current = newOpen)}
 	class="max-h-0 max-w-0"

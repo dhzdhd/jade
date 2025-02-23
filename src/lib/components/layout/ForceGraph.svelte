@@ -1,11 +1,16 @@
 <script lang="ts">
+	import type { GraphData } from '$lib';
 	import * as Dialog from '$lib/components/ui/dialog/index';
 	import Button from '../ui/button/button.svelte';
 	import Graph from 'lucide-svelte/icons/git-graph';
 
-	let container: HTMLDivElement;
-	let N = 5;
+	interface ForceGraphProps {
+		data: GraphData;
+	}
 
+	let container: HTMLDivElement;
+
+	let { data }: ForceGraphProps = $props();
 	let open = $state(false);
 
 	const initGraph = async () => {
@@ -13,13 +18,8 @@
 
 		const inst = new ForceGraph3D.default(container)
 			.graphData({
-				nodes: [...Array(N).keys()].map((i) => ({ id: i })),
-				links: [...Array(N).keys()]
-					.filter((id) => id)
-					.map((id) => ({
-						source: id,
-						target: Math.round(Math.random() * (id - 1))
-					}))
+				nodes: data.nodes,
+				links: data.links
 			})
 			.height(500)
 			.showNavInfo(false)
@@ -29,7 +29,11 @@
 			.nodeAutoColorBy('group');
 
 		inst.onLinkHover((link, prev) => {
-			inst.linkWidth(2);
+			inst.linkWidth(link === null ? 1 : 2);
+		});
+
+		inst.onNodeHover((node, prev) => {
+			inst.nodeColor(node === null ? '#232323' : '#23FFFF');
 		});
 	};
 

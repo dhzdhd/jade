@@ -14,6 +14,7 @@ import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import inspectUrls from "@jsdevtools/rehype-url-inspector";
 import jsdom from 'jsdom';
+import type { GraphData } from "$lib";
 
 export const prerender = true;
 
@@ -25,7 +26,7 @@ export const load: LayoutServerLoad = async () => {
         return fileName.replace('.md', '').replace('../../posts/', '');
     }
 
-    const posts = Promise.all(rawPosts.map(async ([fileName, file], idx) => {
+    const posts = await Promise.all(rawPosts.map(async ([fileName, file], idx) => {
         const content = (await file()).default;
         const slug = getSlug(fileName);
 
@@ -78,9 +79,39 @@ export const load: LayoutServerLoad = async () => {
         }
     }))
 
+    const postNodes = posts.map((post) => {
+        const slug = getSlug(post.fileName);
+        return { id: slug, label: slug };
+    })
+    const headingNodes = posts.map((post) => {
+        return post.headings.map((heading) => {
+            return {
+                id: heading.url,
+                label: heading.text,
+            }
+        });
+    }).flat();
+    const nodes = [...postNodes, ...headingNodes];
+    const links = posts.map((post) => {
+        const slug = getSlug(post.fileName);
+
+        return post.headings.map((heading) => {
+            return {
+                source: slug,
+                target: heading.url,
+            }
+        })
+    }).flat();
+
+    const graphData = {
+        nodes,
+        links,
+    } satisfies GraphData;
+
     return {
-        posts: posts,
+        posts: Promise.all(posts),
         files: rawPosts.map(([fileName]) => getSlug(fileName)),
         config: config,
+        graphData: graphData,
     };
 };
