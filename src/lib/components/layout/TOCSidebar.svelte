@@ -1,6 +1,5 @@
 <script lang="ts">
-	import * as Sidebar from '$lib/components/ui/sidebar/index.js';
-	import PanelLeft from 'lucide-svelte/icons/panel-left';
+	import Button from '../ui/button/button.svelte';
 
 	interface TOCSidebarProps {
 		headings: {
@@ -11,37 +10,14 @@
 	}
 
 	const { headings }: TOCSidebarProps = $props();
-	let open = $state(false);
 </script>
 
-<Sidebar.Root collapsible="offcanvas" side="right" class="fixed top-0 right-0">
-	<Sidebar.Content class="bg-background w-52 max-w-52 pt-16">
-		<Sidebar.Group>
-			<Sidebar.GroupLabel>Table Of Contents</Sidebar.GroupLabel>
-			<Sidebar.GroupContent>
-				<Sidebar.Menu>
-					{#each headings as heading}
-						<Sidebar.MenuItem>
-							<Sidebar.MenuButton
-								class="hover:bg-accent active:bg-accent flex flex-row justify-between px-0 py-5"
-							>
-								{#snippet child({ props })}
-									<a
-										href={heading.url}
-										{...props}
-										style={`padding-left: ${heading.level - 0.5 * 1}rem`}
-									>
-										<span>{heading.text}</span>
-									</a>
-								{/snippet}
-							</Sidebar.MenuButton>
-						</Sidebar.MenuItem>
-					{/each}
-				</Sidebar.Menu>
-			</Sidebar.GroupContent>
-		</Sidebar.Group>
-		<Sidebar.Trigger side="right" class="fixed right-[1rem] bottom-[1rem]">
-			<PanelLeft></PanelLeft>
-		</Sidebar.Trigger>
-	</Sidebar.Content>
-</Sidebar.Root>
+{#each headings as heading}
+	<Button
+		class="hover:bg-accent active:bg-accent bg-background text-foreground flex w-full flex-row justify-between overflow-clip px-0 py-5 text-left"
+	>
+		<a href={heading.url} style={`padding-left: ${heading.level - 0.5 * 1}rem`}>
+			<span class="text-left text-wrap">{heading.text}</span>
+		</a>
+	</Button>
+{/each}

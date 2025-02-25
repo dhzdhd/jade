@@ -33,18 +33,19 @@ export const load: LayoutServerLoad = async () => {
         const processor = unified()
             .use(remarkParse)
             .use(remarkWikiLink,
-                //     {
-                //     pathFormat: 'obsidian-short',
-                //     permalinks: getPermalinks("../../posts"),
-                //     hrefTemplate: (permalink: string) => {
-                //         if (permalink.endsWith(".excalidraw")) {
-                //             const link = permalink.split("posts/").pop();
-                //             return `/excalidraw/${link!.split(".excalidraw")[0]}`;
-                //         }
+                {
+                    pathFormat: 'obsidian-short',
+                    permalinks: getPermalinks("posts"),
+                    hrefTemplate: (permalink: string) => {
 
-                //         return permalink.split("posts").pop()!.toString();
-                //     }
-                // }
+                        if (permalink.endsWith(".excalidraw")) {
+                            const link = permalink.split("posts/").pop();
+                            return `/excalidraw/${link!.split(".excalidraw")[0]}`;
+                        }
+
+                        return permalink.split("posts").pop()!.toString();
+                    }
+                }
             )
             .use(remarkMath)
             .use(remarkToc)
@@ -54,8 +55,10 @@ export const load: LayoutServerLoad = async () => {
             .use(rehypeSlug)
             .use(rehypeAutolinkHeadings)
             .use(inspectUrls, {
-                inspectEach({ url }) {
-                    // console.log(url);
+                inspectEach({ url, propertyName, node }) {
+                    if (node.tagName === 'img' && propertyName === 'src') {
+                        // console.log(url)
+                    }
                 }
             })
             .use(rehypeStringify);

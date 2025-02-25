@@ -10,8 +10,6 @@
 	}
 
 	let { config, graphData }: HeaderProps = $props();
-
-	$inspect(graphData);
 </script>
 
 <header class="bg-background fixed z-20 flex h-16 w-screen items-center justify-between px-2">

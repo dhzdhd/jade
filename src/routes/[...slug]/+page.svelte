@@ -1,26 +1,21 @@
 <script lang="ts">
+	import Sidebar from '$lib/components/layout/Sidebar.svelte';
 	import TocSidebar from '$lib/components/layout/TOCSidebar.svelte';
 	import type { PageProps } from './$types';
-	import * as Sidebar from '$lib/components/ui/sidebar/index';
 	import { PersistedState } from 'runed';
 
 	const { data }: PageProps = $props();
 
 	const content = data.post.content;
 	const headings = data.post.headings;
-
-	const open = new PersistedState('tocOpen', false);
 </script>
 
 <article class="prose w-[50rem] max-w-[50rem] px-2 py-20">
 	{@html content}
 </article>
-<Sidebar.Provider
-	bind:open={() => open.current, (newOpen) => (open.current = newOpen)}
-	class="fixed max-w-52"
->
+<Sidebar storageKey="tocOpen" side="right">
 	<TocSidebar {headings} />
-</Sidebar.Provider>
+</Sidebar>
 
 <style>
 	@reference "../../app.css";
