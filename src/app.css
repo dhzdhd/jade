@@ -3,6 +3,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
 @import "tailwindcss";
+@import "../.config/custom.css";
 
 @plugin "@tailwindcss/typography";
 @plugin "tailwindcss-animate";
@@ -43,6 +44,9 @@
   --sidebar-accent-foreground: hsl(240 5.9% 10%);
   --sidebar-border: hsl(220 13% 91%);
   --sidebar-ring: hsl(217.2 91.2% 59.8%);
+
+  --font-title: "Montserrat", sans-serif;
+  --font-normal: "Atkinson Hyperlegible", sans;
 }
 
 .dark {
@@ -121,9 +125,8 @@
   --animate-accordion-down: accordion-down 0.2s ease-out;
   --animate-accordion-up: accordion-up 0.2s ease-out;
 
-  --font-title: "Montserrat", sans-serif;
-  /* --font-normal: "Lexend", sans; */
-  --font-normal: "Atkinson Hyperlegible", sans;
+  --font-title: var(--font-title);
+  --font-normal: var(--font-normal);
 
   @keyframes accordion-down {
     from {

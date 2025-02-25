@@ -2,7 +2,6 @@
 	import Sidebar from '$lib/components/layout/Sidebar.svelte';
 	import TocSidebar from '$lib/components/layout/TOCSidebar.svelte';
 	import type { PageProps } from './$types';
-	import { PersistedState } from 'runed';
 
 	const { data }: PageProps = $props();
 

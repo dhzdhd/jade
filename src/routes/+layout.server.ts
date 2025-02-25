@@ -1,4 +1,3 @@
-import { type MdsvexCompileOptions } from "mdsvex";
 import type { LayoutServerLoad } from "./$types";
 import remarkWikiLink, { getPermalinks } from "@portaljs/remark-wiki-link";
 import remarkMath from "remark-math";
@@ -20,7 +19,6 @@ export const prerender = true;
 
 export const load: LayoutServerLoad = async () => {
     const rawPosts = Object.entries(import.meta.glob<any>('../../posts/**.md', { query: '?raw' }),);
-    const mdsvexOptions: MdsvexCompileOptions = {};
 
     const getSlug = (fileName: string): string => {
         return fileName.replace('.md', '').replace('../../posts/', '');
