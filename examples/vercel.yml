@@ -1,0 +1,52 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+env:
+  MD_FOLDER: .
+  DEPLOY_BRANCH: deploy
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main repo
+        uses: actions/checkout@v4
+
+      - name: Checkout SSG repo
+        uses: actions/checkout@v4
+        with:
+          repository: dhzdhd/jade
+          path: ssg
+
+      - name: Cleanup SSG repository
+        run: |
+          rm -rf ssg/.config
+          rm -rf ssg/posts
+          mkdir ssg/.config
+          mkdir ssg/posts
+
+      - name: Move config files
+        run: mv ./.config ./ssg/.config
+
+      - name: Move markdown files
+        run: |
+          rsync -avm --include='*.md' --include='*/' --exclude='*' "${{ env.MD_FOLDER }}/" "ssg/posts"
+
+      - name: Copy images to static/
+        run: |
+          rsync -avm --include='*.png' --include='*.jpg' --include='*.webp' --include='*.svg' --include='*/' --exclude='*' "${{ env.MD_FOLDER }}/" "ssg/static"
+
+      - name: Push updated files to deploy branch
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: ${{ env.DEPLOY_BRANCH }}
+          folder: ssg
