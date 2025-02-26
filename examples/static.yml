@@ -65,8 +65,21 @@ jobs:
         run: |
           rsync -avm --include='*.png' --include='*.jpg' --include='*.webp' --include='*.svg' --include='*/' --exclude='*' "${{ env.MD_FOLDER }}/" "ssg/static"
 
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install dependencies
+        working-directory: ssg
+        run: npm install
+
+      - name: Build app
+        working-directory: ssg
+        run: npm run build
+
       - name: Push built files to deploy branch
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: ${{ env.DEPLOY_BRANCH }}
-          folder: ssg
+          folder: ssg/build
