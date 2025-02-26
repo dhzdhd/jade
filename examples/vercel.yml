@@ -37,6 +37,26 @@ jobs:
       - name: Move config files
         run: mv ./.config ./ssg/.config
 
+      - name: Create config.ts if it does not exist
+        run: |
+          if [ ! -f ssg/.config/config.ts ]; then
+            touch ssg/.config/config.ts
+            echo "export default {}" > ssg/.config/config.ts
+          fi
+
+      - name: Create custom.css if it does not exist
+        run: |
+          if [ ! -f ssg/.config/custom.css ]; then
+            touch ssg/.config/custom.css
+          fi
+
+      - name: Create landing.md if it does not exist
+        run: |
+          if [ ! -f ssg/.config/landing.md ]; then
+            touch ssg/.config/landing.md
+            echo "# Hello World" > ssg/.config/landing.md
+          fi
+
       - name: Move markdown files
         run: |
           rsync -avm --include='*.md' --include='*/' --exclude='*' "${{ env.MD_FOLDER }}/" "ssg/posts"

@@ -14,6 +14,7 @@ import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import inspectUrls from "@jsdevtools/rehype-url-inspector";
 import jsdom from 'jsdom';
 import type { GraphData } from "$lib";
+import type { Config } from "$lib/types";
 
 export const prerender = true;
 
@@ -112,7 +113,7 @@ export const load: LayoutServerLoad = async () => {
     return {
         posts: Promise.all(posts),
         files: rawPosts.map(([fileName]) => getSlug(fileName)),
-        config: config,
+        config: config as Config,
         graphData: graphData,
     };
 };
