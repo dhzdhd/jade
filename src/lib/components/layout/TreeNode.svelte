@@ -1,10 +1,8 @@
 <script lang="ts">
 	import TreeNode from './TreeNode.svelte';
 	import * as Sidebar from '$lib/components/ui/sidebar/index.js';
-	import Button from '../ui/button/button.svelte';
 	import type { TreeItem } from '$lib';
 	import ArrowRight from 'lucide-svelte/icons/chevron-right';
-	import ArrowDown from 'lucide-svelte/icons/chevron-down';
 
 	let { id, children, depth, url }: TreeItem = $props();
 
@@ -23,7 +21,7 @@
 			class="hover:bg-accent active:bg-accent flex flex-row justify-between py-5"
 		>
 			{#snippet child({ props })}
-				<button onclick={toggleExpansion} {...props}>
+				<button onclick={toggleExpansion} style={`padding-left: ${0.5 + depth * 0.6}rem`} {...props}>
 					<span>{id}</span>
 					<ArrowRight
 						style="transition: transform 200ms; transform: rotate({expanded ? '90deg' : '0deg'});"
