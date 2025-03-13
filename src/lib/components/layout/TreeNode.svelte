@@ -21,7 +21,11 @@
 			class="hover:bg-accent active:bg-accent flex flex-row justify-between py-5"
 		>
 			{#snippet child({ props })}
-				<button onclick={toggleExpansion} style={`padding-left: ${0.5 + depth * 0.6}rem`} {...props}>
+				<button
+					onclick={toggleExpansion}
+					style={`padding-left: ${0.5 + depth * 0.6}rem`}
+					{...props}
+				>
 					<span>{id}</span>
 					<ArrowRight
 						style="transition: transform 200ms; transform: rotate({expanded ? '90deg' : '0deg'});"
