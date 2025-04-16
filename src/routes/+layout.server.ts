@@ -15,8 +15,6 @@ import inspectUrls from "@jsdevtools/rehype-url-inspector";
 import jsdom from 'jsdom';
 import type { GraphData } from "$lib";
 import type { Config } from "$lib/types";
-import rehypeMermaid from "rehype-mermaid";
-import mermaid from 'mermaid'
 
 export const prerender = true;
 
@@ -26,8 +24,6 @@ export const load: LayoutServerLoad = async () => {
     const getSlug = (fileName: string): string => {
         return fileName.replace('.md', '').replace('../../posts/', '');
     }
-
-    mermaid.initialize({ startOnLoad: true })
 
     const posts = await Promise.all(rawPosts.map(async ([fileName, file], idx) => {
         const content = (await file()).default;
@@ -40,7 +36,6 @@ export const load: LayoutServerLoad = async () => {
                     pathFormat: 'obsidian-short',
                     permalinks: getPermalinks("posts"),
                     hrefTemplate: (permalink: string) => {
-
                         if (permalink.endsWith(".excalidraw")) {
                             const link = permalink.split("posts/").pop();
                             return `/excalidraw/${link!.split(".excalidraw")[0]}`;
@@ -54,10 +49,11 @@ export const load: LayoutServerLoad = async () => {
             .use(remarkToc)
             .use(remarkRehype)
             .use(rehypeKatex)
-            .use(rehypeMermaid, {
-                strategy: 'img-svg'
-                // strategy: 'pre-mermaid'
-            })
+            // FIXME: https://github.com/remcohaszing/remark-mermaidjs/issues/3
+            // .use(rehypeMermaid, {
+            //     strategy: 'img-svg'
+            //     // strategy: 'pre-mermaid'
+            // })
             .use(rehypePrettyCode, { theme: "tokyo-night", keepBackground: true })
             .use(rehypeSlug)
             .use(rehypeAutolinkHeadings)
