@@ -4,6 +4,7 @@
 	import Button from '../ui/button/button.svelte';
 	import PanelLeft from 'lucide-svelte/icons/panel-left';
 	import type { Snippet } from 'svelte';
+	import { fly } from 'svelte/transition';
 
 	interface SidebarProps {
 		storageKey: string;
@@ -24,6 +25,7 @@
 
 <div bind:this={container}>
 	<aside
+		in:fly={{ x: -200, duration: 200 }}
 		class={cn([
 			open.current ? (side === 'left' ? '-translate-x-52' : 'translate-x-52') : 'translate-x-0',
 			side === 'left' ? 'left-0' : 'right-0',

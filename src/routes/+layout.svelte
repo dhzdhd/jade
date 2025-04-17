@@ -5,8 +5,20 @@
 	import TreeSidebar from '$lib/components/layout/TreeSidebar.svelte';
 	import Header from '$lib/components/layout/Header.svelte';
 	import Sidebar from '$lib/components/layout/Sidebar.svelte';
+	import { onNavigate } from '$app/navigation';
 
 	let { children, data }: LayoutProps = $props();
+
+	onNavigate((navigation) => {
+		if (!document.startViewTransition) return;
+
+		return new Promise((resolve) => {
+			document.startViewTransition(async () => {
+				resolve();
+				await navigation.complete;
+			});
+		});
+	});
 </script>
 
 <ModeWatcher />

@@ -45,10 +45,10 @@
 </script>
 
 <Dialog.Root bind:open>
-	<Dialog.Trigger class="animate-none transition-none">
-		<Button size="icon" variant="outline">
-			<Graph />
-		</Button>
+	<Dialog.Trigger
+		class="border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 w-10 animate-none border transition-none"
+	>
+		<Graph />
 	</Dialog.Trigger>
 	<Dialog.Content class="min-w-[35rem] animate-none transition-none">
 		<Dialog.Header>
