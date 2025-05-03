@@ -59,11 +59,11 @@ jobs:
 
       - name: Move markdown files
         run: |
-          rsync -avm --include='*.md' --include='*/' --exclude='*' "${{ env.MD_FOLDER }}/" "ssg/posts"
+          rsync -avm --include='*/' "${{ env.MD_FOLDER }}/" "ssg/posts"
 
       - name: Copy images to static/
         run: |
-          rsync -avm --include='*.png' --include='*.jpg' --include='*.webp' --include='*.svg' --include='*/' --exclude='*' "${{ env.MD_FOLDER }}/" "ssg/static"
+          rsync -avm --include='*.png' --include='*.jpg' --include='*.jpeg' --include='*.webp' --include='*.svg' --include='*/' --exclude='*' "${{ env.MD_FOLDER }}/" "ssg/static"
 
       - name: Push built files to deploy branch
         uses: JamesIves/github-pages-deploy-action@v4
