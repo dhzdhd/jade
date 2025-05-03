@@ -12,8 +12,8 @@
 	let { config, graphData }: HeaderProps = $props();
 </script>
 
-<header class="bg-background fixed z-20 flex h-16 w-screen items-center justify-between px-2">
-	<a href="/" class="font-title pl-2 text-xl">{config.title ?? 'Jade'}</a>
+<header class="bg-background fixed z-20 flex h-16 w-screen items-center justify-between px-4">
+	<a href="/" class="font-title text-xl">{config.title ?? 'Jade'}</a>
 	<div>
 		<ForceGraph data={graphData} />
 		<ThemeSwitcher />

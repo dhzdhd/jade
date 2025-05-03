@@ -38,7 +38,19 @@
 		}
 
 		p {
-			@apply text-lg;
+			@apply text-lg/5.5;
+		}
+
+		li {
+			@apply text-lg/5.5;
+
+			&::marker {
+				@apply text-primary/50;
+			}
+		}
+
+		.katex-html {
+			@apply hidden;
 		}
 
 		pre {
@@ -70,7 +82,6 @@
 			counter-increment: line;
 			content: counter(line);
 
-			/* Other styling */
 			display: inline-block;
 			width: 0.25rem;
 			margin-right: 1rem;

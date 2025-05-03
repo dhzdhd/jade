@@ -27,6 +27,6 @@
 <Sidebar storageKey="treeOpen" side="left">
 	<TreeSidebar files={data.files} />
 </Sidebar>
-<main class="flex w-screen justify-center">
+<main class="flex w-full max-w-svw justify-center">
 	{@render children()}
 </main>
