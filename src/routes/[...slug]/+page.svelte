@@ -47,6 +47,15 @@
 			&::marker {
 				@apply text-primary/50;
 			}
+
+			> code {
+				&::after,
+				&::before {
+					@apply hidden;
+				}
+
+				@apply bg-primary-foreground/60 rounded-sm px-2 py-1;
+			}
 		}
 
 		.katex-html {
