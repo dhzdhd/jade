@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import type { GraphData } from '$lib';
 	import * as Dialog from '$lib/components/ui/dialog/index';
 	import Button from '../ui/button/button.svelte';
@@ -26,15 +27,19 @@
 			.zoomToFit(1000 * 5)
 			.backgroundColor('#23252F')
 			.width(500)
-			.nodeAutoColorBy('group');
-
-		inst.onLinkHover((link, prev) => {
-			inst.linkWidth(link === null ? 1 : 2);
-		});
-
-		inst.onNodeHover((node, prev) => {
-			inst.nodeColor(node === null ? '#232323' : '#23FFFF');
-		});
+			.nodeAutoColorBy('group')
+			.onLinkHover((link, prev) => {
+				inst.linkWidth(link === null ? 1 : 2);
+			})
+			.onNodeClick(async (node: any, event) => {
+				if (node) {
+					open = false;
+					await goto(node.url);
+				}
+			})
+			.onNodeHover((node, prev) => {
+				inst.nodeColor(node === null ? '#232323' : '#23FFFF');
+			});
 	};
 
 	$effect(() => {
@@ -45,11 +50,9 @@
 </script>
 
 <Dialog.Root bind:open>
-	<Dialog.Trigger
-		class="border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 w-10 animate-none border transition-none"
-	>
+	<Button onclick={() => (open = true)} size="icon" variant="outline">
 		<Graph />
-	</Dialog.Trigger>
+	</Button>
 	<Dialog.Content class="min-w-[35rem] animate-none transition-none">
 		<Dialog.Header>
 			<Dialog.Title>Graph View</Dialog.Title>

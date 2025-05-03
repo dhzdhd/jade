@@ -60,7 +60,7 @@ export const load: LayoutServerLoad = async () => {
             .use(inspectUrls, {
                 inspectEach({ url, propertyName, node }) {
                     if (node.tagName === 'img' && propertyName === 'src') {
-                        // console.log(url)
+                        console.log(url)
                     }
                 }
             })
@@ -87,13 +87,14 @@ export const load: LayoutServerLoad = async () => {
 
     const postNodes = posts.map((post) => {
         const slug = getSlug(post.fileName);
-        return { id: slug, label: slug };
+        return { id: slug, label: slug, url: `/${slug}` };
     })
     const headingNodes = posts.map((post) => {
         return post.headings.map((heading) => {
             return {
                 id: heading.url,
                 label: heading.text,
+                url: `/${post.slug}${heading.url}`
             }
         });
     }).flat();

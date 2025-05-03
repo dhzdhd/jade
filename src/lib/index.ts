@@ -12,6 +12,7 @@ export interface TreeItem {
 export interface Node {
     id: string;
     label: string;
+    url: string;
 }
 
 export interface Link {
