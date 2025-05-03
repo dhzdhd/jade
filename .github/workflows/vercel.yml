@@ -1,0 +1,72 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+env:
+  MD_FOLDER: posts
+  DEPLOY_BRANCH: deploy
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main repo
+        uses: actions/checkout@v4
+
+      - name: Checkout SSG repo
+        uses: actions/checkout@v4
+        with:
+          repository: dhzdhd/jade
+          path: ssg
+
+      - name: Cleanup SSG repository
+        run: |
+          rm -rf ssg/.config
+          rm -rf ssg/posts
+          mkdir ssg/.config
+          mkdir ssg/posts
+
+      - name: Move config files
+        run: mv ./.config ./ssg/.config
+
+      - name: Create config.ts if it does not exist
+        run: |
+          if [ ! -f ssg/.config/config.ts ]; then
+            touch ssg/.config/config.ts
+            echo "export default {}" > ssg/.config/config.ts
+          fi
+
+      - name: Create custom.css if it does not exist
+        run: |
+          if [ ! -f ssg/.config/custom.css ]; then
+            touch ssg/.config/custom.css
+          fi
+
+      - name: Create landing.md if it does not exist
+        run: |
+          if [ ! -f ssg/.config/landing.md ]; then
+            touch ssg/.config/landing.md
+            echo "# Hello World" > ssg/.config/landing.md
+          fi
+
+      - name: Move markdown files
+        run: |
+          rsync -avm --include='*.md' --include='*/' --exclude='*' "${{ env.MD_FOLDER }}/" "ssg/posts"
+
+      - name: Copy images to static/
+        run: |
+          rsync -avm --include='*.png' --include='*.jpg' --include='*.webp' --include='*.svg' --include='*/' --exclude='*' "${{ env.MD_FOLDER }}/" "ssg/static"
+
+      - name: Push built files to deploy branch
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: ${{ env.DEPLOY_BRANCH }}
+          folder: ssg
