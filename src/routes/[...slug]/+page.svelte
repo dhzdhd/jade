@@ -73,20 +73,20 @@
 			@apply text-lg/5.5;
 		}
 
+		code:not(pre > code) {
+			&::after,
+			&::before {
+				@apply hidden;
+			}
+
+			@apply bg-primary-foreground/60 rounded-sm px-2 py-1;
+		}
+
 		li {
 			@apply text-lg/5.5;
 
 			&::marker {
 				@apply text-primary/50;
-			}
-
-			> code {
-				&::after,
-				&::before {
-					@apply hidden;
-				}
-
-				@apply bg-primary-foreground/60 rounded-sm px-2 py-1;
 			}
 		}
 
