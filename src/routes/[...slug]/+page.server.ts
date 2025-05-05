@@ -1,15 +1,16 @@
 import type { PageServerLoad } from './$types';
 import { error } from '@sveltejs/kit';
 import type { EntryGenerator } from './$types';
+import { getSanitizedPath, getSlugs } from '$lib';
 
 export const entries: EntryGenerator = async () => {
-    const rawPosts = Object.entries(import.meta.glob<any>('../../../posts/**.md', { query: '?raw' }),);
-    const getSlug = (fileName: string): string => {
-        return fileName.replace('.md', '').replace('../../../posts/', '');
-    }
+    const rawPosts = Object.entries(import.meta.glob<any>('../../../posts/**.md', { query: '?raw' }));
 
-    return rawPosts.map(([fileName]) => {
-        return { slug: getSlug(fileName) }
+    const slugs = rawPosts.map(([fileName]) => getSanitizedPath(fileName)).flatMap((path) => getSlugs(path));
+    const uniqueSlugs = [...new Set(slugs)];
+
+    return uniqueSlugs.map((slug) => {
+        return { slug }
     })
 };
 
@@ -18,14 +19,25 @@ export const load: PageServerLoad = async ({ params, parent }) => {
     const { posts } = await parent();
 
     return posts.then((postsData) => {
-        const post = postsData.filter((post) => post.slug === slug);
+        const posts = postsData.filter((post) => post.postSlug === slug);
+        const postsWithinFolder = postsData.filter(post => post.slugs.includes(slug));
 
-        if (post.length !== 1) {
+        if (posts.length !== 1 && postsWithinFolder.length === 0) {
             error(404, "Page not found");
         }
 
+        if (posts.length === 0) {
+            return {
+                posts: postsWithinFolder,
+                isFolder: true,
+                slug,
+            };
+        }
+
         return {
-            post: post.at(0)!
+            posts: posts,
+            isFolder: false,
+            slug,
         }
     });
 }

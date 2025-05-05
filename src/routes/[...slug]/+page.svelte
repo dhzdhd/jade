@@ -1,20 +1,35 @@
 <script lang="ts">
+	import { getSegment, numberOfSegments } from '$lib';
 	import Sidebar from '$lib/components/layout/Sidebar.svelte';
 	import TocSidebar from '$lib/components/layout/TOCSidebar.svelte';
 	import type { PageProps } from './$types';
 
 	const { data }: PageProps = $props();
 
-	const content = data.post.content;
-	const headings = data.post.headings;
+	const currentSlug = data.slug;
+	const isFolder = data.isFolder;
 </script>
 
-<article class="prose w-[50rem] max-w-[50rem] px-2 py-20">
-	{@html content}
-</article>
-<Sidebar storageKey="tocOpen" side="right">
-	<TocSidebar {headings} />
-</Sidebar>
+{#if isFolder}
+	<div class="flex w-[50rem] max-w-[50rem] flex-col gap-2 px-2 py-20">
+		<h1 class="font-title mb-6 text-4xl font-bold">{getSegment(currentSlug, 'last')}</h1>
+		{#each data.posts as post}
+			<a
+				href={`/${currentSlug}/${getSegment(post.postSlug, numberOfSegments(currentSlug))}`}
+				class="hover:text-accent cursor-pointer justify-start py-2 text-lg"
+			>
+				{getSegment(post.postSlug, numberOfSegments(currentSlug))}
+			</a>
+		{/each}
+	</div>
+{:else}
+	<article class="prose w-[50rem] max-w-[50rem] px-2 py-20">
+		{@html data.posts[0].content}
+	</article>
+	<Sidebar storageKey="tocOpen" side="right">
+		<TocSidebar headings={data.posts[0].headings} />
+	</Sidebar>
+{/if}
 
 <style>
 	@reference "../../app.css";
