@@ -3,11 +3,20 @@
 	import Sidebar from '$lib/components/layout/Sidebar.svelte';
 	import TocSidebar from '$lib/components/layout/TOCSidebar.svelte';
 	import * as Breadcrumb from '$lib/components/ui/breadcrumb/index';
+	import ChevronRight from '@lucide/svelte/icons/chevron-right';
+	import ChevronLeft from '@lucide/svelte/icons/chevron-left';
 	import type { PageProps } from './$types';
 
 	const { data }: PageProps = $props();
 
 	const currentSlug = data.slug;
+	const previousPost = data.allPosts.at(
+		data.allPosts.map((post) => post.postSlug).indexOf(currentSlug) - 1
+	)?.postSlug;
+	const nextPost = data.allPosts.at(
+		data.allPosts.map((post) => post.postSlug).indexOf(currentSlug) + 1
+	)?.postSlug;
+
 	const slugs = getSlugs(currentSlug);
 	const isFolder = data.isFolder;
 </script>
@@ -42,6 +51,22 @@
 		<article class="prose">
 			{@html data.posts[0].content}
 		</article>
+		<div class="mt-12 flex w-full">
+			{#if previousPost}
+				<a
+					href={`/${previousPost}`}
+					class="hover:text-accent flex w-full items-center justify-start gap-2"
+					><ChevronLeft size={'1.2rem'} />Previous
+				</a>
+			{/if}
+			{#if nextPost}
+				<a
+					href={`/${nextPost}`}
+					class="hover:text-accent flex w-full items-center justify-end gap-2"
+					>Next <ChevronRight size={'1.2rem'} /></a
+				>
+			{/if}
+		</div>
 		<Sidebar storageKey="tocOpen" side="right">
 			<TocSidebar headings={data.posts[0].headings} />
 		</Sidebar>
