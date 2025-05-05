@@ -13,7 +13,7 @@ import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import inspectUrls from "@jsdevtools/rehype-url-inspector";
 import jsdom from 'jsdom';
-import type { GraphData } from "$lib";
+import { getSanitizedPath, getSlugs, type GraphData } from "$lib";
 import type { Config } from "$lib/types";
 
 export const prerender = true;
@@ -21,13 +21,10 @@ export const prerender = true;
 export const load: LayoutServerLoad = async () => {
     const rawPosts = Object.entries(import.meta.glob<any>('../../posts/**.md', { query: '?raw' }),);
 
-    const getSlug = (fileName: string): string => {
-        return fileName.replace('.md', '').replace('../../posts/', '');
-    }
-
     const posts = await Promise.all(rawPosts.map(async ([fileName, file], idx) => {
         const content = (await file()).default;
-        const slug = getSlug(fileName);
+        const path = getSanitizedPath(fileName);
+        const slugs = getSlugs(path);
 
         const processor = unified()
             .use(remarkParse)
@@ -60,7 +57,7 @@ export const load: LayoutServerLoad = async () => {
             .use(inspectUrls, {
                 inspectEach({ url, propertyName, node }) {
                     if (node.tagName === 'img' && propertyName === 'src') {
-                        console.log(url)
+                        // console.log(url)
                     }
                 }
             })
@@ -81,12 +78,13 @@ export const load: LayoutServerLoad = async () => {
             content: md.toString(),
             headings,
             fileName,
-            slug,
+            postSlug: path,
+            slugs,
         }
     }))
 
     const postNodes = posts.map((post) => {
-        const slug = getSlug(post.fileName);
+        const slug = getSanitizedPath(post.fileName);
         return { id: slug, label: slug, url: `/${slug}` };
     })
     const headingNodes = posts.map((post) => {
@@ -94,13 +92,13 @@ export const load: LayoutServerLoad = async () => {
             return {
                 id: heading.url,
                 label: heading.text,
-                url: `/${post.slug}${heading.url}`
+                url: `/${post.postSlug}${heading.url}`
             }
         });
     }).flat();
     const nodes = [...postNodes, ...headingNodes];
     const links = posts.map((post) => {
-        const slug = getSlug(post.fileName);
+        const slug = getSanitizedPath(post.fileName);
 
         return post.headings.map((heading) => {
             return {
@@ -117,7 +115,7 @@ export const load: LayoutServerLoad = async () => {
 
     return {
         posts: Promise.all(posts),
-        files: rawPosts.map(([fileName]) => getSlug(fileName)),
+        files: rawPosts.map(([fileName]) => getSanitizedPath(fileName)),
         config: config as Config,
         graphData: graphData,
     };

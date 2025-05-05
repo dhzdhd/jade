@@ -1,5 +1,21 @@
-export function getSlug(fileName: string): string {
-    return ''
+export function getSanitizedPath(fileName: string): string {
+    return fileName.replaceAll(/^(\.\.\/)*|(posts\/)|(\.md$)/g, '');
+}
+
+export function getSlugs(path: string): string[] {
+    return path.split('/').map((_, idx) => path.split('/').slice(0, idx + 1).join('/'));
+}
+
+export function getSegment(path: string, index: number | 'last'): string | undefined {
+    if (typeof index === 'number') {
+        return path.split('/').at(index);
+    } else {
+        return path.split('/').pop();
+    }
+}
+
+export function numberOfSegments(path: string): number {
+    return path.split('/').length;
 }
 
 export interface TreeItem {
