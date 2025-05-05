@@ -1,35 +1,52 @@
 <script lang="ts">
-	import { getSegment, numberOfSegments } from '$lib';
+	import { getSegment, getSlugs, numberOfSegments } from '$lib';
 	import Sidebar from '$lib/components/layout/Sidebar.svelte';
 	import TocSidebar from '$lib/components/layout/TOCSidebar.svelte';
+	import * as Breadcrumb from '$lib/components/ui/breadcrumb/index';
 	import type { PageProps } from './$types';
 
 	const { data }: PageProps = $props();
 
 	const currentSlug = data.slug;
+	const slugs = getSlugs(currentSlug);
 	const isFolder = data.isFolder;
 </script>
 
-{#if isFolder}
-	<div class="flex w-[50rem] max-w-[50rem] flex-col gap-2 px-2 py-20">
-		<h1 class="font-title mb-6 text-4xl font-bold">{getSegment(currentSlug, 'last')}</h1>
-		{#each data.posts as post}
-			<a
-				href={`/${currentSlug}/${getSegment(post.postSlug, numberOfSegments(currentSlug))}`}
-				class="hover:text-accent cursor-pointer justify-start py-2 text-lg"
-			>
-				{getSegment(post.postSlug, numberOfSegments(currentSlug))}
-			</a>
-		{/each}
-	</div>
-{:else}
-	<article class="prose w-[50rem] max-w-[50rem] px-2 py-20">
-		{@html data.posts[0].content}
-	</article>
-	<Sidebar storageKey="tocOpen" side="right">
-		<TocSidebar headings={data.posts[0].headings} />
-	</Sidebar>
-{/if}
+<div class="w-[50rem] max-w-[50rem] px-2 py-20">
+	<Breadcrumb.Root class="mb-6">
+		<Breadcrumb.List>
+			{#each slugs.slice(0, slugs.length - 1) as slug}
+				<Breadcrumb.Item>
+					<Breadcrumb.Link href={`/${slug}`}>{getSegment(slug, 'last')}</Breadcrumb.Link>
+				</Breadcrumb.Item>
+				<Breadcrumb.Separator />
+			{/each}
+			<Breadcrumb.Item>
+				<Breadcrumb.Page>{getSegment(currentSlug, 'last')}</Breadcrumb.Page>
+			</Breadcrumb.Item>
+		</Breadcrumb.List>
+	</Breadcrumb.Root>
+	{#if isFolder}
+		<div class="flex flex-col gap-2">
+			<h1 class="font-title mb-6 text-4xl font-bold">{getSegment(currentSlug, 'last')}</h1>
+			{#each data.posts as post}
+				<a
+					href={`/${currentSlug}/${getSegment(post.postSlug, numberOfSegments(currentSlug))}`}
+					class="hover:text-accent cursor-pointer justify-start py-2 text-lg"
+				>
+					{getSegment(post.postSlug, numberOfSegments(currentSlug))}
+				</a>
+			{/each}
+		</div>
+	{:else}
+		<article class="prose">
+			{@html data.posts[0].content}
+		</article>
+		<Sidebar storageKey="tocOpen" side="right">
+			<TocSidebar headings={data.posts[0].headings} />
+		</Sidebar>
+	{/if}
+</div>
 
 <style>
 	@reference "../../app.css";
