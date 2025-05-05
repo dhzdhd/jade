@@ -18,24 +18,26 @@ export const load: PageServerLoad = async ({ params, parent }) => {
     const slug = params.slug
     const { posts } = await parent();
 
-    return posts.then((postsData) => {
-        const posts = postsData.filter((post) => post.postSlug === slug);
+    return posts.then(async (postsData) => {
+        const filteredPosts = postsData.filter((post) => post.postSlug === slug);
         const postsWithinFolder = postsData.filter(post => post.slugs.includes(slug));
 
-        if (posts.length !== 1 && postsWithinFolder.length === 0) {
+        if (filteredPosts.length !== 1 && postsWithinFolder.length === 0) {
             error(404, "Page not found");
         }
 
-        if (posts.length === 0) {
+        if (filteredPosts.length === 0) {
             return {
                 posts: postsWithinFolder,
+                allPosts: await posts,
                 isFolder: true,
                 slug,
             };
         }
 
         return {
-            posts: posts,
+            posts: filteredPosts,
+            allPosts: await posts,
             isFolder: false,
             slug,
         }
