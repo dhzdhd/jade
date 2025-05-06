@@ -9,16 +9,16 @@
 
 	const { data }: PageProps = $props();
 
-	const currentSlug = data.slug;
-	const previousPost = data.allPosts.at(
-		data.allPosts.map((post) => post.postSlug).indexOf(currentSlug) - 1
-	)?.postSlug;
-	const nextPost = data.allPosts.at(
-		data.allPosts.map((post) => post.postSlug).indexOf(currentSlug) + 1
-	)?.postSlug;
+	const currentSlug = $derived(data.slug);
+	const previousPost = $derived(
+		data.allPosts.at(data.allPosts.map((post) => post.postSlug).indexOf(currentSlug) - 1)?.postSlug
+	);
+	const nextPost = $derived(
+		data.allPosts.at(data.allPosts.map((post) => post.postSlug).indexOf(currentSlug) + 1)?.postSlug
+	);
 
-	const slugs = getSlugs(currentSlug);
-	const isFolder = data.isFolder;
+	const slugs = $derived(getSlugs(currentSlug));
+	const isFolder = $derived(data.isFolder);
 </script>
 
 <div class="w-[50rem] max-w-[50rem] px-2 py-20">
@@ -48,7 +48,7 @@
 			{/each}
 		</div>
 	{:else}
-		<article class="prose">
+		<article class="prose w-full max-w-full">
 			{@html data.posts[0].content}
 		</article>
 		<div class="mt-12 flex w-full">
