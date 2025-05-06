@@ -2,6 +2,9 @@ import type { PageServerLoad } from './$types';
 import { error } from '@sveltejs/kit';
 import type { EntryGenerator } from './$types';
 import { getSanitizedPath, getSlugs } from '$lib';
+import pkg from 'lz-string';
+
+const { decompressFromBase64 } = pkg;
 
 export const entries: EntryGenerator = async () => {
     const rawPosts = Object.entries(import.meta.glob<any>('../../../posts/**.md', { query: '?raw' }));
@@ -13,6 +16,17 @@ export const entries: EntryGenerator = async () => {
         return { slug }
     })
 };
+
+const DRAWING_COMPRESSED_REG =
+    /(\n##? Drawing\n[^`]*(?:```compressed\-json\n))([\s\S]*?)(```\n)/gm;
+function decompressExcalidrawData(content: string): string {
+    const match = DRAWING_COMPRESSED_REG.exec(content);
+
+    const encoded = match![2].replace(/[\r\n]/g, "");
+    const json = decompressFromBase64(encoded);
+
+    return json;
+}
 
 export const load: PageServerLoad = async ({ params, parent }) => {
     const slug = params.slug
@@ -26,12 +40,27 @@ export const load: PageServerLoad = async ({ params, parent }) => {
         error(404, "Page not found");
     }
 
+    if (slug.endsWith('.excalidraw')) {
+        const post = Object.entries(import.meta.glob<any>(`../../../posts/**.excalidraw.md`, { query: '?raw' }),).filter(([path, _fn]) => path === `../../../posts/${slug}.md`)[0];
+        const content = (await post[1]()).default;
+
+        const json = decompressExcalidrawData(content);
+        return {
+            posts: filteredPosts,
+            allPosts: postsData,
+            isFolder: false,
+            slug,
+            json,
+        }
+    }
+
     if (filteredPosts.length === 0) {
         return {
             posts: postsWithinFolder,
             allPosts: postsData,
             isFolder: true,
             slug,
+            undefined,
         };
     }
 
@@ -40,5 +69,6 @@ export const load: PageServerLoad = async ({ params, parent }) => {
         allPosts: postsData,
         isFolder: false,
         slug,
+        undefined,
     }
 }

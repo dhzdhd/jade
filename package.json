@@ -53,6 +53,7 @@
 		"vitest": "^3.0.0"
 	},
 	"dependencies": {
+		"@excalidraw/excalidraw": "^0.18.0",
 		"@icons-pack/svelte-simple-icons": "^4.0.2",
 		"@jsdevtools/rehype-url-inspector": "^2.0.2",
 		"@portaljs/remark-wiki-link": "^1.2.0",

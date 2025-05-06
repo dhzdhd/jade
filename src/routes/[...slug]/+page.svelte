@@ -6,9 +6,11 @@
 	import ChevronRight from '@lucide/svelte/icons/chevron-right';
 	import ChevronLeft from '@lucide/svelte/icons/chevron-left';
 	import type { PageProps } from './$types';
+	import Excalidraw from '$lib/components/Excalidraw.svelte';
 
 	const { data }: PageProps = $props();
 
+	const excalidrawJson = $derived(data.json);
 	const currentSlug = $derived(data.slug);
 	const previousPost = $derived(
 		data.allPosts.at(data.allPosts.map((post) => post.postSlug).indexOf(currentSlug) - 1)?.postSlug
@@ -47,6 +49,8 @@
 				</a>
 			{/each}
 		</div>
+	{:else if excalidrawJson}
+		<Excalidraw slug={currentSlug} data={excalidrawJson} />
 	{:else}
 		<article class="prose w-full max-w-full">
 			{@html data.posts[0].content}
