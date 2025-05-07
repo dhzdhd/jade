@@ -33,7 +33,9 @@
 				<Breadcrumb.Separator />
 			{/each}
 			<Breadcrumb.Item>
-				<Breadcrumb.Page>{getSegment(currentSlug, 'last')}</Breadcrumb.Page>
+				<Breadcrumb.Page
+					>{getSegment(currentSlug, 'last')?.replace('.excalidraw', '')}</Breadcrumb.Page
+				>
 			</Breadcrumb.Item>
 		</Breadcrumb.List>
 	</Breadcrumb.Root>
