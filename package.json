@@ -54,6 +54,7 @@
 	},
 	"dependencies": {
 		"@excalidraw/excalidraw": "^0.18.0",
+		"@excalidraw/roughjs": "^4.5.3",
 		"@icons-pack/svelte-simple-icons": "^4.0.2",
 		"@jsdevtools/rehype-url-inspector": "^2.0.2",
 		"@portaljs/remark-wiki-link": "^1.2.0",

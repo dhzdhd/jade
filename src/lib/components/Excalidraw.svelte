@@ -1,21 +1,22 @@
 <script lang="ts">
-	import { exportToCanvas, loadFromBlob } from '@excalidraw/excalidraw';
-	import { untrack } from 'svelte';
+	import { onMount } from 'svelte';
 
 	type Props = { slug: string; data: string };
 
 	let { slug, data }: Props = $props();
 	let canvasUrl = $state('');
 
-	$effect(() => {
+	onMount(async () => {
+		const excLib = await import('@excalidraw/excalidraw');
+
 		const execPromise = async () => {
-			const content = await loadFromBlob(
+			const content = await excLib.loadFromBlob(
 				new Blob([data], { type: 'application/json' }),
 				null,
 				null
 			);
 
-			const canvas = await exportToCanvas({
+			const canvas = await excLib.exportToCanvas({
 				elements: content.elements,
 				appState: {
 					...content.appState,
@@ -23,7 +24,7 @@
 				},
 				files: content.files
 			});
-			canvasUrl = untrack(() => canvas.toDataURL());
+			canvasUrl = canvas.toDataURL();
 		};
 		execPromise();
 	});
