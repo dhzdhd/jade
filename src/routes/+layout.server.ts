@@ -14,7 +14,7 @@ import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import inspectUrls from "@jsdevtools/rehype-url-inspector";
 import jsdom from 'jsdom';
 import { getSanitizedPath, getSlugs, type GraphData } from "$lib";
-import type { Config } from "$lib/types";
+import type { Config } from "$lib/config";
 
 export const prerender = true;
 

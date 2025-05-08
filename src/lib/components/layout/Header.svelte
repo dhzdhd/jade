@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { GraphData } from '$lib';
-	import type { Config } from '$lib/types';
+	import type { Config } from '$lib/config';
 	import ForceGraph from './ForceGraph.svelte';
 	import ThemeSwitcher from './ThemeSwitcher.svelte';
 
