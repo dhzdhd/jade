@@ -84,7 +84,7 @@
 
 	article :global {
 		* {
-			@apply text-primary font-normal;
+			@apply text-foreground font-normal;
 		}
 
 		h1,

@@ -3,7 +3,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
 @import "tailwindcss";
-@import "../.config/custom.css";
 
 @plugin "@tailwindcss/typography";
 @plugin "tailwindcss-animate";
@@ -62,7 +61,6 @@
   --secondary-foreground: hsl(0, 0%, 84%);
   --muted: hsl(240 3.7% 15.9%);
   --muted-foreground: hsl(240 5% 64.9%);
-  /* --accent: hsl(240 3.7% 15.9%); */
   --accent: hsl(219, 34%, 56%);
   --accent-foreground: hsl(0, 0%, 84%);
   --destructive: hsl(0 62.8% 30.6%);
@@ -84,6 +82,7 @@
   --sidebar-border: hsl(240 3.7% 15.9%);
   --sidebar-ring: hsl(217.2 91.2% 59.8%);
 }
+
 
 @theme inline {
   --color-background: var(--background);
@@ -162,3 +161,5 @@
     @apply bg-background text-foreground;
   }
 }
+
+@import "../.config/custom.css";
