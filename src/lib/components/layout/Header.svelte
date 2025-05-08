@@ -2,6 +2,7 @@
 	import type { GraphData } from '$lib';
 	import type { Config } from '$lib/config';
 	import ForceGraph from './ForceGraph.svelte';
+	import Settings from './Settings.svelte';
 	import ThemeSwitcher from './ThemeSwitcher.svelte';
 
 	interface HeaderProps {
@@ -17,5 +18,6 @@
 	<div>
 		<ForceGraph data={graphData} />
 		<ThemeSwitcher />
+		<Settings />
 	</div>
 </header>
