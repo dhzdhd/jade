@@ -5,14 +5,20 @@
 	import PanelLeft from 'lucide-svelte/icons/panel-left';
 	import type { Snippet } from 'svelte';
 	import { fly } from 'svelte/transition';
+	import { getSettings } from '$lib/state/settings.svelte';
 
 	interface SidebarProps {
-		storageKey: string;
+		storageKey: 'treeOpen' | 'tocOpen';
 		side: 'left' | 'right';
 		children: Snippet;
 	}
 
 	let { storageKey, side, children }: SidebarProps = $props();
+
+	const settings = getSettings();
+	let sidebarVisibility = $derived(
+		storageKey === 'treeOpen' ? settings.treeVisibility : settings.tocVisibility
+	);
 
 	let container = $state<HTMLElement>()!;
 	// onClickOutside(
@@ -39,7 +45,11 @@
 	onclick={() => (open.current = !open.current)}
 	variant="ghost"
 	size="icon"
-	class={cn([side === 'left' ? 'left-[1rem]' : 'right-[1rem]', 'fixed bottom-[1rem]'])}
+	class={cn([
+		sidebarVisibility.isButtonVisible ? 'flex' : 'hidden',
+		side === 'left' ? 'left-[1rem]' : 'right-[1rem]',
+		'fixed bottom-[1rem]'
+	])}
 >
 	<PanelLeft />
 </Button>
