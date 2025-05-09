@@ -18,7 +18,7 @@
 
 <header
 	class={cn([
-		settings.isHeaderVisible ? 'flex' : 'hidden',
+		settings.current.isHeaderVisible ? 'flex' : 'hidden',
 		'bg-background fixed z-20 h-16 w-screen items-center justify-between px-4'
 	])}
 >

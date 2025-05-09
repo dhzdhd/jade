@@ -5,6 +5,7 @@
 	import { Switch } from '../ui/switch';
 	import { Label } from '../ui/label';
 	import {
+		getSettings,
 		toggleHeaderVisibility,
 		toggleLowContrast,
 		toggleTOCVisibility,
@@ -12,6 +13,7 @@
 	} from '$lib/state/settings.svelte';
 
 	let open = $state(false);
+	const settings = getSettings();
 </script>
 
 <Dialog.Root bind:open>
@@ -34,6 +36,7 @@
 				</span>
 			</Label>
 			<Switch
+				checked={!settings.current.treeVisibility.isSidebarVisible}
 				onCheckedChange={(val) => toggleTreeVisibility({ isSidebarVisible: !val })}
 				id="necessary"
 				aria-label="Necessary"
@@ -41,12 +44,13 @@
 		</div>
 		<div class="flex items-center justify-between space-x-2">
 			<Label for="necessary" class="flex flex-col space-y-1">
-				<span>Hide table of contents button</span>
+				<span>Hide file tree button</span>
 				<span class="text-muted-foreground text-xs leading-snug font-normal">
-					Hides the table of contents button on the bottom right side of the page.
+					Hides the file tree button on the bottom left side of the page.
 				</span>
 			</Label>
 			<Switch
+				checked={!settings.current.treeVisibility.isButtonVisible}
 				onCheckedChange={(val) => toggleTreeVisibility({ isButtonVisible: !val })}
 				id="necessary"
 				aria-label="Necessary"
@@ -61,6 +65,7 @@
 				</span>
 			</Label>
 			<Switch
+				checked={!settings.current.tocVisibility.isSidebarVisible}
 				onCheckedChange={(val) => toggleTOCVisibility({ isSidebarVisible: !val })}
 				id="necessary"
 				aria-label="Necessary"
@@ -74,6 +79,7 @@
 				</span>
 			</Label>
 			<Switch
+				checked={!settings.current.tocVisibility.isButtonVisible}
 				onCheckedChange={(val) => toggleTOCVisibility({ isButtonVisible: !val })}
 				id="necessary"
 				aria-label="Necessary"
@@ -88,6 +94,7 @@
 				</span>
 			</Label>
 			<Switch
+				checked={settings.current.isLowContrast}
 				onCheckedChange={(val) => toggleLowContrast(val)}
 				id="necessary"
 				aria-label="Necessary"
@@ -102,6 +109,7 @@
 				</span>
 			</Label>
 			<Switch
+				checked={!settings.current.isHeaderVisible}
 				onCheckedChange={(val) => toggleHeaderVisibility(!val)}
 				id="necessary"
 				aria-label="Necessary"

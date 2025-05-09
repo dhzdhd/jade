@@ -1,3 +1,5 @@
+import { PersistedState } from "runed";
+
 interface SidebarSettings {
     isButtonVisible: boolean;
     isSidebarVisible: boolean;
@@ -10,7 +12,8 @@ interface Settings {
     isLowContrast: boolean;
 }
 
-const settings: Settings = $state({
+
+const settings: PersistedState<Settings> = new PersistedState("settings", {
     treeVisibility: {
         isButtonVisible: true,
         isSidebarVisible: true,
@@ -21,7 +24,7 @@ const settings: Settings = $state({
     },
     isHeaderVisible: true,
     isLowContrast: false,
-}) satisfies Settings;
+}) satisfies PersistedState<Settings>;
 
 export function getSettings() {
     return settings;
@@ -29,28 +32,51 @@ export function getSettings() {
 
 export function toggleTreeVisibility(setting?: Partial<SidebarSettings>) {
     if (setting) {
-        settings.treeVisibility.isButtonVisible = setting.isButtonVisible ?? settings.treeVisibility.isButtonVisible;
-        settings.treeVisibility.isSidebarVisible = setting.isSidebarVisible ?? settings.treeVisibility.isSidebarVisible;
+        settings.current = {
+            ...settings.current,
+            treeVisibility: {
+                isButtonVisible: setting.isButtonVisible ?? settings.current.treeVisibility.isButtonVisible,
+                isSidebarVisible: setting.isSidebarVisible ?? settings.current.treeVisibility.isSidebarVisible,
+            },
+        };
     } else {
-        settings.treeVisibility.isButtonVisible = !settings.treeVisibility.isButtonVisible;
-        settings.treeVisibility.isSidebarVisible = !settings.treeVisibility.isSidebarVisible;
+        settings.current = {
+            ...settings.current,
+            treeVisibility: {
+                isButtonVisible: !settings.current.treeVisibility.isButtonVisible,
+                isSidebarVisible: !settings.current.treeVisibility.isSidebarVisible,
+            },
+        };
     }
 }
 
 export function toggleTOCVisibility(setting?: Partial<SidebarSettings>) {
     if (setting) {
-        settings.tocVisibility.isButtonVisible = setting.isButtonVisible ?? settings.tocVisibility.isButtonVisible;
-        settings.tocVisibility.isSidebarVisible = setting.isSidebarVisible ?? settings.tocVisibility.isSidebarVisible;
+        settings.current = {
+            ...settings.current,
+            tocVisibility: {
+                isButtonVisible: setting.isButtonVisible ?? settings.current.tocVisibility.isButtonVisible,
+                isSidebarVisible: setting.isSidebarVisible ?? settings.current.tocVisibility.isSidebarVisible,
+            },
+        };
     } else {
-        settings.tocVisibility.isButtonVisible = !settings.tocVisibility.isButtonVisible;
-        settings.tocVisibility.isSidebarVisible = !settings.tocVisibility.isSidebarVisible;
+        settings.current = {
+            ...settings.current,
+            tocVisibility: {
+                isButtonVisible: !settings.current.tocVisibility.isButtonVisible,
+                isSidebarVisible: !settings.current.tocVisibility.isSidebarVisible,
+            },
+        };
     }
 }
 
 export function toggleHeaderVisibility(setting?: boolean) {
-    settings.isHeaderVisible = setting ?? !settings.isHeaderVisible;
+    settings.current = {
+        ...settings.current,
+        isHeaderVisible: setting ?? !settings.current.isHeaderVisible
+    }
 }
 
 export function toggleLowContrast(setting?: boolean) {
-    settings.isLowContrast = setting ?? !settings.isLowContrast;
+    settings.current.isLowContrast = setting ?? !settings.current.isLowContrast;
 }
