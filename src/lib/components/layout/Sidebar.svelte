@@ -17,7 +17,7 @@
 
 	const settings = getSettings();
 	let sidebarVisibility = $derived(
-		storageKey === 'treeOpen' ? settings.treeVisibility : settings.tocVisibility
+		storageKey === 'treeOpen' ? settings.current.treeVisibility : settings.current.tocVisibility
 	);
 
 	let container = $state<HTMLElement>()!;
