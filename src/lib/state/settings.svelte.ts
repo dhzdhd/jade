@@ -8,6 +8,8 @@ interface SidebarSettings {
 interface Settings {
     treeVisibility: SidebarSettings;
     tocVisibility: SidebarSettings;
+    isBreadcrumbVisible: boolean;
+    isBottomNavVisible: boolean;
     isHeaderVisible: boolean;
     isLowContrast: boolean;
 }
@@ -22,6 +24,8 @@ const settings: PersistedState<Settings> = new PersistedState("settings", {
         isButtonVisible: true,
         isSidebarVisible: true,
     },
+    isBreadcrumbVisible: true,
+    isBottomNavVisible: true,
     isHeaderVisible: true,
     isLowContrast: false,
 }) satisfies PersistedState<Settings>;
@@ -70,6 +74,20 @@ export function toggleTOCVisibility(setting?: Partial<SidebarSettings>) {
     }
 }
 
+export function toggleBreadcrumbVisibility(setting?: boolean) {
+    settings.current = {
+        ...settings.current,
+        isBreadcrumbVisible: setting ?? !settings.current.isBreadcrumbVisible
+    }
+}
+
+export function toggleBottomNavVisibility(setting?: boolean) {
+    settings.current = {
+        ...settings.current,
+        isBottomNavVisible: setting ?? !settings.current.isBottomNavVisible
+    }
+}
+
 export function toggleHeaderVisibility(setting?: boolean) {
     settings.current = {
         ...settings.current,
@@ -77,6 +95,10 @@ export function toggleHeaderVisibility(setting?: boolean) {
     }
 }
 
+
 export function toggleLowContrast(setting?: boolean) {
-    settings.current.isLowContrast = setting ?? !settings.current.isLowContrast;
+    settings.current = {
+        ...settings.current,
+        isLowContrast: setting ?? !settings.current.isLowContrast
+    }
 }
