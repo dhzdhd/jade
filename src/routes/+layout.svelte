@@ -6,8 +6,12 @@
 	import Header from '$lib/components/layout/Header.svelte';
 	import Sidebar from '$lib/components/layout/Sidebar.svelte';
 	import { onNavigate } from '$app/navigation';
+	import { PressedKeys } from 'runed';
 
 	let { children, data }: LayoutProps = $props();
+
+	const keys = new PressedKeys();
+	const isCtrlKPressed = $derived(keys.has('Control', 'Shift', 'k'));
 
 	onNavigate((navigation) => {
 		if (!document.startViewTransition) return;

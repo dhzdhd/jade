@@ -2,6 +2,7 @@
 	import { goto } from '$app/navigation';
 	import type { GraphData } from '$lib';
 	import * as Dialog from '$lib/components/ui/dialog/index';
+	import { getSettings } from '$lib/state/settings.svelte';
 	import Button from '../ui/button/button.svelte';
 	import Graph from 'lucide-svelte/icons/git-graph';
 
