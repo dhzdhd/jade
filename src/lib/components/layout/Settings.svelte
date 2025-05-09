@@ -85,6 +85,35 @@
 				aria-label="Necessary"
 			/>
 		</div>
+		<h3 class="mt-2 text-lg font-medium">Page navigation</h3>
+		<div class="flex items-center justify-between space-x-2">
+			<Label for="necessary" class="flex flex-col space-y-1">
+				<span>Hide breadcrumb navigation</span>
+				<span class="text-muted-foreground text-xs leading-snug font-normal">
+					Hides the breadcrumb navigation at the top of the page.
+				</span>
+			</Label>
+			<Switch
+				checked={settings.current.isLowContrast}
+				onCheckedChange={(val) => toggleLowContrast(val)}
+				id="necessary"
+				aria-label="Necessary"
+			/>
+		</div>
+		<div class="flex items-center justify-between space-x-2">
+			<Label for="necessary" class="flex flex-col space-y-1">
+				<span>Hide bottom navigation buttons</span>
+				<span class="text-muted-foreground text-xs leading-snug font-normal">
+					Hides the two navigation buttons at the bottom of the page.
+				</span>
+			</Label>
+			<Switch
+				checked={settings.current.isLowContrast}
+				onCheckedChange={(val) => toggleLowContrast(val)}
+				id="necessary"
+				aria-label="Necessary"
+			/>
+		</div>
 		<h3 class="mt-2 text-lg font-medium">Misc</h3>
 		<div class="flex items-center justify-between space-x-2">
 			<Label for="necessary" class="flex flex-col space-y-1">
