@@ -11,7 +11,6 @@
 	let { children, data }: LayoutProps = $props();
 
 	const keys = new PressedKeys();
-	const isCtrlKPressed = $derived(keys.has('Control', 'Shift', 'k'));
 
 	onNavigate((navigation) => {
 		if (!document.startViewTransition) return;
@@ -24,6 +23,10 @@
 		});
 	});
 </script>
+
+<svelte:head>
+	<title>{data.config.title}</title>
+</svelte:head>
 
 <ModeWatcher />
 <Header config={data.config} graphData={data.graphData} />

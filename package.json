@@ -29,7 +29,7 @@
 		"@testing-library/jest-dom": "^6.6.3",
 		"@testing-library/svelte": "^5.2.4",
 		"@types/jsdom": "^21.1.7",
-		"bits-ui": "^1.4.6",
+		"bits-ui": "^1.4.7",
 		"clsx": "^2.1.1",
 		"eslint": "^9.18.0",
 		"eslint-config-prettier": "^10.0.1",

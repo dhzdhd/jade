@@ -11,9 +11,19 @@
 		toggleTOCVisibility,
 		toggleTreeVisibility
 	} from '$lib/state/settings.svelte';
+	import { PressedKeys } from 'runed';
+	import { untrack } from 'svelte';
 
 	let open = $state(false);
 	const settings = getSettings();
+
+	const keys = new PressedKeys();
+	const isCtrlAPressed = $derived(keys.has('s'));
+	$effect(() => {
+		if (isCtrlAPressed) {
+			open = untrack(() => !open);
+		}
+	});
 </script>
 
 <Dialog.Root bind:open>
@@ -24,7 +34,9 @@
 		<Dialog.Header>
 			<Dialog.Title class="text-2xl">Settings</Dialog.Title>
 			<Dialog.Description>
-				All the website settings are stored in your browser. You can change them at any time.
+				All the website settings are stored in your browser. You can change them at any time. Press <kbd
+					>s</kbd
+				> to open the settings.
 			</Dialog.Description>
 		</Dialog.Header>
 		<h3 class="mt-2 text-lg font-medium">File tree</h3>
