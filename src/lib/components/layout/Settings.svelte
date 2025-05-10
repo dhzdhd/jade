@@ -18,7 +18,7 @@
 	const settings = getSettings();
 
 	const keys = new PressedKeys();
-	const isCtrlAPressed = $derived(keys.has('s'));
+	const isCtrlAPressed = $derived(keys.has('Alt', 's'));
 	$effect(() => {
 		if (isCtrlAPressed) {
 			open = untrack(() => !open);
