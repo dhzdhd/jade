@@ -2,8 +2,10 @@
 	import { goto } from '$app/navigation';
 	import type { PostAndHeadingData } from '$lib';
 	import * as Command from '$lib/components/ui/command/index.js';
+	import { PressedKeys } from 'runed';
 	import Button from '../ui/button/button.svelte';
 	import Search from 'lucide-svelte/icons/search';
+	import { untrack } from 'svelte';
 
 	interface Props {
 		postsAndHeadings: PostAndHeadingData[];
@@ -16,6 +18,14 @@
 		open = false;
 		await goto(url);
 	};
+
+	const keys = new PressedKeys();
+	const isCtrlAPressed = $derived(keys.has('Alt', 'k'));
+	$effect(() => {
+		if (isCtrlAPressed) {
+			open = untrack(() => !open);
+		}
+	});
 </script>
 
 <Button onclick={() => (open = true)} size="icon" variant="outline">
