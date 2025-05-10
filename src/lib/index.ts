@@ -40,3 +40,8 @@ export interface GraphData {
     nodes: Node[];
     links: Link[];
 }
+
+export interface PostAndHeadingData {
+    title: string;
+    url: string;
+}

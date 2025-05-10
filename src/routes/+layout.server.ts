@@ -13,7 +13,7 @@ import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import inspectUrls from "@jsdevtools/rehype-url-inspector";
 import jsdom from 'jsdom';
-import { getSanitizedPath, getSlugs, type GraphData } from "$lib";
+import { getSanitizedPath, getSlugs, type GraphData, type PostAndHeadingData } from "$lib";
 import type { Config } from "$lib/config";
 
 export const prerender = true;
@@ -113,10 +113,23 @@ export const load: LayoutServerLoad = async () => {
         links,
     } satisfies GraphData;
 
+    const postsAndHeadings: PostAndHeadingData[] = [
+        ...posts.map((post) => { return { title: post.postSlug, url: `/${post.postSlug}` } }),
+        ...posts.flatMap((post) =>
+            post.headings.map((heading) => {
+                return {
+                    title: `${post.postSlug}${'#'.repeat(heading.level)}${heading.text}`,
+                    url: `/${post.postSlug}${heading.url}`,
+                }
+            })
+        )
+    ].sort() satisfies PostAndHeadingData[];
+
     return {
         posts: Promise.all(posts),
         files: rawPosts.map(([fileName]) => getSanitizedPath(fileName)),
         config: config as Config,
         graphData: graphData,
+        postsAndHeadings: postsAndHeadings,
     };
 };
