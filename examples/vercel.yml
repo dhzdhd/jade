@@ -35,7 +35,7 @@ jobs:
           mkdir ssg/posts
 
       - name: Move config files
-        run: mv ./.config ./ssg/.config
+        run: mv ./.config/* ./ssg/.config
 
       - name: Create config.ts if it does not exist
         run: |
