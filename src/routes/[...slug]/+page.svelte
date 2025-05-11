@@ -23,7 +23,7 @@
 	const isFolder = $derived(data.isFolder);
 </script>
 
-<div class="w-[50rem] max-w-[50rem] px-2 py-20">
+<div class="w-full max-w-[50rem] px-2 py-20">
 	<Breadcrumb.Root class="mb-6">
 		<Breadcrumb.List>
 			{#each slugs.slice(0, slugs.length - 1) as slug}

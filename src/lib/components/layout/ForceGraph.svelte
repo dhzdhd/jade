@@ -2,7 +2,6 @@
 	import { goto } from '$app/navigation';
 	import type { GraphData } from '$lib';
 	import * as Dialog from '$lib/components/ui/dialog/index';
-	import { getSettings } from '$lib/state/settings.svelte';
 	import Button from '../ui/button/button.svelte';
 	import Graph from 'lucide-svelte/icons/git-graph';
 
@@ -24,10 +23,10 @@
 				links: data.links
 			})
 			.height(500)
+			.width(500)
 			.showNavInfo(false)
 			.zoomToFit(1000 * 5)
 			.backgroundColor('#23252F')
-			.width(500)
 			.nodeAutoColorBy('group')
 			.onLinkHover((link, prev) => {
 				inst.linkWidth(link === null ? 1 : 2);
@@ -54,11 +53,11 @@
 	<Button onclick={() => (open = true)} size="icon" variant="outline">
 		<Graph />
 	</Button>
-	<Dialog.Content class="min-w-[35rem] animate-none transition-none">
+	<Dialog.Content class="animate-none transition-none md:min-w-[35rem]">
 		<Dialog.Header>
 			<Dialog.Title>Graph View</Dialog.Title>
 		</Dialog.Header>
-		<div bind:this={container} class="graph-container h-[32rem] w-[32rem]"></div>
+		<div bind:this={container} class="graph-container m:h-[32rem] aspect-square"></div>
 	</Dialog.Content>
 </Dialog.Root>
 
