@@ -30,7 +30,7 @@
 	<Button onclick={() => (open = true)} size="icon" variant="outline">
 		<Settings />
 	</Button>
-	<Dialog.Content>
+	<Dialog.Content class="h-[90vh] w-[90vw] overflow-scroll">
 		<Dialog.Header>
 			<Dialog.Title class="text-2xl">Settings</Dialog.Title>
 			<Dialog.Description>
