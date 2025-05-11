@@ -10,7 +10,7 @@
 
 	article :global {
 		* {
-			@apply text-primary font-normal;
+			@apply text-foreground font-normal;
 		}
 
 		h1,
@@ -27,7 +27,28 @@
 		}
 
 		p {
-			@apply text-lg;
+			@apply text-lg/5.5;
+		}
+
+		code:not(pre > code) {
+			&::after,
+			&::before {
+				@apply hidden;
+			}
+
+			@apply bg-primary-foreground/60 rounded-sm px-2 py-1;
+		}
+
+		li {
+			@apply text-lg/5.5;
+
+			&::marker {
+				@apply text-primary/50;
+			}
+		}
+
+		.katex-html {
+			@apply hidden;
 		}
 
 		pre {
@@ -59,7 +80,6 @@
 			counter-increment: line;
 			content: counter(line);
 
-			/* Other styling */
 			display: inline-block;
 			width: 0.25rem;
 			margin-right: 1rem;
