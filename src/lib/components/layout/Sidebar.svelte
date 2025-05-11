@@ -35,7 +35,7 @@
 		class={cn([
 			open.current ? (side === 'left' ? '-translate-x-52' : 'translate-x-52') : 'translate-x-0',
 			side === 'left' ? 'left-0' : 'right-0',
-			'bg-background fixed bottom-0 h-screen w-52 max-w-52 list-none overflow-x-clip px-2 py-20 transition'
+			'bg-background fixed bottom-0 h-screen w-52 max-w-52 list-none overflow-x-clip overflow-y-auto px-2 py-20 transition'
 		])}
 	>
 		{@render children()}
