@@ -42,14 +42,9 @@
 	{/if}
 {:else}
 	<Sidebar.MenuItem>
-		<Sidebar.MenuButton onclick={toggleExpansion} class="hover:bg-accent active:bg-accent py-5">
+		<Sidebar.MenuButton class="hover:bg-accent active:bg-accent py-5">
 			{#snippet child({ props })}
-				<a
-					href={url}
-					onclick={toggleExpansion}
-					{...props}
-					style={`padding-left: ${0.5 + depth * 0.6}rem`}
-				>
+				<a href={url} {...props} style={`padding-left: ${0.5 + depth * 0.6}rem`}>
 					<span>{id}</span>
 				</a>
 			{/snippet}
