@@ -28,7 +28,7 @@
 	});
 </script>
 
-<Button onclick={() => (open = true)} size="icon" variant="outline">
+<Button onclick={() => (open = true)} size="icon" variant="outline" aria-label="Search Button">
 	<Search />
 </Button>
 <Command.Dialog bind:open>

@@ -50,7 +50,12 @@
 </script>
 
 <Dialog.Root bind:open>
-	<Button onclick={() => (open = true)} size="icon" variant="outline">
+	<Button
+		onclick={() => (open = true)}
+		size="icon"
+		variant="outline"
+		aria-label="Graph View Button"
+	>
 		<Graph />
 	</Button>
 	<Dialog.Content class="animate-none transition-none md:min-w-[35rem]">

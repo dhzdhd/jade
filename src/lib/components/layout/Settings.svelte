@@ -27,7 +27,7 @@
 </script>
 
 <Dialog.Root bind:open>
-	<Button onclick={() => (open = true)} size="icon" variant="outline">
+	<Button onclick={() => (open = true)} size="icon" variant="outline" aria-label="Settings Button">
 		<Settings />
 	</Button>
 	<Dialog.Content class="h-[90vh] w-[90vw] overflow-scroll">

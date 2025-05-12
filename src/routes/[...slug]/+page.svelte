@@ -26,7 +26,7 @@
 	const settings = getSettings();
 </script>
 
-<div class={cn([settings.current.isHeaderVisible ? 'py-20' : 'py-6', 'w-full max-w-[50rem] px-2'])}>
+<div class={cn([settings.current.isHeaderVisible ? 'py-20' : 'py-6', 'w-full max-w-[50rem] px-4'])}>
 	<Breadcrumb.Root class="mb-6">
 		<Breadcrumb.List>
 			{#each slugs.slice(0, slugs.length - 1) as slug}

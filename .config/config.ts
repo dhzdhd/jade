@@ -1,3 +1,4 @@
 export default {
-    title: 'Jade'
+    title: 'Jade',
+    description: 'Sample site for the Jade SSG'
 };
