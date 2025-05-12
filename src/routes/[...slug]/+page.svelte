@@ -7,6 +7,8 @@
 	import ChevronLeft from '@lucide/svelte/icons/chevron-left';
 	import type { PageProps } from './$types';
 	import Excalidraw from '$lib/components/Excalidraw.svelte';
+	import { cn } from '$lib/utils';
+	import { getSettings } from '$lib/state/settings.svelte';
 
 	const { data }: PageProps = $props();
 
@@ -21,9 +23,11 @@
 
 	const slugs = $derived(getSlugs(currentSlug));
 	const isFolder = $derived(data.isFolder);
+
+	const settings = getSettings();
 </script>
 
-<div class="w-full max-w-[50rem] px-2 py-20">
+<div class={cn([settings.current.isHeaderVisible ? 'py-20' : 'py-6', 'w-full max-w-[50rem] px-2'])}>
 	<Breadcrumb.Root class="mb-6">
 		<Breadcrumb.List>
 			{#each slugs.slice(0, slugs.length - 1) as slug}
