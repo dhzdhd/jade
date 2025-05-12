@@ -23,6 +23,7 @@
 
 <svelte:head>
 	<title>{data.config.title}</title>
+	<meta name="description" content={data.config.description ?? 'Jade SSG generated site'} />
 </svelte:head>
 
 <ModeWatcher />

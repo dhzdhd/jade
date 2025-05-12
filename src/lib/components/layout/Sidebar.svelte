@@ -39,7 +39,9 @@
 			'bg-background fixed bottom-0 h-screen w-52 max-w-52 list-none overflow-x-clip overflow-y-auto px-2 transition'
 		])}
 	>
-		{@render children()}
+		<ul class="flex flex-col gap-1">
+			{@render children()}
+		</ul>
 	</aside>
 </div>
 <Button
@@ -51,6 +53,9 @@
 		side === 'left' ? 'left-[1rem]' : 'right-[1rem]',
 		'fixed bottom-[1rem]'
 	])}
+	aria-label={storageKey === 'treeOpen'
+		? 'Toggle file tree button'
+		: 'Toggle table of contents button'}
 >
 	<PanelLeft />
 </Button>
