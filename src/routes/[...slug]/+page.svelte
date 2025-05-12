@@ -14,10 +14,10 @@
 	const excalidrawJson = $derived(data.json);
 	const currentSlug = $derived(data.slug);
 	const previousPost = $derived(
-		data.allPosts.at(data.allPosts.map((post) => post.postSlug).indexOf(currentSlug) - 1)?.postSlug
+		data.allPosts[data.allPosts.map((post) => post.postSlug).indexOf(currentSlug) - 1]?.postSlug
 	);
 	const nextPost = $derived(
-		data.allPosts.at(data.allPosts.map((post) => post.postSlug).indexOf(currentSlug) + 1)?.postSlug
+		data.allPosts[data.allPosts.map((post) => post.postSlug).indexOf(currentSlug) + 1]?.postSlug
 	);
 
 	const slugs = $derived(getSlugs(currentSlug));
