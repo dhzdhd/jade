@@ -1,6 +1,20 @@
 # Jade
 
-Successor to [obsidian-ssg](github.com/dhzdhd/obsidian-ssg) made in SvelteKit
+Jade is a lightweight, Svelte-based static site generator. The project uses ShadCN for styling due to its simplicity, customisability, and ease of use. 
+
+The SSG can be used for any markdown-based files, including Obsidian. Unlike other SSG's, you do not have to clone Jade and run it locally. A simple GitHub Action workflow is provided to deploy the site to any hosting provider (Vercel, Netlify, GitHub Pages, etc.) with zero configuration required.
+
+## Features
+
+- Incredibly fast routing, including support for a SPA router and View Transitions API.
+- Custom styling support by providing a custom CSS file, with templates available at [tweakcn](https://tweakcn.com/editor/theme).
+- Obsidian editor like graph UI for exploring related links.
+- Excalidraw support for rendering diagrams (Use Obsidian Excalidraw plugin for generating `.excalidraw.md` files).
+- File tree and table of contents sidebars.
+- Local settings dialog to remove unnecessary clutter.
+- Dark mode support and search functionality.
+- Support for custom landing page.
+- Website configuration using a single, simple `config.ts` file.
 
 ## Installation steps
 
@@ -43,6 +57,8 @@ This file is used to set up the configuration for the site. It is a typescript f
 export default {
     // The base title of the site which will also show up in the browser tab
     title: "My Site",
+    // The description of the site which is included in the meta tag
+    description: "This is a sample site",
 } 
 ```
 
