@@ -90,7 +90,7 @@ export const load: LayoutServerLoad = async () => {
     const headingNodes = posts.map((post) => {
         return post.headings.map((heading) => {
             return {
-                id: heading.url,
+                id: `${post.postSlug}${heading.url}`,
                 label: heading.text,
                 url: `/${post.postSlug}${heading.url}`
             }
@@ -103,7 +103,7 @@ export const load: LayoutServerLoad = async () => {
         return post.headings.map((heading) => {
             return {
                 source: slug,
-                target: heading.url,
+                target: `${post.postSlug}${heading.url}`,
             }
         })
     }).flat();

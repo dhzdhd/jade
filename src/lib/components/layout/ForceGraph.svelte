@@ -28,6 +28,7 @@
 			.zoomToFit(1000 * 5)
 			.backgroundColor('#23252F')
 			.nodeAutoColorBy('group')
+			.nodeLabel((node: any) => node.label)
 			.onLinkHover((link, prev) => {
 				inst.linkWidth(link === null ? 1 : 2);
 			})
