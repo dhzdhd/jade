@@ -21,10 +21,10 @@ export const prerender = true;
 export const load: LayoutServerLoad = async () => {
     const rawPosts = Object.entries(import.meta.glob<any>('../../posts/**.md', { query: '?raw' }),);
 
-    const posts = await Promise.all(rawPosts.map(async ([fileName, file], idx) => {
+    const posts = await Promise.all(rawPosts.map(async ([fileName, file]) => {
         const content = (await file()).default;
-        const path = getSanitizedPath(fileName);
-        const slugs = getSlugs(path);
+        const slug = getSanitizedPath(fileName);
+        const postSlugs = getSlugs(slug);
 
         const processor = unified()
             .use(remarkParse)
@@ -78,8 +78,8 @@ export const load: LayoutServerLoad = async () => {
             content: md.toString(),
             headings,
             fileName,
-            postSlug: path,
-            slugs,
+            postSlug: slug,
+            slugs: postSlugs,
         }
     }))
 
@@ -91,7 +91,7 @@ export const load: LayoutServerLoad = async () => {
         return post.headings.map((heading) => {
             return {
                 id: `${post.postSlug}${heading.url}`,
-                label: heading.text,
+                label: `${post.postSlug}#${heading.text}`,
                 url: `/${post.postSlug}${heading.url}`
             }
         });
