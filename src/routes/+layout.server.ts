@@ -19,9 +19,10 @@ import type { Config } from "$lib/config";
 export const prerender = true;
 
 export const load: LayoutServerLoad = async () => {
-    const rawPosts = Object.entries(import.meta.glob<any>('../../posts/**.md', { query: '?raw' }),);
+    const cfg = config as Config;
+    const files = Object.entries(import.meta.glob<any>('../../posts/**', { query: '?raw' }),);
 
-    const posts = await Promise.all(rawPosts.map(async ([fileName, file]) => {
+    const posts = await Promise.all(files.filter(async ([filename]) => filename.endsWith('.md')).map(async ([fileName, file]) => {
         const content = (await file()).default;
         const slug = getSanitizedPath(fileName);
         const postSlugs = getSlugs(slug);
@@ -47,11 +48,7 @@ export const load: LayoutServerLoad = async () => {
             .use(remarkRehype)
             .use(rehypeKatex)
             // FIXME: https://github.com/remcohaszing/remark-mermaidjs/issues/3
-            // .use(rehypeMermaid, {
-            //     strategy: 'img-svg'
-            //     // strategy: 'pre-mermaid'
-            // })
-            .use(rehypePrettyCode, { theme: "tokyo-night", keepBackground: true })
+            .use(rehypePrettyCode, { theme: cfg.codeblockTheme ?? 'tokyo-night', keepBackground: true })
             .use(rehypeSlug)
             .use(rehypeAutolinkHeadings)
             .use(inspectUrls, {
@@ -126,9 +123,9 @@ export const load: LayoutServerLoad = async () => {
     ].sort() satisfies PostAndHeadingData[];
 
     return {
-        posts: Promise.all(posts),
-        files: rawPosts.map(([fileName]) => getSanitizedPath(fileName)),
-        config: config as Config,
+        posts: posts,
+        files: files.map(([fileName]) => getSanitizedPath(fileName)),
+        config: cfg,
         graphData: graphData,
         postsAndHeadings: postsAndHeadings,
     };

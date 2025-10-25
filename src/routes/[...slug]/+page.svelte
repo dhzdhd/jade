@@ -11,40 +11,59 @@
 
 	const { data }: PageProps = $props();
 
-	const excalidrawJson = $derived(data.json);
+	const postType = $derived(data.postType);
 	const currentSlug = $derived(data.slug);
 	const previousPost = $derived(
-		data.allPosts[data.allPosts.map((post) => post.postSlug).indexOf(currentSlug) - 1]?.postSlug
+		data.allPosts[
+			data.allPosts
+				.map((post) => post.postSlug)
+				.indexOf(currentSlug) - 1
+		]?.postSlug
 	);
 	const nextPost = $derived(
-		data.allPosts[data.allPosts.map((post) => post.postSlug).indexOf(currentSlug) + 1]?.postSlug
+		data.allPosts[
+			data.allPosts
+				.map((post) => post.postSlug)
+				.indexOf(currentSlug) + 1
+		]?.postSlug
 	);
 
 	const slugs = $derived(getSlugs(currentSlug));
-	const isFolder = $derived(data.isFolder);
 
 	const settings = getSettings();
 </script>
 
-<div class={cn([settings.current.isHeaderVisible ? 'py-20' : 'py-6', 'w-full max-w-[50rem] px-4'])}>
+<div
+	class={cn([
+		settings.current.isHeaderVisible ? 'py-20' : 'py-6',
+		'w-full max-w-[50rem] px-4'
+	])}
+>
 	<Breadcrumb.Root class="mb-6">
 		<Breadcrumb.List>
 			{#each slugs.slice(0, slugs.length - 1) as slug}
 				<Breadcrumb.Item>
-					<Breadcrumb.Link href={`/${slug}`}>{getSegment(slug, 'last')}</Breadcrumb.Link>
+					<Breadcrumb.Link href={`/${slug}`}
+						>{getSegment(slug, 'last')}</Breadcrumb.Link
+					>
 				</Breadcrumb.Item>
 				<Breadcrumb.Separator />
 			{/each}
 			<Breadcrumb.Item>
 				<Breadcrumb.Page
-					>{getSegment(currentSlug, 'last')?.replace('.excalidraw', '')}</Breadcrumb.Page
+					>{getSegment(currentSlug, 'last')?.replace(
+						'.excalidraw',
+						''
+					)}</Breadcrumb.Page
 				>
 			</Breadcrumb.Item>
 		</Breadcrumb.List>
 	</Breadcrumb.Root>
-	{#if isFolder}
+	{#if postType.type === 'folder'}
 		<div class="flex flex-col gap-2">
-			<h1 class="font-title mb-6 text-4xl font-bold">{getSegment(currentSlug, 'last')}</h1>
+			<h1 class="font-title mb-6 text-4xl font-bold">
+				{getSegment(currentSlug, 'last')}
+			</h1>
 			{#each data.posts as post}
 				<a
 					href={`/${currentSlug}/${getSegment(post.postSlug, numberOfSegments(currentSlug))}`}
@@ -54,8 +73,8 @@
 				</a>
 			{/each}
 		</div>
-	{:else if excalidrawJson}
-		<Excalidraw slug={currentSlug} data={excalidrawJson} />
+	{:else if postType.type === 'excalidraw'}
+		<Excalidraw slug={currentSlug} data={postType.excalidrawJson} />
 		<BottomNav {previousPost} {nextPost} />
 	{:else}
 		<article class="prose w-full max-w-full">

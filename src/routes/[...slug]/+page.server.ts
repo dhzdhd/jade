@@ -6,6 +6,25 @@ import pkg from 'lz-string';
 
 const { decompressFromBase64 } = pkg;
 
+type MarkdownData = {
+    type: 'markdown'
+}
+type ExcalidrawData = {
+    type: 'excalidraw'
+    excalidrawJson: string,
+}
+type BasesData = {
+    type: 'base'
+}
+type JupyterData = {
+    type: 'jupyter'
+}
+type FolderData = {
+    type: 'folder'
+}
+
+type PostType = MarkdownData | FolderData | ExcalidrawData | BasesData | JupyterData;
+
 export const entries: EntryGenerator = async () => {
     const rawPosts = Object.entries(import.meta.glob<any>('../../../posts/**.md', { query: '?raw' }));
 
@@ -28,16 +47,19 @@ function decompressExcalidrawData(content: string): string {
     return json;
 }
 
-export const load: PageServerLoad = async ({ params, parent }) => {
+export const load: PageServerLoad<{}> = async ({ params, parent }) => {
     const slug = params.slug
     const { posts } = await parent();
 
-    const postsData = await posts;
-    const filteredPosts = postsData.filter((post) => post.postSlug === slug);
-    const postsWithinFolder = postsData.filter(post => post.slugs.includes(slug));
+    const filteredPosts = posts.filter((post) => post.postSlug === slug);
+    const postsWithinFolder = posts.filter(post => post.slugs.includes(slug));
 
     if (filteredPosts.length !== 1 && postsWithinFolder.length === 0) {
         error(404, "Page not found");
+    }
+
+    if (['.base', '.base.yml', '.base.yaml'].some(x => slug.endsWith(x))) {
+        const post = Object.entries(import.meta.glob<any>(`../../../posts/**.excalidraw.md`, { query: '?raw' }),).filter(([path, _fn]) => path === `../../../posts/${slug}.md`)[0];
     }
 
     if (slug.endsWith('.excalidraw')) {
@@ -47,28 +69,25 @@ export const load: PageServerLoad = async ({ params, parent }) => {
         const json = decompressExcalidrawData(content);
         return {
             posts: filteredPosts,
-            allPosts: postsData,
-            isFolder: false,
-            slug,
-            json,
+            allPosts: posts,
+            slug: slug,
+            postType: { type: 'excalidraw', excalidrawJson: json } satisfies ExcalidrawData,
         }
     }
 
     if (filteredPosts.length === 0) {
         return {
             posts: postsWithinFolder,
-            allPosts: postsData,
-            isFolder: true,
-            slug,
-            undefined,
+            allPosts: posts,
+            slug: slug,
+            postType: { type: 'folder' } satisfies FolderData,
         };
     }
 
     return {
         posts: filteredPosts,
-        allPosts: postsData,
-        isFolder: false,
-        slug,
-        undefined,
+        allPosts: posts,
+        slug: slug,
+        postType: { type: 'markdown' } satisfies MarkdownData,
     }
 }
