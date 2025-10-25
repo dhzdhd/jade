@@ -23,11 +23,18 @@
 
 <svelte:head>
 	<title>{data.config.title}</title>
-	<meta name="description" content={data.config.description ?? 'Jade SSG generated site'} />
+	<meta
+		name="description"
+		content={data.config.description ?? 'Jade SSG generated site'}
+	/>
 </svelte:head>
 
 <ModeWatcher />
-<Header config={data.config} graphData={data.graphData} postsAndHeadings={data.postsAndHeadings} />
+<Header
+	config={data.config}
+	graphData={data.graphData}
+	postsAndHeadings={data.postsAndHeadings}
+/>
 
 <Sidebar storageKey="treeOpen" side="left">
 	<TreeSidebar files={data.files} />
