@@ -16,9 +16,9 @@
 	<li class="m-0 p-0">
 		<Button
 			variant="ghost"
-			class="flex w-full flex-row justify-between overflow-clip p-0 text-left"
+			class="flex w-full flex-row justify-between overflow-clip p-0 text-left h-fit"
 		>
-			<a href={heading.url} style={`padding-left: ${heading.level - 0.5 * 1}rem`} class="py-5">
+			<a href={heading.url} style={`padding-left: ${heading.level - 0.5 * 1}rem`} class="py-2 px-1 w-full">
 				<span class="text-left text-wrap">{heading.text}</span>
 			</a>
 		</Button>
