@@ -37,7 +37,6 @@
 		"globals": "^16.5.0",
 		"jsdom": "^27.1.0",
 		"lucide-svelte": "^0.552.0",
-		"mdsvex": "^0.12.6",
 		"prettier": "^3.6.2",
 		"prettier-plugin-svelte": "^3.4.0",
 		"prettier-plugin-tailwindcss": "^0.7.1",
@@ -49,6 +48,7 @@
 		"tailwindcss-animate": "^1.0.7",
 		"typescript": "^5.9.3",
 		"typescript-eslint": "^8.46.3",
+		"vercel": "^48.8.1",
 		"vite": "^7.0.0",
 		"vitest": "^4.0.6"
 	},
