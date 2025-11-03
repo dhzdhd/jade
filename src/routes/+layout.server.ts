@@ -146,7 +146,9 @@ export const load: LayoutServerLoad = async () => {
 
 	return {
 		posts: posts,
-		files: files.map(([fileName]) => getSanitizedPath(fileName)),
+		files: files
+			.filter(([filename]) => filename.endsWith('.md'))
+			.map(([fileName]) => getSanitizedPath(fileName)),
 		config: cfg,
 		graphData: graphData,
 		postsAndHeadings: postsAndHeadings
