@@ -1,7 +1,7 @@
 <script lang="ts">
 </script>
 
-<article class="prose w-[50rem] max-w-[50rem] px-2 py-20">
+<article class="prose w-[54rem] max-w-[54rem] px-2 py-20">
 	<h1>Hello World</h1>
 </article>
 
