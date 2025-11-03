@@ -75,7 +75,7 @@ Reference-style link:
 
 ### Images
 
-![This is alt text for an image](/static/favicon.png 'This is a title for the image')
+![This is alt text for an image](/favicon.png 'This is a title for the image')
 
 ### Blockquotes
 

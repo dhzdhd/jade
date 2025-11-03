@@ -6,10 +6,6 @@ const config = {
 	preprocess: [vitePreprocess()],
 	kit: {
 		adapter: adapter(),
-		prerender: {
-			handleUnseenRoutes: 'ignore'
-		}
-		
 	},
 	extensions: ['.svelte', '.md'],
 };
