@@ -59,11 +59,14 @@
 	>
 		<Graph />
 	</Button>
-	<Dialog.Content class="animate-none transition-none md:min-w-[35rem]">
+	<Dialog.Content class="animate-none transition-none md:min-w-140">
 		<Dialog.Header>
 			<Dialog.Title>Graph View</Dialog.Title>
 		</Dialog.Header>
-		<div bind:this={container} class="graph-container m:h-[32rem] aspect-square"></div>
+		<div
+			bind:this={container}
+			class="graph-container m:h-[20rem] aspect-square"
+		></div>
 	</Dialog.Content>
 </Dialog.Root>
 

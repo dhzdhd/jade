@@ -18,7 +18,7 @@
 	<Sidebar.MenuItem>
 		<Sidebar.MenuButton
 			onclick={toggleExpansion}
-			class="hover:bg-accent active:bg-accent flex flex-row justify-between py-2 px-1 cursor-pointer h-fit"
+			class="hover:bg-accent active:bg-accent flex h-fit cursor-pointer flex-row justify-between px-1 py-2"
 		>
 			{#snippet child({ props })}
 				<button
@@ -28,7 +28,9 @@
 				>
 					<span>{id}</span>
 					<ArrowRight
-						style="transition: transform 200ms; transform: rotate({expanded ? '90deg' : '0deg'});"
+						style="transition: transform 200ms; transform: rotate({expanded
+							? '90deg'
+							: '0deg'});"
 					/>
 				</button>
 			{/snippet}
@@ -37,14 +39,25 @@
 
 	{#if expanded}
 		{#each children as child}
-			<TreeNode id={child.id} children={child.children} depth={child.depth} url={child.url} />
+			<TreeNode
+				id={child.id}
+				children={child.children}
+				depth={child.depth}
+				url={child.url}
+			/>
 		{/each}
 	{/if}
 {:else}
 	<Sidebar.MenuItem>
-		<Sidebar.MenuButton class="hover:bg-accent active:bg-accent py-2 px-1 h-fit">
+		<Sidebar.MenuButton
+			class="hover:bg-accent active:bg-accent h-fit px-1 py-2"
+		>
 			{#snippet child({ props })}
-				<a href={url} {...props} style={`padding-left: ${0.5 + depth * 0.6}rem`}>
+				<a
+					href={url}
+					{...props}
+					style={`padding-left: ${0.5 + depth * 0.6}rem`}
+				>
 					<span>{id}</span>
 				</a>
 			{/snippet}

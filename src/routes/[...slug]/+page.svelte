@@ -1,5 +1,9 @@
 <script lang="ts">
-	import { getSegment, generateIncrementalSlugs, numberOfSegments } from '$lib';
+	import {
+		getSegment,
+		generateIncrementalSlugs,
+		numberOfSegments
+	} from '$lib';
 	import Sidebar from '$lib/components/layout/Sidebar.svelte';
 	import TocSidebar from '$lib/components/layout/TOCSidebar.svelte';
 	import * as Breadcrumb from '$lib/components/ui/breadcrumb/index';
@@ -15,16 +19,12 @@
 	const currentSlug = $derived(data.slug);
 	const previousPost = $derived(
 		data.allPosts[
-			data.allPosts
-				.map((post) => post.slug)
-				.indexOf(currentSlug) - 1
+			data.allPosts.map((post) => post.slug).indexOf(currentSlug) - 1
 		]?.slug
 	);
 	const nextPost = $derived(
 		data.allPosts[
-			data.allPosts
-				.map((post) => post.slug)
-				.indexOf(currentSlug) + 1
+			data.allPosts.map((post) => post.slug).indexOf(currentSlug) + 1
 		]?.slug
 	);
 
