@@ -6,6 +6,7 @@
 	import type { Snippet } from 'svelte';
 	import { fly } from 'svelte/transition';
 	import { getSettings } from '$lib/state/settings.svelte';
+	import PanelRight from 'lucide-svelte/icons/panel-right';
 
 	interface SidebarProps {
 		storageKey: 'treeOpen' | 'tocOpen';
@@ -57,12 +58,16 @@
 	size="icon"
 	class={cn([
 		sidebarVisibility.isButtonVisible ? 'flex' : 'hidden',
-		side === 'left' ? 'left-[1rem]' : 'right-[1rem]',
-		'fixed bottom-[1rem]'
+		side === 'left' ? 'left-4' : 'right-4',
+		'fixed bottom-4'
 	])}
 	aria-label={storageKey === 'treeOpen'
 		? 'Toggle file tree button'
 		: 'Toggle table of contents button'}
 >
-	<PanelLeft />
+	{#if side == 'left'}
+		<PanelLeft />
+	{:else}
+		<PanelRight />
+	{/if}
 </Button>

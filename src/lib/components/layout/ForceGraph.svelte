@@ -25,7 +25,7 @@
 			.height(500)
 			.width(500)
 			.showNavInfo(false)
-			.zoomToFit(1000 * 5)
+			.zoomToFit(100 * 5)
 			.backgroundColor('#23252F')
 			.nodeAutoColorBy('group')
 			.nodeLabel((node: any) => node.label)
@@ -59,13 +59,15 @@
 	>
 		<Graph />
 	</Button>
-	<Dialog.Content class="animate-none transition-none md:min-w-140">
+	<Dialog.Content
+		class="w-[90%] animate-none transition-none md:min-w-140"
+	>
 		<Dialog.Header>
 			<Dialog.Title>Graph View</Dialog.Title>
 		</Dialog.Header>
 		<div
 			bind:this={container}
-			class="graph-container m:h-[20rem] aspect-square"
+			class="graph-container aspect-square max-w-[90%] overflow-hidden md:h-80"
 		></div>
 	</Dialog.Content>
 </Dialog.Root>
