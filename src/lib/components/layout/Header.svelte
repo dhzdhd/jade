@@ -1,6 +1,7 @@
 <script lang="ts">
-	import type { GraphData, PostAndHeadingData } from '$lib';
+	import type { PostAndHeadingData } from '$lib';
 	import type { Config } from '$lib/config';
+	import type { GraphData } from '$lib/graph';
 	import { getSettings } from '$lib/state/settings.svelte';
 	import { cn } from '$lib/utils';
 	import ForceGraph from './ForceGraph.svelte';
@@ -14,7 +15,8 @@
 		postsAndHeadings: PostAndHeadingData[];
 	}
 
-	const { config, graphData, postsAndHeadings }: HeaderProps = $props();
+	const { config, graphData, postsAndHeadings }: HeaderProps =
+		$props();
 	const settings = getSettings();
 </script>
 

@@ -28,7 +28,12 @@
 	});
 </script>
 
-<Button onclick={() => (open = true)} size="icon" variant="outline" aria-label="Search Button">
+<Button
+	onclick={() => (open = true)}
+	size="icon"
+	variant="outline"
+	aria-label="Search Button"
+>
 	<Search />
 </Button>
 <Command.Dialog bind:open>
@@ -37,7 +42,10 @@
 		<Command.Empty>No results found.</Command.Empty>
 		<Command.Group heading="Suggestions">
 			{#each postsAndHeadings as suggestion}
-				<Command.Item value={suggestion.title} onSelect={async () => handleSelect(suggestion.url)}>
+				<Command.Item
+					value={suggestion.title}
+					onSelect={async () => handleSelect(suggestion.url)}
+				>
 					{suggestion.title}
 				</Command.Item>
 			{/each}

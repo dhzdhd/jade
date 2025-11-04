@@ -17,25 +17,30 @@
 
 	const settings = getSettings();
 	let sidebarVisibility = $derived(
-		storageKey === 'treeOpen' ? settings.current.treeVisibility : settings.current.tocVisibility
+		storageKey === 'treeOpen'
+			? settings.current.treeVisibility
+			: settings.current.tocVisibility
 	);
 
 	const closed = new PersistedState(storageKey, true);
 	let container = $state<HTMLElement>()!;
 	onClickOutside(
 		() => container,
-		() => false,
+		() => false
 		// TODO:
 		// () => (closed.current = true)
 	);
-
 </script>
 
 <div bind:this={container}>
 	<aside
 		in:fly={{ x: -200, duration: 200 }}
 		class={cn([
-			closed.current ? (side === 'left' ? '-translate-x-52' : 'translate-x-52') : 'translate-x-0',
+			closed.current
+				? side === 'left'
+					? '-translate-x-52'
+					: 'translate-x-52'
+				: 'translate-x-0',
 			side === 'left' ? 'left-0' : 'right-0',
 			settings.current.isHeaderVisible ? 'py-20' : 'py-2',
 			'bg-background fixed bottom-0 h-screen w-52 max-w-52 list-none overflow-x-clip overflow-y-auto px-2 transition'

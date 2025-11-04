@@ -19,7 +19,9 @@
 		</a>
 	{/if}
 	{#if nextPost}
-		<a href={`/${nextPost}`} class="hover:text-accent flex w-full items-center justify-end gap-2"
+		<a
+			href={`/${nextPost}`}
+			class="hover:text-accent flex w-full items-center justify-end gap-2"
 			>Next <ChevronRight size={'1.2rem'} /></a
 		>
 	{/if}
