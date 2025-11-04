@@ -1,7 +1,7 @@
 import type { PageServerLoad } from './$types';
 import { error } from '@sveltejs/kit';
 import type { EntryGenerator } from './$types';
-import { getSanitizedPath, getSlugs } from '$lib';
+import { getSanitizedPath, generateIncrementalSlugs } from '$lib';
 import pkg from 'lz-string';
 
 const { decompressFromBase64 } = pkg;
@@ -37,7 +37,7 @@ export const entries: EntryGenerator = async () => {
 
 	const slugs = rawPosts
 		.map(([fileName]) => getSanitizedPath(fileName))
-		.flatMap((path) => getSlugs(path));
+		.flatMap((path) => generateIncrementalSlugs(path));
 	const uniqueSlugs = [...new Set(slugs)];
 
 	return uniqueSlugs.map((slug) => {
@@ -63,11 +63,9 @@ export const load: PageServerLoad<{}> = async ({
 	const slug = params.slug;
 	const { posts } = await parent();
 
-	const filteredPosts = posts.filter(
-		(post) => post.postSlug === slug
-	);
+	const filteredPosts = posts.filter((post) => post.slug === slug);
 	const postsWithinFolder = posts.filter((post) =>
-		post.slugs.includes(slug)
+		post.incrementalSlugs.includes(slug)
 	);
 
 	if (filteredPosts.length !== 1 && postsWithinFolder.length === 0) {
