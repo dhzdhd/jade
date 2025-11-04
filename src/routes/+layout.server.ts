@@ -39,6 +39,7 @@ export interface Post {
 	slug: string;
 	content: string;
 	headings: Heading[];
+	links: string[];
 	incrementalSlugs: string[];
 }
 
@@ -57,6 +58,7 @@ export const load: LayoutServerLoad = async () => {
 				const content = (await file()).default;
 				const slug = getSanitizedPath(fileName);
 				const incrementalSlugs = generateIncrementalSlugs(slug);
+				const links: string[] = [];
 
 				const processor = unified()
 					.use(remarkParse)
@@ -88,6 +90,7 @@ export const load: LayoutServerLoad = async () => {
 					.use(rehypeAutolinkHeadings)
 					.use(inspectUrls, {
 						inspectEach({ url, propertyName, node }) {
+							links.push(url);
 							if (node.tagName === 'img' && propertyName === 'src') {
 								// console.log(url)
 							}
@@ -113,6 +116,7 @@ export const load: LayoutServerLoad = async () => {
 					fileName,
 					slug,
 					headings,
+					links,
 					incrementalSlugs: incrementalSlugs
 				} satisfies Post;
 			})

@@ -39,14 +39,35 @@ export function generateGraphData(posts: Post[]): GraphData {
 		.map((post) => {
 			const slug = getSanitizedPath(post.fileName);
 
-			return post.headings.map((heading) => {
-				return {
-					source: slug,
-					target: `${post.slug}${heading.url}`
-				};
-			});
+			const headingLinksSet = new Set(
+				post.headings.map((heading) => {
+					return {
+						source: slug,
+						target: `${post.slug}${heading.url}`
+					};
+				})
+			);
+			const urlLinksSet = new Set(
+				post.links
+					.filter(
+						(link) =>
+							link.startsWith('/') &&
+							nodes.map((node) => node.id).includes(link.slice(1))
+					)
+					.map((link) => {
+						return {
+							source: slug,
+							target: link.slice(1)
+						};
+					})
+			);
+			const linksSet = headingLinksSet.union(urlLinksSet);
+
+			return [...linksSet];
 		})
 		.flat();
+
+	console.log(links);
 
 	return {
 		nodes,
