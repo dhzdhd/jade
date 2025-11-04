@@ -7,6 +7,9 @@ import rehypeKatex from 'rehype-katex';
 import config from '../../.config/config';
 import { unified } from 'unified';
 import remarkParse from 'remark-parse';
+import remarkFrontMatter from 'remark-frontmatter';
+import remarkGfm from 'remark-gfm';
+import remarkDirective from 'remark-directive';
 import remarkRehype from 'remark-rehype';
 import rehypeStringify from 'rehype-stringify';
 import rehypePrettyCode from 'rehype-pretty-code';
@@ -55,6 +58,9 @@ export const load: LayoutServerLoad = async () => {
 					})
 					.use(remarkMath)
 					.use(remarkToc)
+					.use(remarkFrontMatter)
+					.use(remarkGfm)
+					.use(remarkDirective)
 					.use(remarkRehype)
 					.use(rehypeKatex)
 					// FIXME: https://github.com/remcohaszing/remark-mermaidjs/issues/3
