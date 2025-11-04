@@ -20,18 +20,34 @@ import inspectUrls from '@jsdevtools/rehype-url-inspector';
 import jsdom from 'jsdom';
 import {
 	getSanitizedPath,
-	getSlugs,
-	type GraphData,
+	generateIncrementalSlugs,
 	type PostAndHeadingData
 } from '$lib';
 import type { Config } from '$lib/config';
+import { generateGraphData } from '$lib/graph';
 
 export const prerender = true;
+
+export interface Heading {
+	level: number;
+	text: string;
+	url: string;
+}
+
+export interface Post {
+	fileName: string;
+	slug: string;
+	content: string;
+	headings: Heading[];
+	incrementalSlugs: string[];
+}
 
 export const load: LayoutServerLoad = async () => {
 	const cfg = config as Config;
 	const files = Object.entries(
-		import.meta.glob<any>('../../posts/**', { query: '?raw' })
+		import.meta.glob<{ default: string }>('../../posts/**', {
+			query: '?raw'
+		})
 	);
 
 	const posts = await Promise.all(
@@ -40,7 +56,7 @@ export const load: LayoutServerLoad = async () => {
 			.map(async ([fileName, file]) => {
 				const content = (await file()).default;
 				const slug = getSanitizedPath(fileName);
-				const postSlugs = getSlugs(slug);
+				const incrementalSlugs = generateIncrementalSlugs(slug);
 
 				const processor = unified()
 					.use(remarkParse)
@@ -94,57 +110,25 @@ export const load: LayoutServerLoad = async () => {
 
 				return {
 					content: md.toString(),
-					headings,
 					fileName,
-					postSlug: slug,
-					slugs: postSlugs
-				};
+					slug,
+					headings,
+					incrementalSlugs: incrementalSlugs
+				} satisfies Post;
 			})
 	);
 
-	const postNodes = posts.map((post) => {
-		const slug = getSanitizedPath(post.fileName);
-		return { id: slug, label: slug, url: `/${slug}` };
-	});
-	const headingNodes = posts
-		.map((post) => {
-			return post.headings.map((heading) => {
-				return {
-					id: `${post.postSlug}${heading.url}`,
-					label: `${post.postSlug}#${heading.text}`,
-					url: `/${post.postSlug}${heading.url}`
-				};
-			});
-		})
-		.flat();
-	const nodes = [...postNodes, ...headingNodes];
-	const links = posts
-		.map((post) => {
-			const slug = getSanitizedPath(post.fileName);
-
-			return post.headings.map((heading) => {
-				return {
-					source: slug,
-					target: `${post.postSlug}${heading.url}`
-				};
-			});
-		})
-		.flat();
-
-	const graphData = {
-		nodes,
-		links
-	} satisfies GraphData;
+	const graphData = generateGraphData(posts);
 
 	const postsAndHeadings: PostAndHeadingData[] = [
 		...posts.map((post) => {
-			return { title: post.postSlug, url: `/${post.postSlug}` };
+			return { title: post.slug, url: `/${post.slug}` };
 		}),
 		...posts.flatMap((post) =>
 			post.headings.map((heading) => {
 				return {
-					title: `${post.postSlug}${'#'.repeat(heading.level)}${heading.text}`,
-					url: `/${post.postSlug}${heading.url}`
+					title: `${post.slug}${'#'.repeat(heading.level)}${heading.text}`,
+					url: `/${post.slug}${heading.url}`
 				};
 			})
 		)

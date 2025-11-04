@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getSegment, getSlugs, numberOfSegments } from '$lib';
+	import { getSegment, generateIncrementalSlugs, numberOfSegments } from '$lib';
 	import Sidebar from '$lib/components/layout/Sidebar.svelte';
 	import TocSidebar from '$lib/components/layout/TOCSidebar.svelte';
 	import * as Breadcrumb from '$lib/components/ui/breadcrumb/index';
@@ -16,19 +16,19 @@
 	const previousPost = $derived(
 		data.allPosts[
 			data.allPosts
-				.map((post) => post.postSlug)
+				.map((post) => post.slug)
 				.indexOf(currentSlug) - 1
-		]?.postSlug
+		]?.slug
 	);
 	const nextPost = $derived(
 		data.allPosts[
 			data.allPosts
-				.map((post) => post.postSlug)
+				.map((post) => post.slug)
 				.indexOf(currentSlug) + 1
-		]?.postSlug
+		]?.slug
 	);
 
-	const slugs = $derived(getSlugs(currentSlug));
+	const slugs = $derived(generateIncrementalSlugs(currentSlug));
 
 	const settings = getSettings();
 </script>
@@ -66,10 +66,10 @@
 			</h1>
 			{#each data.posts as post}
 				<a
-					href={`/${currentSlug}/${getSegment(post.postSlug, numberOfSegments(currentSlug))}`}
+					href={`/${currentSlug}/${getSegment(post.slug, numberOfSegments(currentSlug))}`}
 					class="hover:text-accent cursor-pointer justify-start py-2 text-lg"
 				>
-					{getSegment(post.postSlug, numberOfSegments(currentSlug))}
+					{getSegment(post.slug, numberOfSegments(currentSlug))}
 				</a>
 			{/each}
 		</div>

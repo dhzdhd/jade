@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import type { GraphData } from '$lib';
 	import * as Dialog from '$lib/components/ui/dialog/index';
+	import type { GraphData } from '$lib/graph';
 	import Button from '../ui/button/button.svelte';
 	import Graph from 'lucide-svelte/icons/git-graph';
 
