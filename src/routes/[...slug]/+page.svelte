@@ -36,7 +36,7 @@
 <div
 	class={cn([
 		settings.current.isHeaderVisible ? 'py-20' : 'py-6',
-		'w-full max-w-[50rem] px-4'
+		'w-full max-w-200 px-4'
 	])}
 >
 	<Breadcrumb.Root class="mb-6">

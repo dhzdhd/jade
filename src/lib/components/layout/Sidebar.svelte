@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { cn } from '$lib/utils';
-	import { PersistedState } from 'runed';
+	import { onClickOutside, PersistedState } from 'runed';
 	import Button from '../ui/button/button.svelte';
 	import PanelLeft from 'lucide-svelte/icons/panel-left';
 	import type { Snippet } from 'svelte';
@@ -20,20 +20,22 @@
 		storageKey === 'treeOpen' ? settings.current.treeVisibility : settings.current.tocVisibility
 	);
 
+	const closed = new PersistedState(storageKey, true);
 	let container = $state<HTMLElement>()!;
-	// onClickOutside(
-	// 	() => container,
-	// 	() => (open.current = false)
-	// );
+	onClickOutside(
+		() => container,
+		() => false,
+		// TODO:
+		// () => (closed.current = true)
+	);
 
-	const open = new PersistedState(storageKey, true);
 </script>
 
 <div bind:this={container}>
 	<aside
 		in:fly={{ x: -200, duration: 200 }}
 		class={cn([
-			open.current ? (side === 'left' ? '-translate-x-52' : 'translate-x-52') : 'translate-x-0',
+			closed.current ? (side === 'left' ? '-translate-x-52' : 'translate-x-52') : 'translate-x-0',
 			side === 'left' ? 'left-0' : 'right-0',
 			settings.current.isHeaderVisible ? 'py-20' : 'py-2',
 			'bg-background fixed bottom-0 h-screen w-52 max-w-52 list-none overflow-x-clip overflow-y-auto px-2 transition'
@@ -45,7 +47,7 @@
 	</aside>
 </div>
 <Button
-	onclick={() => (open.current = !open.current)}
+	onclick={() => (closed.current = !closed.current)}
 	variant="ghost"
 	size="icon"
 	class={cn([
