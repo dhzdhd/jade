@@ -2,33 +2,7 @@ import type { PageServerLoad } from './$types';
 import { error } from '@sveltejs/kit';
 import type { EntryGenerator } from './$types';
 import { getSanitizedPath, generateIncrementalSlugs } from '$lib';
-import pkg from 'lz-string';
-
-const { decompressFromBase64 } = pkg;
-
-type MarkdownData = {
-	type: 'markdown';
-};
-type ExcalidrawData = {
-	type: 'excalidraw';
-	excalidrawJson: string;
-};
-type BasesData = {
-	type: 'base';
-};
-type JupyterData = {
-	type: 'jupyter';
-};
-type FolderData = {
-	type: 'folder';
-};
-
-type PostType =
-	| MarkdownData
-	| FolderData
-	| ExcalidrawData
-	| BasesData
-	| JupyterData;
+import type { Post } from '$lib/post';
 
 export const entries: EntryGenerator = async () => {
 	const rawPosts = Object.entries(
@@ -45,80 +19,46 @@ export const entries: EntryGenerator = async () => {
 	});
 };
 
-const DRAWING_COMPRESSED_REG =
-	/(\n##? Drawing\n[^`]*(?:```compressed\-json\n))([\s\S]*?)(```\n)/gm;
-function decompressExcalidrawData(content: string): string {
-	const match = DRAWING_COMPRESSED_REG.exec(content);
-
-	const encoded = match![2].replace(/[\r\n]/g, '');
-	const json = decompressFromBase64(encoded);
-
-	return json;
-}
-
-export const load: PageServerLoad<{}> = async ({
-	params,
-	parent
-}) => {
+export const load: PageServerLoad<{
+	post: Post;
+	nextPost?: Post;
+	previousPost?: Post;
+}> = async ({ params, parent }) => {
 	const slug = params.slug;
 	const { posts } = await parent();
 
-	const filteredPosts = posts.filter((post) => post.slug === slug);
-	const postsWithinFolder = posts.filter((post) =>
+	const currentPost = posts
+		.filter((post: Post) => post.slug === slug)
+		.at(0);
+	const postsWithinFolder = posts.filter((post: Post) =>
 		post.incrementalSlugs.includes(slug)
 	);
+	console.log(postsWithinFolder.map((a) => a.fileName));
 
-	if (filteredPosts.length !== 1 && postsWithinFolder.length === 0) {
+	if (!currentPost && postsWithinFolder.length === 0) {
 		error(404, 'Page not found');
 	}
 
-	if (
-		['.base', '.base.yml', '.base.yaml'].some((x) => slug.endsWith(x))
-	) {
-		const post = Object.entries(
-			import.meta.glob<any>(`../../../posts/**.excalidraw.md`, {
-				query: '?raw'
-			})
-		).filter(
-			([path, _fn]) => path === `../../../posts/${slug}.md`
-		)[0];
-	}
+	const previousPost: Post =
+		posts[posts.map((post) => post.slug).indexOf(slug) - 1];
+	const nextPost: Post =
+		posts[posts.map((post) => post.slug).indexOf(slug) + 1];
 
-	if (slug.endsWith('.excalidraw')) {
-		const post = Object.entries(
-			import.meta.glob<any>(`../../../posts/**.excalidraw.md`, {
-				query: '?raw'
-			})
-		).filter(
-			([path, _fn]) => path === `../../../posts/${slug}.md`
-		)[0];
-		const content = (await post[1]()).default;
-
-		const json = decompressExcalidrawData(content);
+	if (!currentPost) {
 		return {
-			posts: filteredPosts,
-			allPosts: posts,
-			slug: slug,
-			postType: {
-				type: 'excalidraw',
-				excalidrawJson: json
-			} satisfies ExcalidrawData
-		};
-	}
-
-	if (filteredPosts.length === 0) {
-		return {
-			posts: postsWithinFolder,
-			allPosts: posts,
-			slug: slug,
-			postType: { type: 'folder' } satisfies FolderData
+			post: {
+				content: '',
+				data: { kind: 'folder', posts: postsWithinFolder },
+				fileName: slug,
+				slug: slug,
+				incrementalSlugs: generateIncrementalSlugs(slug)
+			}
 		};
 	}
 
 	return {
-		posts: filteredPosts,
-		allPosts: posts,
-		slug: slug,
-		postType: { type: 'markdown' } satisfies MarkdownData
+		post: currentPost,
+		previousPost,
+		nextPost
 	};
 };

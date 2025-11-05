@@ -1,5 +1,5 @@
 import { getSanitizedPath } from '$lib';
-import type { Post } from '../routes/+layout.server';
+import type { Markdown, Post } from './post';
 
 export interface Node {
 	id: string;
@@ -23,8 +23,11 @@ export function generateGraphData(posts: Post[]): GraphData {
 		return { id: slug, label: slug, url: `/${slug}` };
 	});
 	const headingNodes = posts
+		.filter((post) => post.data.kind === 'markdown')
 		.map((post) => {
-			return post.headings.map((heading) => {
+			const data = post.data as Markdown;
+
+			return data.headings.map((heading) => {
 				return {
 					id: `${post.slug}${heading.url}`,
 					label: `${post.slug}#${heading.text}`,
@@ -36,11 +39,13 @@ export function generateGraphData(posts: Post[]): GraphData {
 	const nodes = [...postNodes, ...headingNodes];
 
 	const links = posts
+		.filter((post) => post.data.kind === 'markdown')
 		.map((post) => {
 			const slug = getSanitizedPath(post.fileName);
+			const data = post.data as Markdown;
 
 			const headingLinksSet = new Set(
-				post.headings.map((heading) => {
+				data.headings.map((heading) => {
 					return {
 						source: slug,
 						target: `${post.slug}${heading.url}`
@@ -48,7 +53,7 @@ export function generateGraphData(posts: Post[]): GraphData {
 				})
 			);
 			const urlLinksSet = new Set(
-				post.links
+				data.links
 					.filter(
 						(link) =>
 							link.startsWith('/') &&
@@ -66,8 +71,6 @@ export function generateGraphData(posts: Post[]): GraphData {
 			return [...linksSet];
 		})
 		.flat();
-
-	console.log(links);
 
 	return {
 		nodes,

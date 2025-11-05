@@ -17,7 +17,6 @@ import remarkToc from 'remark-toc';
 import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import inspectUrls from '@jsdevtools/rehype-url-inspector';
-import jsdom from 'jsdom';
 import {
 	getSanitizedPath,
 	generateIncrementalSlugs,
@@ -25,23 +24,14 @@ import {
 } from '$lib';
 import type { Config } from '$lib/config';
 import { generateGraphData } from '$lib/graph';
+import {
+	generateHeadings,
+	type Markdown,
+	type Post
+} from '$lib/post';
+import { decompressExcalidrawData } from '$lib/excalidraw';
 
 export const prerender = true;
-
-export interface Heading {
-	level: number;
-	text: string;
-	url: string;
-}
-
-export interface Post {
-	fileName: string;
-	slug: string;
-	content: string;
-	headings: Heading[];
-	links: string[];
-	incrementalSlugs: string[];
-}
 
 export const load: LayoutServerLoad = async () => {
 	const cfg = config as Config;
@@ -52,12 +42,22 @@ export const load: LayoutServerLoad = async () => {
 	);
 
 	const posts = await Promise.all(
-		files
-			.filter(([filename]) => filename.endsWith('.md'))
-			.map(async ([fileName, file]) => {
-				const content = (await file()).default;
-				const slug = getSanitizedPath(fileName);
-				const incrementalSlugs = generateIncrementalSlugs(slug);
+		files.map(async ([fileName, file]) => {
+			const content = (await file()).default;
+			const slug = getSanitizedPath(fileName);
+			const incrementalSlugs = generateIncrementalSlugs(slug);
+
+			if (fileName.endsWith('.excalidraw.md')) {
+				const json = decompressExcalidrawData(content);
+
+				return {
+					content: content,
+					data: { kind: 'excalidraw', excalidrawJson: json },
+					fileName,
+					slug,
+					incrementalSlugs
+				} satisfies Post;
+			} else if (fileName.endsWith('.md')) {
 				const links: string[] = [];
 
 				const processor = unified()
@@ -91,51 +91,59 @@ export const load: LayoutServerLoad = async () => {
 					.use(inspectUrls, {
 						inspectEach({ url, propertyName, node }) {
 							links.push(url);
-							if (node.tagName === 'img' && propertyName === 'src') {
-								// console.log(url)
-							}
 						}
 					})
 					.use(rehypeStringify);
 
 				const md = await processor.process(content);
-
-				const parser = new jsdom.JSDOM(md.toString());
-				const document = parser.window.document;
-				const headingNodes = document.querySelectorAll(
-					'h1, h2, h3, h4, h5, h6'
-				);
-				const headings = Array.from(headingNodes).map((heading) => ({
-					level: parseInt(heading.tagName.substring(1), 10),
-					text: heading.textContent || '',
-					url: `#${heading.id}`
-				}));
+				const headings = generateHeadings(md.toString());
 
 				return {
 					content: md.toString(),
+					data: { kind: 'markdown', headings, links },
 					fileName,
 					slug,
-					headings,
-					links,
-					incrementalSlugs: incrementalSlugs
+					incrementalSlugs
 				} satisfies Post;
-			})
+			} else if (fileName.endsWith('.excalidraw')) {
+				return {
+					content: content,
+					data: { kind: 'excalidraw', excalidrawJson: content },
+					fileName,
+					slug,
+					incrementalSlugs
+				} satisfies Post;
+			} else {
+				return {
+					content: content,
+					data: { kind: 'invalid' },
+					fileName,
+					slug,
+					incrementalSlugs
+				} satisfies Post;
+			}
+		})
 	);
 
 	const graphData = generateGraphData(posts);
 
 	const postsAndHeadings: PostAndHeadingData[] = [
-		...posts.map((post) => {
-			return { title: post.slug, url: `/${post.slug}` };
-		}),
-		...posts.flatMap((post) =>
-			post.headings.map((heading) => {
-				return {
-					title: `${post.slug}${'#'.repeat(heading.level)}${heading.text}`,
-					url: `/${post.slug}${heading.url}`
-				};
+		...posts
+			.filter((post) => post.data.kind === 'markdown')
+			.map((post) => {
+				return { title: post.slug, url: `/${post.slug}` };
+			}),
+		...posts
+			.filter((post) => post.data.kind === 'markdown')
+			.flatMap((post) => {
+				const data = post.data as Markdown;
+				return data.headings.map((heading) => {
+					return {
+						title: `${post.slug}${'#'.repeat(heading.level)}${heading.text}`,
+						url: `/${post.slug}${heading.url}`
+					};
+				});
 			})
-		)
 	].sort() satisfies PostAndHeadingData[];
 
 	return {
