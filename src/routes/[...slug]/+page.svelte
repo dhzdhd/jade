@@ -9,7 +9,8 @@
 	import BottomNav from '$lib/components/BottomNav.svelte';
 	import {
 		type Excalidraw as ExcalidrawData,
-		type Folder
+		type Folder,
+		type Markdown
 	} from '$lib/post';
 	import Excalidraw from '$lib/components/Excalidraw.svelte';
 
@@ -79,7 +80,7 @@
 			nextPost={nextPostSlug}
 		/>
 		<Sidebar storageKey="tocOpen" side="right">
-			<TocSidebar headings={[]} />
+			<TocSidebar headings={(post.data as Markdown).headings} />
 		</Sidebar>
 	{/if}
 </div>

@@ -29,6 +29,7 @@
 		"@testing-library/jest-dom": "^6.9.1",
 		"@testing-library/svelte": "^5.2.8",
 		"@types/jsdom": "^27.0.0",
+		"@types/three": "^0.181.0",
 		"bits-ui": "^2.14.2",
 		"clsx": "^2.1.1",
 		"eslint": "^9.39.0",
@@ -77,6 +78,7 @@
 		"remark-toc": "^9.0.0",
 		"runed": "^0.35.1",
 		"shiki": "^3.14.0",
+		"three": "^0.181.0",
 		"unified": "^11.0.5"
 	}
 }

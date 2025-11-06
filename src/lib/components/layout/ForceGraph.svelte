@@ -15,6 +15,7 @@
 	let open = $state(false);
 
 	const initGraph = async () => {
+		const THREE = await import('three');
 		const ForceGraph3D = await import('3d-force-graph');
 
 		const inst = new ForceGraph3D.default(container)
@@ -22,10 +23,10 @@
 				nodes: data.nodes,
 				links: data.links
 			})
-			.height(500)
-			.width(500)
+			.width(container.clientWidth)
+			.height(container.clientWidth)
 			.showNavInfo(false)
-			.zoomToFit(100 * 5)
+			.zoomToFit(1000 * 5)
 			.backgroundColor('#23252F')
 			.nodeAutoColorBy('group')
 			.nodeLabel((node: any) => node.label)
@@ -37,10 +38,53 @@
 					open = false;
 					await goto(node.url);
 				}
-			})
-			.onNodeHover((node, prev) => {
-				inst.nodeColor(node === null ? '#232323' : '#23FFFF');
 			});
+
+		// inst.nodeThreeObject((node: any) => {
+		// 	const group = new THREE.Group();
+		// 	group.add(
+		// 		new THREE.Mesh(
+		// 			new THREE.SphereGeometry(4),
+		// 			new THREE.MeshBasicMaterial({ color: node.color })
+		// 		)
+		// 	);
+
+		// 	const sprite = new THREE.Sprite();
+		// 	const canvas = document.createElement('canvas');
+
+		// 	const ctx = canvas.getContext('2d');
+		// 	if (!ctx) return group;
+
+		// 	const fontSize = 16;
+		// 	ctx.font = `${fontSize}px Sans-Serif`;
+		// 	const text = node.label;
+		// 	const textWidth = ctx.measureText(text).width;
+		// 	canvas.width = textWidth + 8;
+		// 	canvas.height = fontSize + 8;
+
+		// 	// ctx.fillStyle = 'rgba(40, 40, 50, 0.9)';
+		// 	// ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+		// 	ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+		// 	ctx.textAlign = 'center';
+		// 	ctx.textBaseline = 'middle';
+		// 	// ctx.fillText(text, canvas.width / 2, canvas.height / 2);
+
+		// 	const texture = new THREE.CanvasTexture(canvas);
+		// 	sprite.material = new THREE.SpriteMaterial({ map: texture });
+		// 	const scale = 0.2;
+		// 	sprite.scale.set(
+		// 		canvas.width * scale,
+		// 		canvas.height * scale,
+		// 		1
+		// 	);
+		// 	sprite.position.y -= 10; // move label below node
+		// 	group.add(sprite);
+
+		// 	return group;
+		// });
+
+		inst.d3Force('charge')?.strength(-25);
 	};
 
 	$effect(() => {
@@ -67,7 +111,7 @@
 		</Dialog.Header>
 		<div
 			bind:this={container}
-			class="graph-container aspect-square max-w-[90%] overflow-hidden md:h-80"
+			class="graph-container aspect-square w-full overflow-hidden"
 		></div>
 	</Dialog.Content>
 </Dialog.Root>
