@@ -33,7 +33,6 @@ export const load: PageServerLoad<{
 	const postsWithinFolder = posts.filter((post: Post) =>
 		post.incrementalSlugs.includes(slug)
 	);
-	console.log(postsWithinFolder.map((a) => a.fileName));
 
 	if (!currentPost && postsWithinFolder.length === 0) {
 		error(404, 'Page not found');
