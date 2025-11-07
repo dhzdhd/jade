@@ -1,12 +1,20 @@
 <script lang="ts">
 	import TreeNode from './TreeNode.svelte';
 	import * as Sidebar from '$lib/components/ui/sidebar/index.js';
-	import type { TreeItem } from '$lib';
+	import { generateIncrementalSlugs, type TreeItem } from '$lib';
 	import ArrowRight from 'lucide-svelte/icons/chevron-right';
+	import { page } from '$app/state';
+	import { cn } from '$lib/utils';
 
 	let { id, children, depth, url }: TreeItem = $props();
 
-	let expanded = $state(false);
+	// TODO: Move logic to parent as url isn't covered for every link
+	let isActive = $derived(
+		generateIncrementalSlugs(page.url.pathname).includes(
+			url.replaceAll(' ', '%20')
+		)
+	);
+	let expanded = $derived(isActive);
 
 	const toggleExpansion = (e: any) => {
 		e.stopPropagation();
@@ -50,7 +58,10 @@
 {:else}
 	<Sidebar.MenuItem>
 		<Sidebar.MenuButton
-			class="hover:bg-accent active:bg-accent h-fit px-1 py-2"
+			class={cn([
+				'hover:bg-accent active:bg-accent h-fit px-1 py-2',
+				isActive ? 'bg-secondary' : ''
+			])}
 		>
 			{#snippet child({ props })}
 				<a
