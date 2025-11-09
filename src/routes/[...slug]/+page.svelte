@@ -10,12 +10,14 @@
 	import {
 		type Excalidraw as ExcalidrawData,
 		type Folder,
-		type Markdown
+		type Markdown,
+		type Post
 	} from '$lib/post';
 	import Excalidraw from '$lib/components/Excalidraw.svelte';
+	import BaseLayout from '$lib/components/bases/BaseLayout.svelte';
 
 	const { data }: PageProps = $props();
-	const post = $derived(data.post);
+	const post: Post = $derived(data.post);
 	const previousPostSlug = $derived(data.previousPost?.slug);
 	const nextPostSlug = $derived(data.nextPost?.slug);
 
@@ -71,7 +73,9 @@
 			previousPost={previousPostSlug}
 			nextPost={nextPostSlug}
 		/>
-	{:else}
+	{:else if post.data.kind === 'base'}
+		<BaseLayout data={post.data}></BaseLayout>
+	{:else if post.data.kind === 'markdown'}
 		<article class="prose w-full max-w-full">
 			{@html post.content}
 		</article>

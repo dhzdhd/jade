@@ -1,0 +1,28 @@
+formulas:
+  a: file.size / 1024 + ' MB'
+views:
+  - type: cards
+    name: Table
+    filters:
+      and:
+        - file.ext == "png"
+    order:
+      - file.name
+      - file.folder
+      - file.embeds
+      - file.mtime
+      - formula.a
+    sort:
+      - property: file.basename
+        direction: ASC
+    cardSize: 200
+    image: file.file
+    imageFit: contain
+    imageAspectRatio: 1.4
+    rowHeight: medium
+  - type: table
+    name: View
+    image: note.title
+  - type: cards
+    name: View 2
+    image: note.tags

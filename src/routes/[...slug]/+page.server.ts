@@ -51,12 +51,12 @@ export const load: PageServerLoad<{
 				fileName: slug,
 				slug: slug,
 				incrementalSlugs: generateIncrementalSlugs(slug)
-			}
+			} satisfies Post
 		};
 	}
 
 	return {
-		post: currentPost,
+		post: currentPost satisfies Post,
 		previousPost,
 		nextPost
 	};

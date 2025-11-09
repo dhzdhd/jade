@@ -3,7 +3,7 @@
 
 	type Props = { slug: string; data: string };
 
-	let { slug, data }: Props = $props();
+	let { data }: Props = $props();
 	let canvasUrl = $state('');
 
 	onMount(async () => {

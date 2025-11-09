@@ -1,4 +1,4 @@
-import jsdom from 'jsdom';
+import type { FileProperties } from './bases';
 
 export interface Heading {
 	level: number;
@@ -25,6 +25,7 @@ export type Excalidraw = {
 };
 export type Bases = {
 	kind: 'base';
+	fileProperties: FileProperties[];
 };
 export type Jupyter = {
 	kind: 'jupyter';
@@ -44,17 +45,3 @@ type PostData =
 	| Bases
 	| Jupyter
 	| Invalid;
-
-export function generateHeadings(content: string): Heading[] {
-	const parser = new jsdom.JSDOM(content.toString());
-	const document = parser.window.document;
-	const headingNodes = document.querySelectorAll(
-		'h1, h2, h3, h4, h5, h6'
-	);
-
-	return Array.from(headingNodes).map((heading) => ({
-		level: parseInt(heading.tagName.substring(1), 10),
-		text: heading.textContent || '',
-		url: `#${heading.id}`
-	}));
-}

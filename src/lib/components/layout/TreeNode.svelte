@@ -8,7 +8,7 @@
 
 	let { id, children, depth, url }: TreeItem = $props();
 
-	// TODO: Move logic to parent as url isn't covered for every link
+	// TODO: Move logic to parent as url isn't covered for every link & encode HTML properly
 	let isActive = $derived(
 		generateIncrementalSlugs(page.url.pathname).includes(
 			url.replaceAll(' ', '%20')
