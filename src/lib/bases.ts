@@ -68,8 +68,6 @@ export interface FileProperties {
 export function parseBase(content: string): BaseConfig {
 	const yaml: BaseConfig = parse(content) as BaseConfig;
 
-	console.log(JSON.stringify(yaml, null, 3));
-
 	return yaml;
 }
 
