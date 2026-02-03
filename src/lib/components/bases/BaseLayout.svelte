@@ -5,7 +5,13 @@
 		data: Bases;
 	}
 
-	const props: BaseLayoutProps = $props();
+	const { data }: BaseLayoutProps = $props();
+
+	const fileProperties = data.fileProperties;
 </script>
 
-<div></div>
+<div>
+	{#each fileProperties as property}
+		<div>{property.ext}</div>
+	{/each}
+</div>
