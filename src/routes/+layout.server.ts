@@ -7,7 +7,14 @@ import {
 } from '$lib';
 import type { Config } from '$lib/config';
 import { generateGraphData } from '$lib/graph';
-import { type Markdown, type Post } from '$lib/post';
+import {
+	type Bases,
+	type Canvas,
+	type Excalidraw,
+	type Invalid,
+	type Markdown,
+	type Post
+} from '$lib/post';
 import { decompressExcalidrawData } from '$lib/excalidraw';
 import { generateFileProperties, parseBase } from '$lib/bases';
 import { generateMarkdownPost } from '$lib/markdown';
@@ -35,7 +42,10 @@ export const load: LayoutServerLoad = async () => {
 
 				return {
 					content: content,
-					data: { kind: 'excalidraw', excalidrawJson: json },
+					data: {
+						kind: 'excalidraw',
+						excalidrawJson: json
+					} satisfies Excalidraw,
 					fileName,
 					slug,
 					incrementalSlugs
@@ -49,7 +59,7 @@ export const load: LayoutServerLoad = async () => {
 						kind: 'markdown',
 						headings: markdownPostData.headings,
 						links: markdownPostData.links
-					},
+					} satisfies Markdown,
 					fileName,
 					slug,
 					incrementalSlugs
@@ -57,7 +67,10 @@ export const load: LayoutServerLoad = async () => {
 			} else if (fileName.endsWith('.excalidraw')) {
 				return {
 					content: content,
-					data: { kind: 'excalidraw', excalidrawJson: content },
+					data: {
+						kind: 'excalidraw',
+						excalidrawJson: content
+					} satisfies Excalidraw,
 					fileName,
 					slug,
 					incrementalSlugs
@@ -71,15 +84,25 @@ export const load: LayoutServerLoad = async () => {
 
 				return {
 					content: content,
-					data: { kind: 'base', fileProperties },
+					data: { kind: 'base', fileProperties } satisfies Bases,
 					fileName,
 					slug,
 					incrementalSlugs
 				} satisfies Post;
+			} else if (fileName.endsWith('.canvas')) {
+				const canvas = parseCanvas(content);
+
+				return {
+					content,
+					data: canvas satisfies Canvas,
+					fileName,
+					slug,
+					incrementalSlugs
+				};
 			} else {
 				return {
 					content: content,
-					data: { kind: 'invalid' },
+					data: { kind: 'invalid' } satisfies Invalid,
 					fileName,
 					slug,
 					incrementalSlugs
