@@ -60,6 +60,7 @@
 		"@jsdevtools/rehype-url-inspector": "^2.0.2",
 		"@portaljs/remark-wiki-link": "^1.2.0",
 		"@types/d3": "^7.4.3",
+		"@xyflow/svelte": "^1.5.0",
 		"3d-force-graph": "^1.79.0",
 		"d3": "^7.9.0",
 		"mode-watcher": "^1.1.0",

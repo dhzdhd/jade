@@ -15,6 +15,7 @@
 	} from '$lib/post';
 	import Excalidraw from '$lib/components/Excalidraw.svelte';
 	import BaseLayout from '$lib/components/bases/BaseLayout.svelte';
+	import Canvas from '$lib/components/canvas/Canvas.svelte';
 
 	const { data }: PageProps = $props();
 	const post: Post = $derived(data.post);
@@ -86,6 +87,12 @@
 		<Sidebar storageKey="tocOpen" side="right">
 			<TocSidebar headings={(post.data as Markdown).headings} />
 		</Sidebar>
+	{:else if post.data.kind === 'canvas'}
+		<Canvas data={post.data} />
+		<BottomNav
+			previousPost={previousPostSlug}
+			nextPost={nextPostSlug}
+		/>
 	{/if}
 </div>
 
