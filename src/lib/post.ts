@@ -14,6 +14,12 @@ export interface Post {
 	incrementalSlugs: string[];
 }
 
+export type Canvas = {
+	kind: 'canvas';
+	nodes: CanvasNode[];
+	edges: CanvasEdge[];
+};
+
 export type Markdown = {
 	kind: 'markdown';
 	headings: Heading[];
@@ -44,4 +50,5 @@ type PostData =
 	| Excalidraw
 	| Bases
 	| Jupyter
+	| Canvas
 	| Invalid;
