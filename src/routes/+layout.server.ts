@@ -18,6 +18,7 @@ import {
 import { decompressExcalidrawData } from '$lib/excalidraw';
 import { generateFileProperties, parseBase } from '$lib/bases';
 import { generateMarkdownPost } from '$lib/markdown';
+import { parseCanvas } from '$lib/canvas';
 
 export const prerender = true;
 
@@ -91,6 +92,7 @@ export const load: LayoutServerLoad = async () => {
 				} satisfies Post;
 			} else if (fileName.endsWith('.canvas')) {
 				const canvas = parseCanvas(content);
+				console.log('Canvas');
 
 				return {
 					content,
@@ -98,7 +100,7 @@ export const load: LayoutServerLoad = async () => {
 					fileName,
 					slug,
 					incrementalSlugs
-				};
+				} satisfies Post;
 			} else {
 				return {
 					content: content,

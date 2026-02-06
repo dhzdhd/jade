@@ -93,6 +93,8 @@
 			previousPost={previousPostSlug}
 			nextPost={nextPostSlug}
 		/>
+	{:else}
+		<div>Unknown</div>
 	{/if}
 </div>
 
