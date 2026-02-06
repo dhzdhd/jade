@@ -1,4 +1,5 @@
 import type { FileProperties } from './bases';
+import type { CanvasEdge, CanvasNode } from './canvas';
 
 export interface Heading {
 	level: number;

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Canvas } from '$lib/post';
-	import { SvelteFlow } from '@xyflow/svelte';
+	import { Background, SvelteFlow } from '@xyflow/svelte';
 	import '@xyflow/svelte/dist/style.css';
 
 	interface Props {
@@ -17,6 +17,8 @@
 	let edges = $state.raw([{ id: 'e1-2', source: '1', target: '2' }]);
 </script>
 
-<div style:width="100vw" style:height="100vh">
-	<SvelteFlow bind:nodes bind:edges />
+<div class="h-full w-full">
+	<SvelteFlow bind:nodes bind:edges>
+		<Background bgColor="black" />
+	</SvelteFlow>
 </div>

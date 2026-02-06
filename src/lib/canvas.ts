@@ -1,17 +1,20 @@
-interface CanvasNode {
+import type { Canvas } from './post';
+
+export interface CanvasNode {
 	id: string;
 	x: number;
 	y: number;
 	width: number;
 	height: number;
 	type: 'file' | 'text';
+	color?: string;
 	file?: string;
 	text?: string;
 }
 
-type Side = 'left' | 'right';
+export type Side = 'left' | 'right' | 'top' | 'bottom';
 
-interface CanvasEdge {
+export interface CanvasEdge {
 	id: string;
 	fromNode: string;
 	fromSide: Side;
@@ -19,8 +22,8 @@ interface CanvasEdge {
 	toSide: Side;
 }
 
-function parseCanvas(content: string): any {
+export function parseCanvas(content: string): Canvas {
 	const contentJson = JSON.parse(content);
 
-	return contentJson;
+	return { ...contentJson, kind: 'canvas' };
 }
