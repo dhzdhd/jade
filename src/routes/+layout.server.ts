@@ -92,7 +92,6 @@ export const load: LayoutServerLoad = async () => {
 				} satisfies Post;
 			} else if (fileName.endsWith('.canvas')) {
 				const canvas = parseCanvas(content);
-				console.log('Canvas');
 
 				return {
 					content,
