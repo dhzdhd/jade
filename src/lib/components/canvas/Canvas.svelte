@@ -17,8 +17,14 @@
 	let edges = $state.raw([{ id: 'e1-2', source: '1', target: '2' }]);
 </script>
 
-<div class="h-full w-full">
+<div class="canvas__ h-full w-full">
 	<SvelteFlow bind:nodes bind:edges>
 		<Background bgColor="black" />
 	</SvelteFlow>
 </div>
+
+<style>
+	.canvas__ {
+		height: calc(100vh - 16rem);
+	}
+</style>
