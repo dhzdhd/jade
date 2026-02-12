@@ -60,7 +60,7 @@
 			</h1>
 			{#each (post.data as Folder).posts as child}
 				<a
-					href={child.slug}
+					href={`/${child.slug}`}
 					class="hover:text-accent cursor-pointer justify-start py-2 text-lg"
 				>
 					{child.slug.replace(`${post.slug}/`, '')}

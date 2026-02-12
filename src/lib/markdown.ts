@@ -43,15 +43,8 @@ export async function generateMarkdownPost(content: string) {
 		.use(remarkWikiLink, {
 			pathFormat: 'obsidian-short',
 			permalinks: getPermalinks('posts'),
-			hrefTemplate: (permalink: string) => {
-				if (permalink.endsWith('.excalidraw')) {
-					const link = permalink.split('posts/').pop();
-
-					return link ?? '/';
-				}
-
-				return permalink.split('posts').pop()!.toString();
-			}
+			hrefTemplate: (permalink: string) =>
+				permalink.split('posts').pop() ?? '/'
 		})
 		.use(remarkMath)
 		.use(remarkToc)
