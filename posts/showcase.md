@@ -122,7 +122,7 @@ def hello_world():
 
 This is a link to another note: [[Sample Note]].
 
-You can also link to headings: [[Sample Note#Heading]].
+You can also link to headings: [[Sample Note#Headings]].
 
 And you can use an alias: [[Sample Note|This is an alias]].
 
@@ -171,7 +171,7 @@ Embed an entire note:
 ![[Sample Note]]
 
 Embed a specific section of a note:
-![[Sample Note#Heading]]
+![[Sample Note#Headings]]
 
 ### Comments
 
