@@ -6,6 +6,9 @@ const config = {
 	preprocess: [vitePreprocess()],
 	kit: {
 		adapter: adapter(),
+		prerender: {
+			handleHttpError: 'warn'
+		}
 	},
 	extensions: ['.svelte', '.md'],
 };
