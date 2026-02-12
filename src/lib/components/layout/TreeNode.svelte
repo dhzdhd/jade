@@ -1,10 +1,15 @@
 <script lang="ts">
 	import TreeNode from './TreeNode.svelte';
 	import * as Sidebar from '$lib/components/ui/sidebar/index.js';
-	import { generateIncrementalSlugs, type TreeItem } from '$lib';
+	import {
+		generateIncrementalSlugs,
+		getNameForExtension,
+		type TreeItem
+	} from '$lib';
 	import ArrowRight from 'lucide-svelte/icons/chevron-right';
 	import { page } from '$app/state';
 	import { cn } from '$lib/utils';
+	import { Badge } from '../ui/badge';
 
 	let { id, children, depth, url }: TreeItem = $props();
 
@@ -20,6 +25,8 @@
 		e.stopPropagation();
 		expanded = !expanded;
 	};
+
+	const nameForExtension = getNameForExtension(url);
 </script>
 
 {#if children.length !== 0}
@@ -66,10 +73,19 @@
 			{#snippet child({ props })}
 				<a
 					href={url}
-					{...props}
 					style={`padding-left: ${0.5 + depth * 0.6}rem`}
+					{...props}
+					class={`${props.class} flex flex-row items-center justify-between`}
 				>
-					<span>{id}</span>
+					<span
+						class="grow overflow-hidden text-ellipsis whitespace-nowrap"
+						>{id}</span
+					>
+					{#if nameForExtension !== undefined}
+						<Badge class="bg-muted text-muted-foreground">
+							{nameForExtension}
+						</Badge>
+					{/if}
 				</a>
 			{/snippet}
 		</Sidebar.MenuButton>

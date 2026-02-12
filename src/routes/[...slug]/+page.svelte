@@ -1,5 +1,9 @@
 <script lang="ts">
-	import { getSegment, numberOfSegments } from '$lib';
+	import {
+		cleanExtensions,
+		getSegment,
+		numberOfSegments
+	} from '$lib';
 	import Sidebar from '$lib/components/layout/Sidebar.svelte';
 	import TocSidebar from '$lib/components/layout/TOCSidebar.svelte';
 	import * as Breadcrumb from '$lib/components/ui/breadcrumb/index';
@@ -43,12 +47,9 @@
 				<Breadcrumb.Separator />
 			{/each}
 			<Breadcrumb.Item>
-				<Breadcrumb.Page
-					>{getSegment(post.slug, 'last')?.replace(
-						'.excalidraw',
-						''
-					)}</Breadcrumb.Page
-				>
+				<Breadcrumb.Page>
+					{cleanExtensions(getSegment(post.slug, 'last') ?? '')}
+				</Breadcrumb.Page>
 			</Breadcrumb.Item>
 		</Breadcrumb.List>
 	</Breadcrumb.Root>
