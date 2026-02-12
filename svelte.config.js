@@ -9,6 +9,9 @@ const config = {
 		prerender: {
 			handleHttpError: 'warn',
 			handleMissingId: 'warn',
+		},
+		router: {
+			resolution: 'server'
 		}
 	},
 	extensions: ['.svelte', '.md'],
