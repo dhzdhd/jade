@@ -47,7 +47,7 @@ export async function generateMarkdownPost(content: string) {
 				if (permalink.endsWith('.excalidraw')) {
 					const link = permalink.split('posts/').pop();
 					// TODO: Use a link joiner
-					return `/excalidraw${link!.split('.excalidraw')[0]}`;
+					return link!.split('.excalidraw')[0];
 				}
 
 				return permalink.split('posts').pop()!.toString();
