@@ -2,6 +2,7 @@
 	import TreeNode from './TreeNode.svelte';
 	import * as Sidebar from '$lib/components/ui/sidebar/index.js';
 	import {
+		cleanExtensions,
 		generateIncrementalSlugs,
 		getNameForExtension,
 		type TreeItem
@@ -79,8 +80,9 @@
 				>
 					<span
 						class="grow overflow-hidden text-ellipsis whitespace-nowrap"
-						>{id}</span
 					>
+						{cleanExtensions(id)}
+					</span>
 					{#if nameForExtension !== undefined}
 						<Badge class="bg-muted text-muted-foreground">
 							{nameForExtension}
