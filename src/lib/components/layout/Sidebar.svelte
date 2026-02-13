@@ -44,7 +44,7 @@
 				: 'translate-x-0',
 			side === 'left' ? 'left-0' : 'right-0',
 			settings.current.isHeaderVisible ? 'py-20' : 'py-2',
-			'bg-background fixed bottom-0 h-screen w-52 max-w-52 list-none overflow-x-clip overflow-y-auto px-2 transition'
+			'bg-background fixed bottom-0 z-40 h-screen w-52 max-w-52 list-none overflow-x-clip overflow-y-auto px-2 transition'
 		])}
 	>
 		<ul class="flex flex-col gap-1">
@@ -59,7 +59,7 @@
 	class={cn([
 		sidebarVisibility.isButtonVisible ? 'flex' : 'hidden',
 		side === 'left' ? 'left-4' : 'right-4',
-		'fixed bottom-4'
+		'fixed bottom-4 z-50'
 	])}
 	aria-label={storageKey === 'treeOpen'
 		? 'Toggle file tree button'
