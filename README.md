@@ -6,9 +6,11 @@ The SSG can be used for any markdown-based files, including Obsidian. Unlike oth
 
 ## Features
 
-- Incredibly fast routing, including support for a SPA router and View Transitions API.
+- Fast routing, including support for a SPA router and View Transitions API.
 - Custom styling support by providing a custom CSS file, with templates available at [tweakcn](https://tweakcn.com/editor/theme).
 - Obsidian editor like graph UI for exploring related links.
+- Obsidian canvas support with a node graph view.
+- Obsidian bases support with a few functions and file operations.
 - Excalidraw support for rendering diagrams (Use Obsidian Excalidraw plugin for generating `.excalidraw.md` files).
 - File tree and table of contents sidebars.
 - Local settings dialog to remove unnecessary clutter.
@@ -18,7 +20,7 @@ The SSG can be used for any markdown-based files, including Obsidian. Unlike oth
 
 ## Installation steps
 
-Jade is meant to be used with GitHub Actions/CD workflows only. There is no need to clone this repository/download the source code and all you will need is the `.md` files in any directory (even root) along with an optional `.config` folder for [customisation](#customisation).
+Jade is primarily meant to be used with GitHub Actions/CD workflows. There is no need to clone this repository/download the source code and all you will need is the `.md` files in any directory (even root) along with an optional `.config` folder for [customisation](#customisation).
 
 The example workflows are present in the `examples` [directory](/examples/) in the project.
 
