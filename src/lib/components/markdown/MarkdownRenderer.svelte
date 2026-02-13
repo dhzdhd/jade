@@ -2,14 +2,18 @@
 	import type { Post } from '$lib/post';
 
 	interface Props {
-		post: Post;
+		post: Post | string;
 	}
 
 	const { post }: Props = $props();
 </script>
 
 <article class="prose w-full max-w-full">
-	{@html post.content}
+	{#if typeof post === 'string'}
+		{@html post}
+	{:else}
+		{@html post.content}
+	{/if}
 </article>
 
 <style>
