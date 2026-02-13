@@ -1,26 +1,19 @@
 <script lang="ts">
-	import {
-		Position,
-		useSvelteFlow,
-		type NodeProps
-	} from '@xyflow/svelte';
+	import { Handle, Position, type NodeProps } from '@xyflow/svelte';
 
 	let { id, data }: NodeProps = $props();
-
-	let { updateNodeData } = useSvelteFlow();
 </script>
 
-<div class="text-updater-node">
+<div class="markdown-node rounded-3xl">
 	<div>
-		<label for="text">Text:</label>
-		<input
-			id="text"
-			name="text"
-			value={data.text}
-			oninput={(evt) => {
-				updateNodeData(id, { text: evt?.target?.value });
-			}}
-			class="nodrag"
-		/>
+		<label for="text">{data.content}</label>
 	</div>
 </div>
+<Handle type="target" position={Position.Top} id="top" />
+<Handle type="target" position={Position.Left} id="left" />
+<Handle type="target" position={Position.Right} id="right" />
+<Handle type="target" position={Position.Bottom} id="bottom" />
+<Handle type="source" position={Position.Top} id="top" />
+<Handle type="source" position={Position.Left} id="left" />
+<Handle type="source" position={Position.Right} id="right" />
+<Handle type="source" position={Position.Bottom} id="bottom" />

@@ -1,26 +1,19 @@
 <script lang="ts">
-	import {
-		Position,
-		useSvelteFlow,
-		type NodeProps
-	} from '@xyflow/svelte';
+	import type { CanvasFlowNodeData } from '$lib/canvas';
+	import { Handle, Position, type NodeProps } from '@xyflow/svelte';
 
 	let { id, data }: NodeProps = $props();
-
-	let { updateNodeData } = useSvelteFlow();
+	let nodeData = data as CanvasFlowNodeData;
 </script>
 
-<div class="text-updater-node">
-	<div>
-		<label for="text">Text:</label>
-		<input
-			id="text"
-			name="text"
-			value={data.text}
-			oninput={(evt) => {
-				updateNodeData(id, { text: evt?.target?.value });
-			}}
-			class="nodrag"
-		/>
-	</div>
+<div class="image-node">
+	<img src={nodeData.content} alt={nodeData.content} />
 </div>
+<Handle type="target" position={Position.Top} />
+<Handle type="target" position={Position.Left} />
+<Handle type="target" position={Position.Right} />
+<Handle type="target" position={Position.Bottom} />
+<Handle type="source" position={Position.Top} />
+<Handle type="source" position={Position.Left} />
+<Handle type="source" position={Position.Right} />
+<Handle type="source" position={Position.Bottom} />
