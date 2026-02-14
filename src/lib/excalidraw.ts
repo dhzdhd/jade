@@ -24,7 +24,7 @@ export function decompressExcalidrawData(content: string): string {
 		bufMatch = match;
 	}
 
-	const encoded = match![2].replace(/[\r\n]/g, '');
+	const encoded = bufMatch![2].replace(/[\r\n]/g, '');
 	const json = decompressFromBase64(encoded);
 
 	return json;
