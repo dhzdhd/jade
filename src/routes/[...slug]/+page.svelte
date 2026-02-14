@@ -21,7 +21,6 @@
 	import BaseLayout from '$lib/components/bases/BaseLayout.svelte';
 	import Canvas from '$lib/components/canvas/Canvas.svelte';
 	import MarkdownRenderer from '$lib/components/markdown/MarkdownRenderer.svelte';
-	import { onMount } from 'svelte';
 
 	const { data }: PageProps = $props();
 	const post: Post = $derived(data.post);
@@ -29,8 +28,6 @@
 	const nextPostSlug = $derived(data.nextPost?.slug);
 
 	const settings = getSettings();
-
-	onMount(() => console.log(JSON.stringify(post)));
 </script>
 
 <div
