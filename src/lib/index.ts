@@ -23,6 +23,7 @@ export function getSegment(
 }
 
 const extensionMap = {
+	'.excalidraw.md': 'Excalidraw',
 	'.excalidraw': 'Excalidraw',
 	'.base.yaml': 'Base',
 	'.base.yml': 'Base',
