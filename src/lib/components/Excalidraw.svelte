@@ -5,16 +5,20 @@
 
 	let { data }: Props = $props();
 	let canvasUrl = $state('');
+	$inspect(data);
 
 	onMount(async () => {
 		const excLib = await import('@excalidraw/excalidraw');
 
 		const execPromise = async () => {
+			console.log('start');
+			console.log(data);
 			const content = await excLib.loadFromBlob(
 				new Blob([data], { type: 'application/json' }),
 				null,
 				null
 			);
+			console.log(content);
 
 			const canvas = await excLib.exportToCanvas({
 				elements: content.elements,

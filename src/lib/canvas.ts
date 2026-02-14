@@ -19,7 +19,10 @@ export interface CanvasData {
 	edges: CanvasEdge[];
 }
 
-export const nodeTypes = { markdown: MarkdownNode, image: ImageNode };
+export const nodeTypes = {
+	markdown: MarkdownNode,
+	image: ImageNode
+} as const;
 export type CanvasFlowNodeData =
 	| {
 			type: 'file';
