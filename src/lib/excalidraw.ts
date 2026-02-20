@@ -2,9 +2,9 @@ import pkg from 'lz-string';
 const { decompressFromBase64 } = pkg;
 
 const DRAWING_COMPRESSED_REG =
-	/(\n##? Drawing\n[^`]*(?:```compressed\-json\n))([\s\S]*?)(```\n)/gm;
+	/(\n##? Drawing\n[^`]*(?:```compressed\-json\n))([\s\S]*?)(```\n)/m;
 const DRAWING_COMPRESSED_REG_ESCAPED_NEWLINE =
-	/(\\n##? Drawing\\n[^`]*(?:```compressed\-json\\n))([\s\S]*?)(```\\n)/gm;
+	/(\\n##? Drawing\\n[^`]*(?:```compressed\-json\\n))([\s\S]*?)(```\\n)/m;
 
 export function decompressExcalidrawData(content: string): string {
 	const match = DRAWING_COMPRESSED_REG.exec(content);
@@ -14,7 +14,6 @@ export function decompressExcalidrawData(content: string): string {
 	let bufMatch = undefined;
 
 	if (match == null && escapedMatch == null) {
-		console.log('Failed to parse regex');
 		return '';
 	}
 	if (escapedMatch != null) {
