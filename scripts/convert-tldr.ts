@@ -1,6 +1,5 @@
 import { readFile, writeFile } from 'fs/promises';
 import { glob } from 'fs/promises';
-import path from 'path';
 
 async function main() {
 	const files = await Array.fromAsync(glob('../**/*.drawing'));
@@ -11,10 +10,7 @@ async function main() {
 			const parsed = JSON.parse(content);
 			const svg = parsed['previewUri'];
 
-			const dirName = path.dirname(fileName);
-			const baseName = path.basename(fileName);
-
-			await writeFile(`${dirName}/${baseName}.svg`, svg);
+			await writeFile(`${fileName}.svg`, svg);
 		})
 	);
 }

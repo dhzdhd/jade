@@ -4,9 +4,7 @@
 	"private": true,
 	"type": "module",
 	"scripts": {
-		"convert": "node convert-tldr.ts ../posts/Ink/Drawing/* -f svg -d --output ../posts/Ink/Exports/"
+		"convert:tldr": "node convert-tldr.ts ../posts/Ink/Drawing/* -f svg -d --output ../posts/Ink/Exports/"
 	},
-	"dependencies": {
-		"@kitschpatrol/tldraw-cli": "^5.0.10"
-	}
+	"dependencies": {}
 }
