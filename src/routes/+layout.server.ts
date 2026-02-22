@@ -91,7 +91,15 @@ export const load: LayoutServerLoad = async () => {
 					incrementalSlugs
 				} satisfies Post;
 			} else if (fileName.endsWith('.canvas')) {
-				const canvas = parseCanvas(content);
+				const fileMap = await Promise.all(
+					files.map(async ([fileName, file]) => {
+						return {
+							fileName: fileName,
+							content: (await file()).default
+						};
+					})
+				);
+				const canvas = parseCanvas(content, fileMap);
 
 				return {
 					content,
