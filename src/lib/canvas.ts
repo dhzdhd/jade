@@ -19,10 +19,6 @@ export interface CanvasData {
 	edges: CanvasEdge[];
 }
 
-export const nodeTypes = {
-	markdown: MarkdownNode,
-	image: ImageNode
-} as const;
 export type CanvasFlowNodeData =
 	| {
 			type: 'file';
@@ -39,6 +35,11 @@ export interface CanvasFlowNode {
 	position: CanvasFlowNodePosition;
 	data: CanvasFlowNodeData;
 }
+
+export const nodeTypes = {
+	markdown: MarkdownNode,
+	image: ImageNode
+} as const;
 
 export interface CanvasFlowEdge {
 	id: string;
@@ -58,10 +59,25 @@ export interface CanvasEdge {
 	toSide: Side;
 }
 
-export function parseCanvas(content: string): Canvas {
+export function parseCanvas(
+	content: string,
+	fileMap: {
+		fileName: string;
+		content: string;
+	}[]
+): Canvas {
 	const contentJson = JSON.parse(content);
+	const parsedFiles = fileMap.map((map) => {
+		return {
+			...map
+		};
+	});
 
-	return { ...contentJson, kind: 'canvas' };
+	return {
+		nodes: contentJson.nodes,
+		edges: contentJson.edges,
+		kind: 'canvas'
+	} satisfies Canvas;
 }
 
 export function convertToFlowModelEdges(

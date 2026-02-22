@@ -1,0 +1,11 @@
+{
+	"nodes":[
+		{"id":"f6e143c2e527a1ea","type":"text","text":"hi\n","x":166,"y":-122,"width":250,"height":60},
+		{"id":"42fa32bda17b0788","x":-626,"y":-572,"width":726,"height":552,"type":"file","file":"Shaders and Textures.md"},
+		{"id":"d92637eb1c299394","x":-109,"y":40,"width":589,"height":400,"type":"file","file":"Showcase/Code.md"}
+	],
+	"edges":[
+		{"id":"a517bef1d1bc6c57","fromNode":"f6e143c2e527a1ea","fromSide":"left","toNode":"42fa32bda17b0788","toSide":"right"},
+		{"id":"03a5d9daa617cfe9","fromNode":"f6e143c2e527a1ea","fromSide":"bottom","toNode":"d92637eb1c299394","toSide":"top"}
+	]
+}

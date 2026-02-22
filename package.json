@@ -3,6 +3,9 @@
 	"private": true,
 	"version": "0.0.1",
 	"type": "module",
+	"workspaces": [
+		"scripts"
+	],
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
@@ -14,7 +17,8 @@
 		"lint": "prettier --check . && eslint .",
 		"test:unit": "vitest",
 		"test": "npm run test:unit -- --run && npm run test:e2e",
-		"postinstall": "patch-package"
+		"postinstall": "patch-package",
+		"script:ink": "npm run convert --workspace=scripts"
 	},
 	"devDependencies": {
 		"@eslint/compat": "^1.4.1",
