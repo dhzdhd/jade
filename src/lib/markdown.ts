@@ -19,6 +19,7 @@ import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import inspectUrls from '@jsdevtools/rehype-url-inspector';
 import config from '../../.config/config';
 import type { Config } from './config';
+import rehypeMermaid from 'rehype-mermaid';
 
 export function generateHeadings(content: string): Heading[] {
 	const parser = new jsdom.JSDOM(content.toString());
@@ -54,6 +55,10 @@ export async function generateMarkdownPost(content: string) {
 		.use(remarkRehype)
 		.use(rehypeKatex)
 		// FIXME: https://github.com/remcohaszing/remark-mermaidjs/issues/3
+		.use(rehypeMermaid, {
+			strategy: 'img-svg',
+			dark: true
+		})
 		.use(rehypePrettyCode, {
 			theme: cfg.codeblockTheme ?? 'tokyo-night',
 			keepBackground: true
