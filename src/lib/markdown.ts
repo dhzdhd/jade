@@ -20,6 +20,12 @@ import inspectUrls from '@jsdevtools/rehype-url-inspector';
 import config from '../../.config/config';
 import type { Config } from './config';
 import rehypeMermaid from 'rehype-mermaid';
+import rehypeSwapCodeWithImage, {
+	type RehypeCodeSwapOptions
+} from './rehype-code-swap';
+import { h } from 'hastscript';
+import fs from 'node:fs';
+import { fromHtml } from 'hast-util-from-html';
 
 export function generateHeadings(content: string): Heading[] {
 	const parser = new jsdom.JSDOM(content.toString());
@@ -53,12 +59,28 @@ export async function generateMarkdownPost(content: string) {
 		.use(remarkGfm)
 		.use(remarkDirective)
 		.use(remarkRehype)
+		.use(rehypeSwapCodeWithImage, {
+			transform(code, lang) {
+				if (lang === 'handdrawn-ink') {
+					const codeJson = JSON.parse(code);
+					const filePath = codeJson['filepath'];
+
+					const data = fs.readFileSync('posts/' + filePath, 'utf-8');
+					const svg = JSON.parse(data)['previewUri'];
+
+					const tree = fromHtml(svg.trim(), { fragment: true });
+					const svgElement = tree.children[0];
+
+					return h('div', { class: 'svg-block' }, [svgElement]);
+				}
+			}
+		} as RehypeCodeSwapOptions)
 		.use(rehypeKatex)
 		// FIXME: https://github.com/remcohaszing/remark-mermaidjs/issues/3
-		.use(rehypeMermaid, {
-			strategy: 'img-svg',
-			dark: true
-		})
+		// .use(rehypeMermaid, {
+		// 	strategy: 'img-svg',
+		// 	dark: true
+		// })
 		.use(rehypePrettyCode, {
 			theme: cfg.codeblockTheme ?? 'tokyo-night',
 			keepBackground: true
