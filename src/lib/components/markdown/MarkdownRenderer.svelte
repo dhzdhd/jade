@@ -109,5 +109,13 @@
 		code[data-line-numbers-max-digits='4'] > [data-line]::before {
 			width: 1.75rem;
 		}
+
+		/* For Ink drawings */
+		.svg-block {
+			svg {
+				width: 100%;
+				height: 100%;
+			}
+		}
 	}
 </style>
