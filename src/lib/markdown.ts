@@ -62,16 +62,24 @@ export async function generateMarkdownPost(content: string) {
 		.use(rehypeSwapCodeWithImage, {
 			transform(code, lang) {
 				if (lang === 'handdrawn-ink') {
-					const codeJson = JSON.parse(code);
-					const filePath = codeJson['filepath'];
+					try {
+						const codeJson = JSON.parse(code);
+						const filePath = codeJson['filepath'];
 
-					const data = fs.readFileSync('posts/' + filePath, 'utf-8');
-					const svg = JSON.parse(data)['previewUri'];
+						const data = fs.readFileSync(
+							'posts/' + filePath,
+							'utf-8'
+						);
 
-					const tree = fromHtml(svg.trim(), { fragment: true });
-					const svgElement = tree.children[0];
+						const svg = JSON.parse(data)['previewUri'];
 
-					return h('div', { class: 'svg-block' }, [svgElement]);
+						const tree = fromHtml(svg.trim(), { fragment: true });
+						const svgElement = tree.children[0];
+
+						return h('div', { class: 'svg-block' }, [svgElement]);
+					} catch (err) {
+						console.log('Failed to parse Ink drawing');
+					}
 				}
 			}
 		} as RehypeCodeSwapOptions)
