@@ -37,6 +37,9 @@ jobs:
           mkdir .config
           mkdir posts
 
+      - name: Debug tree
+        run: tree .
+
       - name: Move config files
         run: mv ${{ env.MARKDOWN_REPO }}/.config/* .config
 
