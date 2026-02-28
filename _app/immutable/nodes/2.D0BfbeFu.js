@@ -1,0 +1,1 @@
+import"../chunks/DsnmJJEf.js";import"../chunks/Bz1CHLWW.js";import{f as r,a as t}from"../chunks/D1LFdX-h.js";var e=r('<article class="prose w-216 max-w-216 px-2 py-20 svelte-1uha8ag"><h1>Hello World</h1></article>');function i(a){var o=e();t(a,o)}export{i as component};
