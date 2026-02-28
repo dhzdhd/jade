@@ -8,6 +8,7 @@ on:
 env:
   MD_FOLDER: posts
   DEPLOY_BRANCH: deploy
+  MARKDOWN_REPO: garden
 
 permissions:
   contents: write
@@ -20,50 +21,52 @@ jobs:
     steps:
       - name: Checkout main repo
         uses: actions/checkout@v6
+        with:
+          path: ${{ env.MARKDOWN_REPO }}
 
       - name: Checkout SSG repo
         uses: actions/checkout@v6
         with:
           repository: dhzdhd/jade
-          path: ssg
+          path: .
 
       - name: Cleanup SSG repository
         run: |
-          rm -rf ssg/.config
-          rm -rf ssg/posts
-          mkdir ssg/.config
-          mkdir ssg/posts
+          rm -rf .config
+          rm -rf posts
+          mkdir .config
+          mkdir posts
 
       - name: Move config files
-        run: mv ./.config/* ./ssg/.config
+        run: mv ${{ env.MARKDOWN_REPO }}/.config/* .config
 
       - name: Create config.ts if it does not exist
         run: |
-          if [ ! -f ssg/.config/config.ts ]; then
-            touch ssg/.config/config.ts
-            echo "export default {}" > ssg/.config/config.ts
+          if [ ! -f .config/config.ts ]; then
+            touch .config/config.ts
+            echo "export default {}" > .config/config.ts
           fi
 
       - name: Create custom.css if it does not exist
         run: |
-          if [ ! -f ssg/.config/custom.css ]; then
-            touch ssg/.config/custom.css
+          if [ ! -f .config/custom.css ]; then
+            touch .config/custom.css
           fi
 
       - name: Create landing.md if it does not exist
         run: |
-          if [ ! -f ssg/.config/landing.md ]; then
-            touch ssg/.config/landing.md
-            echo "# Hello World" > ssg/.config/landing.md
+          if [ ! -f .config/landing.md ]; then
+            touch .config/landing.md
+            echo "# Hello World" > .config/landing.md
           fi
 
       - name: Move markdown files
         run: |
-          rsync -avm --include='*/' "${{ env.MD_FOLDER }}/" "ssg/posts"
+          rsync -avm --include='*/' "./${{ env.MARKDOWN_REPO }}/${{ env.MD_FOLDER }}/" "posts"
 
       - name: Copy images to static/
         run: |
-          rsync -avm --include='*.png' --include='*.jpg' --include='*.jpeg' --include='*.webp' --include='*.svg' --include='*/' --exclude='*' "${{ env.MD_FOLDER }}/" "ssg/static"
+          rsync -avm --include='*.png' --include='*.jpg' --include='*.jpeg' --include='*.webp' --include='*.svg' --include='*/' --exclude='*' "${{ env.MARKDOWN_REPO }}/${{ env.MD_FOLDER }}/" "static"
 
       - name: Install dependencies
         run: npm install
