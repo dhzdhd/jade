@@ -19,16 +19,16 @@ jobs:
   build-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout main repo
-        uses: actions/checkout@v6
-        with:
-          path: ${{ env.MARKDOWN_REPO }}
-
       - name: Checkout SSG repo
         uses: actions/checkout@v6
         with:
           repository: dhzdhd/jade
           path: .
+
+      - name: Checkout main repo
+        uses: actions/checkout@v6
+        with:
+          path: ${{ env.MARKDOWN_REPO }}
 
       - name: Cleanup SSG repository
         run: |
