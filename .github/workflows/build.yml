@@ -7,7 +7,7 @@ on:
 
 env:
   MD_FOLDER: posts
-  DEPLOY_BRANCH: deploy
+  DEPLOY_BRANCH: prebuilt
   MARKDOWN_REPO: garden
 
 permissions:
@@ -81,3 +81,9 @@ jobs:
 
       - name: Build project
         run: npm run build
+
+      - name: Push built files to deploy branch
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: ${{ env.DEPLOY_BRANCH }}
+          folder: build
