@@ -85,10 +85,10 @@ export async function generateMarkdownPost(content: string) {
 		} as RehypeCodeSwapOptions)
 		.use(rehypeKatex)
 		// FIXME: https://github.com/remcohaszing/remark-mermaidjs/issues/3
-		// .use(rehypeMermaid, {
-		// 	strategy: 'img-svg',
-		// 	dark: true
-		// })
+		.use(rehypeMermaid, {
+			strategy: 'img-svg',
+			dark: true
+		})
 		.use(rehypePrettyCode, {
 			theme: cfg.codeblockTheme ?? 'tokyo-night',
 			keepBackground: true

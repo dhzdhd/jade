@@ -37,9 +37,6 @@ jobs:
           mkdir .config
           mkdir posts
 
-      - name: Debug tree
-        run: tree .
-
       - name: Move config files
         run: mv ${{ env.MARKDOWN_REPO }}/.config/* .config
 
@@ -75,7 +72,9 @@ jobs:
         run: npm install
 
       - name: Install Playwright dependencies
-        run: npx playwright install
+        run: |
+          npx playwright install-deps
+          npx playwright install
 
       - name: Install Puppeteer dependencies
         run: npm i puppeteer
