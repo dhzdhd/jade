@@ -19,10 +19,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout main repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Checkout SSG repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: dhzdhd/jade
           path: ssg
@@ -65,8 +65,14 @@ jobs:
         run: |
           rsync -avm --include='*.png' --include='*.jpg' --include='*.jpeg' --include='*.webp' --include='*.svg' --include='*/' --exclude='*' "${{ env.MD_FOLDER }}/" "ssg/static"
 
-      - name: Push built files to deploy branch
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          branch: ${{ env.DEPLOY_BRANCH }}
-          folder: ssg
+      - name: Install dependencies
+        run: npm install
+
+      - name: Install Playwright dependencies
+        run: npx playwright install
+
+      - name: Install Puppeteer dependencies
+        run: npm i puppeteer
+
+      - name: Build project
+        run: npm run build
