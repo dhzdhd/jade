@@ -5,5 +5,6 @@ interface ConfigData {
 	description: string;
 	redirects: Record<string, string>;
 	codeblockTheme: BundledTheme;
+	basePath: string;
 }
 export type Config = Partial<ConfigData>;

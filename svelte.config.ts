@@ -1,8 +1,9 @@
 import adapter from '@sveltejs/adapter-static';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
+import type { Config } from '@sveltejs/kit';
+import cfg from './.config/config.ts';
 
-/** @type {import('@sveltejs/kit').Config} */
-const config = {
+const config: Config = {
 	preprocess: [vitePreprocess()],
 	kit: {
 		adapter: adapter(),
@@ -13,6 +14,9 @@ const config = {
 		router: {
 			resolution: 'server'
 		}
+	},
+	paths: {
+		base: cfg.basePath ?? ''
 	},
 	extensions: ['.svelte', '.md']
 };
