@@ -6,17 +6,21 @@ import cfg from './.config/config.ts';
 const config: Config = {
 	preprocess: [vitePreprocess()],
 	kit: {
-		adapter: adapter(),
+		adapter: adapter({
+			pages: 'build',
+			assets: 'build',
+			fallback: 'index.html',
+			precompress: false,
+			strict: true
+		}),
 		prerender: {
+			entries: ['*'],
 			handleHttpError: 'warn',
 			handleMissingId: 'warn'
 		},
-		router: {
-			resolution: 'server'
+		paths: {
+			base: cfg.basePath === undefined ? `/${cfg.basePath}` : ''
 		}
-	},
-	paths: {
-		base: cfg.basePath ?? ''
 	},
 	extensions: ['.svelte', '.md']
 };
