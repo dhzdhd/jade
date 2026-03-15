@@ -113,9 +113,13 @@
 		/* For Ink drawings */
 		.svg-block {
 			svg {
-				width: 100%;
-				height: 100%;
+				@apply h-full w-full;
 			}
+		}
+
+		/* For Mermaid drawings */
+		.mermaid {
+			@apply bg-background;
 		}
 	}
 </style>
