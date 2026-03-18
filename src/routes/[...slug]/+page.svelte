@@ -21,8 +21,9 @@
 	import BaseLayout from '$lib/components/bases/BaseLayout.svelte';
 	import Canvas from '$lib/components/canvas/Canvas.svelte';
 	import MarkdownRenderer from '$lib/components/markdown/MarkdownRenderer.svelte';
-	import { initMermaid } from '$lib/mermaid';
+	import { renderMermaid } from '$lib/mermaid';
 	import { onMount } from 'svelte';
+	import { mode } from 'mode-watcher';
 
 	const { data }: PageProps = $props();
 	const post: Post = $derived(data.post);
@@ -30,11 +31,12 @@
 	const nextPostSlug = $derived(data.nextPost?.slug);
 
 	const settings = getSettings();
+	const curTheme = $derived(mode.current);
 
-	onMount(() => initMermaid('dark'));
+	onMount(() => renderMermaid(curTheme!));
 
 	$effect(() => {
-		initMermaid('dark'); // re-render on theme switch
+		renderMermaid(curTheme!);
 	});
 </script>
 
