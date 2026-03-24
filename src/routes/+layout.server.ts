@@ -61,11 +61,6 @@ export const load: LayoutServerLoad = async () => {
 					? incrementalSlugs.slice(0, incrementalSlugs.length - 2)
 					: incrementalSlugs;
 
-				if (isIndex) {
-					console.log(calcSlug);
-					console.log(calcIncrementalSlugs);
-				}
-
 				return {
 					content: markdownPostData.md.toString(),
 					data: {
@@ -156,7 +151,9 @@ export const load: LayoutServerLoad = async () => {
 
 	return {
 		posts: posts,
-		files: files.map(([fileName]) => getSanitizedPath(fileName)),
+		files: files
+			.filter(([fileName]) => !isFileIndex(fileName))
+			.map(([fileName]) => getSanitizedPath(fileName)),
 		config: cfg,
 		graphData: graphData,
 		postsAndHeadings: postsAndHeadings
