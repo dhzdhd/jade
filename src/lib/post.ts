@@ -25,6 +25,7 @@ export type Markdown = {
 	kind: 'markdown';
 	headings: Heading[];
 	links: string[];
+	isIndex: boolean;
 };
 export type Excalidraw = {
 	kind: 'excalidraw';

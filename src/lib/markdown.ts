@@ -26,6 +26,7 @@ import rehypeSwapCodeWithImage, {
 import { h } from 'hastscript';
 import fs from 'node:fs';
 import { fromHtml } from 'hast-util-from-html';
+import path from 'node:path';
 
 export function generateHeadings(content: string): Heading[] {
 	const parser = new jsdom.JSDOM(content.toString());
@@ -39,6 +40,13 @@ export function generateHeadings(content: string): Heading[] {
 		text: heading.textContent || '',
 		url: `#${heading.id}`
 	}));
+}
+
+export function isFileIndex(fileName: string): boolean {
+	const fileBaseName = path
+		.basename(fileName)
+		.replace(path.extname(fileName), '');
+	return ['index', 'landing'].includes(fileBaseName.toLowerCase());
 }
 
 export async function generateMarkdownPost(content: string) {
