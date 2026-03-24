@@ -17,8 +17,9 @@ import {
 } from '$lib/post';
 import { decompressExcalidrawData } from '$lib/excalidraw';
 import { generateFileProperties, parseBase } from '$lib/bases';
-import { generateMarkdownPost } from '$lib/markdown';
+import { generateMarkdownPost, isFileIndex } from '$lib/markdown';
 import { parseCanvas } from '$lib/canvas';
+import path from 'node:path';
 
 export const prerender = true;
 
@@ -53,17 +54,29 @@ export const load: LayoutServerLoad = async () => {
 				} satisfies Post;
 			} else if (fileName.endsWith('.md')) {
 				const markdownPostData = await generateMarkdownPost(content);
+				const isIndex = isFileIndex(fileName);
+
+				const calcSlug = isIndex ? path.dirname(slug) : slug;
+				const calcIncrementalSlugs = isIndex
+					? incrementalSlugs.slice(0, incrementalSlugs.length - 2)
+					: incrementalSlugs;
+
+				if (isIndex) {
+					console.log(calcSlug);
+					console.log(calcIncrementalSlugs);
+				}
 
 				return {
 					content: markdownPostData.md.toString(),
 					data: {
 						kind: 'markdown',
 						headings: markdownPostData.headings,
-						links: markdownPostData.links
+						links: markdownPostData.links,
+						isIndex: isIndex
 					} satisfies Markdown,
 					fileName,
-					slug,
-					incrementalSlugs
+					slug: calcSlug,
+					incrementalSlugs: calcIncrementalSlugs
 				} satisfies Post;
 			} else if (fileName.endsWith('.excalidraw')) {
 				return {
