@@ -23,7 +23,12 @@
 	const { data }: PageProps = $props();
 	const posts: Post[] = $derived(data.posts);
 	const post = $derived(
-		posts.filter((post) => post.incrementalSlugs.length === 0).at(0)
+		posts
+			.filter(
+				(post) =>
+					post.incrementalSlugs.length === 0 && post.slug === '.'
+			)
+			.at(0)
 	);
 
 	const settings = getSettings();
