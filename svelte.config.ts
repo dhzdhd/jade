@@ -6,11 +6,7 @@ import cfg from './.config/config.ts';
 const config: Config = {
 	preprocess: [vitePreprocess()],
 	kit: {
-		adapter: adapter({
-			pages: 'build',
-			assets: 'build',
-			strict: true
-		}),
+		adapter: adapter(),
 		router: {
 			resolution: 'server'
 		},
