@@ -13,6 +13,9 @@ const config: Config = {
 			precompress: false,
 			strict: true
 		}),
+		router: {
+			resolution: 'server'
+		},
 		prerender: {
 			entries: ['*'],
 			handleHttpError: 'warn',
