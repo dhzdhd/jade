@@ -81,12 +81,9 @@
 	},
 	"dependencies": {
 		"@excalidraw/excalidraw": "^0.18.0",
-		"@excalidraw/roughjs": "^4.5.3",
-		"@icons-pack/svelte-simple-icons": "^6.5.0",
 		"@xyflow/svelte": "^1.5.0",
 		"3d-force-graph": "^1.79.0",
 		"mode-watcher": "^1.1.0",
-		"runed": "^0.35.1",
-		"shiki": "^3.14.0"
+		"runed": "^0.35.1"
 	}
 }
