@@ -14,7 +14,6 @@
 	import { cn } from '$lib/utils';
 	import { getSegment } from '$lib';
 	import Excalidraw from '$lib/components/Excalidraw.svelte';
-	import BottomNav from '$lib/components/BottomNav.svelte';
 	import Canvas from '$lib/components/canvas/Canvas.svelte';
 	import Sidebar from '$lib/components/layout/Sidebar.svelte';
 	import MarkdownRenderer from '$lib/components/markdown/MarkdownRenderer.svelte';
