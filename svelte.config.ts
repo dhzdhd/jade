@@ -20,7 +20,7 @@ const config: Config = {
 			handleMissingId: 'warn'
 		},
 		paths: {
-			base: cfg.basePath === undefined ? `/${cfg.basePath}` : ''
+			base: cfg.basePath === undefined ? '' : `/${cfg.basePath}`
 		}
 	},
 	extensions: ['.svelte', '.md']
