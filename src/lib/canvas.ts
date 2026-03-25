@@ -1,5 +1,4 @@
-import ImageNode from './components/canvas/ImageNode.svelte';
-import MarkdownNode from './components/canvas/MarkdownNode.svelte';
+import PageNode from './components/canvas/PageNode.svelte';
 import type { Canvas } from './post';
 
 export interface CanvasNode {
@@ -37,8 +36,7 @@ export interface CanvasFlowNode {
 }
 
 export const nodeTypes = {
-	markdown: MarkdownNode,
-	image: ImageNode
+	page: PageNode
 } as const;
 
 export interface CanvasFlowEdge {
@@ -114,7 +112,7 @@ export function convertToFlowModelNodes(
 				x: node.x,
 				y: node.y
 			} satisfies CanvasFlowNodePosition,
-			type: data.type === 'file' ? 'markdown' : 'image',
+			type: 'page',
 			data: data
 		} satisfies CanvasFlowNode;
 	});

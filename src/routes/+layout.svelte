@@ -6,8 +6,13 @@
 	import Header from '$lib/components/layout/Header.svelte';
 	import Sidebar from '$lib/components/layout/Sidebar.svelte';
 	import { onNavigate } from '$app/navigation';
+	import { page } from '$app/state';
 
 	let { children, data }: LayoutProps = $props();
+
+	const embedded = $derived(
+		page.url.pathname.includes('iframe_embed')
+	);
 
 	onNavigate((navigation) => {
 		if (!document.startViewTransition) return;
@@ -30,15 +35,20 @@
 </svelte:head>
 
 <ModeWatcher />
-<Header
-	config={data.config}
-	graphData={data.graphData}
-	postsAndHeadings={data.postsAndHeadings}
-/>
 
-<Sidebar storageKey="treeOpen" side="left">
-	<TreeSidebar files={data.files} />
-</Sidebar>
-<main class="flex w-full max-w-svw justify-center">
+{#if embedded}
 	{@render children()}
-</main>
+{:else}
+	<Header
+		config={data.config}
+		graphData={data.graphData}
+		postsAndHeadings={data.postsAndHeadings}
+	/>
+
+	<Sidebar storageKey="treeOpen" side="left">
+		<TreeSidebar files={data.files} />
+	</Sidebar>
+	<main class="flex w-full max-w-svw justify-center">
+		{@render children()}
+	</main>
+{/if}
