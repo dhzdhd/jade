@@ -4,7 +4,7 @@
 	import * as Command from '$lib/components/ui/command/index.js';
 	import { PressedKeys } from 'runed';
 	import Button from '../ui/button/button.svelte';
-	import Search from 'lucide-svelte/icons/search';
+	import Search from '@lucide/svelte/icons/search';
 	import { untrack } from 'svelte';
 
 	interface Props {
