@@ -16,6 +16,10 @@
 		"format": "prettier --write .",
 		"lint": "prettier --check . && eslint .",
 		"test:unit": "vitest",
+		"test:e2e": "playwright test",
+		"test:e2e:ui": "playwright test --ui",
+		"test:e2e:debug": "playwright test --debug",
+		"test:codegen": "playwright codegen http://localhost:5173",
 		"test": "npm run test:unit -- --run && npm run test:e2e",
 		"postinstall": "patch-package",
 		"script:ink": "npm run convert:tldr --workspace=scripts"
@@ -37,6 +41,7 @@
 		"@testing-library/jest-dom": "^6.9.1",
 		"@testing-library/svelte": "^5.2.8",
 		"@types/jsdom": "^27.0.0",
+		"@types/node": "^25.5.0",
 		"@types/three": "^0.181.0",
 		"bits-ui": "^2.16.2",
 		"clsx": "^2.1.1",
