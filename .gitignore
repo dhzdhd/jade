@@ -24,3 +24,9 @@ vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
 .obsidian/
+
+# Playwright
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/
