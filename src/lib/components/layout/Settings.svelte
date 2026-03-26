@@ -1,7 +1,7 @@
 <script lang="ts">
 	import * as Dialog from '$lib/components/ui/dialog/index.js';
 	import { Button } from '../ui/button';
-	import Settings from 'lucide-svelte/icons/settings';
+	import Settings from '@lucide/svelte/icons/settings';
 	import { Switch } from '../ui/switch';
 	import { Label } from '../ui/label';
 	import {

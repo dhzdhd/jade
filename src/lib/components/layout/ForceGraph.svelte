@@ -3,7 +3,7 @@
 	import * as Dialog from '$lib/components/ui/dialog/index';
 	import type { GraphData } from '$lib/graph';
 	import Button from '../ui/button/button.svelte';
-	import Graph from 'lucide-svelte/icons/git-graph';
+	import Graph from '@lucide/svelte/icons/git-graph';
 
 	interface ForceGraphProps {
 		data: GraphData;

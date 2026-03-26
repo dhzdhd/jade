@@ -7,7 +7,7 @@
 		getNameForExtension,
 		type TreeItem
 	} from '$lib';
-	import ArrowRight from 'lucide-svelte/icons/chevron-right';
+	import ArrowRight from '@lucide/svelte/icons/chevron-right';
 	import { page } from '$app/state';
 	import { cn } from '$lib/utils';
 	import { Badge } from '../ui/badge';

@@ -2,11 +2,11 @@
 	import { cn } from '$lib/utils';
 	import { onClickOutside, PersistedState } from 'runed';
 	import Button from '../ui/button/button.svelte';
-	import PanelLeft from 'lucide-svelte/icons/panel-left';
+	import PanelLeft from '@lucide/svelte/icons/panel-left';
 	import type { Snippet } from 'svelte';
 	import { fly } from 'svelte/transition';
 	import { getSettings } from '$lib/state/settings.svelte';
-	import PanelRight from 'lucide-svelte/icons/panel-right';
+	import PanelRight from '@lucide/svelte/icons/panel-right';
 
 	interface SidebarProps {
 		storageKey: 'treeOpen' | 'tocOpen';
