@@ -36,7 +36,7 @@ jobs:
       - name: Run prerequisite script
         working-directory: 'scripts'
         run: |
-          npm i
+          npm install --workspace=@jade/scripts
           node prereq.ts ${{ github.workspace }} false
 
       - name: Move markdown files
