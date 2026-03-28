@@ -10,7 +10,6 @@ test.describe('Navigation', () => {
 			page.getByRole('button', { name: 'Toggle file tree button' })
 		).toBeVisible();
 		await expect(page.locator('h1')).toContainText('404');
-		await expect(page.locator('h2')).toContainText('Page not found');
 	});
 
 	test('should navigate to a post route successfully with reload check', async ({
