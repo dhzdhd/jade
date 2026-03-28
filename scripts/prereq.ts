@@ -28,26 +28,41 @@ async function cleanAndRemake(ssgPath: ParsedPath, dryRun: boolean) {
 		return;
 	}
 
-	console.log(
-		`Cleaning and remaking directories in ${path.format(ssgPath)}...`
-	);
+	console.log(`Cleaning directories in ${path.format(ssgPath)}...`);
 
 	await ignore(`Removing ${configPath}`, async () => {
 		await fs.rm(configPath, { recursive: true, force: true });
-	});
-	await ignore(`Creating ${configPath}`, async () => {
-		await fs.mkdir(configPath, { recursive: true });
 	});
 
 	await ignore(`Removing ${postsPath}`, async () => {
 		await fs.rm(postsPath, { recursive: true, force: true });
 	});
-	await ignore(`Creating ${postsPath}`, async () => {
-		await fs.mkdir(postsPath, { recursive: true });
+}
+
+async function moveConfigs(ssgPath: ParsedPath, dryRun: boolean) {
+	const sourceConfigPath = path.join(
+		path.format(ssgPath),
+		'garden',
+		'.config'
+	);
+	const targetConfigPath = path.join(path.format(ssgPath), '.config');
+
+	if (dryRun) {
+		console.log(
+			`[Dry Run] Would move files from ${sourceConfigPath} to ${targetConfigPath}`
+		);
+		return;
+	}
+
+	console.log(`Moving configuration files to ${targetConfigPath}...`);
+
+	await ignore(`Moving config files`, async () => {
+		await fs.rename(sourceConfigPath, targetConfigPath);
 	});
 }
 
 async function createFiles(ssgPath: ParsedPath, dryRun: boolean) {
+	const configPath = path.join(path.format(ssgPath), '.config');
 	const configFile = path.join(
 		path.format(ssgPath),
 		'.config',
@@ -69,6 +84,9 @@ async function createFiles(ssgPath: ParsedPath, dryRun: boolean) {
 
 	console.log('Initializing configuration files...');
 
+	await ignore(`Creating ${configPath}`, async () => {
+		await fs.mkdir(configPath, { recursive: true });
+	});
 	await ignore(`Writing ${configFile}`, async () => {
 		await fs.writeFile(configFile, '{}', { flag: 'wx' });
 	});
@@ -91,6 +109,7 @@ async function main() {
 	console.log(`Dry Run: ${dryRun}`);
 
 	await cleanAndRemake(ssgPath, dryRun);
+	await moveConfigs(ssgPath, dryRun);
 	await createFiles(ssgPath, dryRun);
 
 	console.log('Prerequisites setup complete.');
