@@ -74,18 +74,17 @@ export async function generateMarkdownPost(content: string) {
 						const codeJson = JSON.parse(code);
 						const filePath = codeJson['filepath'];
 
-						const data = fs.readFileSync(
-							'posts/' + filePath,
+						const svg = fs.readFileSync(
+							`posts/${filePath}.svg`,
 							'utf-8'
 						);
-
-						const svg = JSON.parse(data)['previewUri'];
 
 						const tree = fromHtml(svg.trim(), { fragment: true });
 						const svgElement = tree.children[0];
 
 						return h('div', { class: 'svg-block' }, [svgElement]);
 					} catch (err) {
+						console.log(err);
 						console.log('Failed to parse Ink drawing');
 					}
 				}
