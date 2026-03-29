@@ -112,7 +112,7 @@ export async function generateFileProperties(
 						try {
 							properties = parse(value);
 						} catch (err) {
-							console.error(
+							console.debug(
 								`Could not parse frontmatter for file : ${fileName}`
 							);
 						}

@@ -27,7 +27,7 @@
 		expanded = !expanded;
 	};
 
-	const nameForExtension = getNameForExtension(url);
+	const nameForExtension = $derived(getNameForExtension(url));
 </script>
 
 {#if children.length !== 0}
