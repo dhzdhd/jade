@@ -33,17 +33,22 @@
 {#if children.length !== 0}
 	<Sidebar.MenuItem>
 		<Sidebar.MenuButton
-			onclick={toggleExpansion}
-			class="hover:bg-accent active:bg-accent flex h-fit cursor-pointer flex-row justify-between px-1 py-2"
+			class="hover:bg-accent active:bg-accent relative flex h-fit cursor-pointer flex-row justify-between px-1 py-2"
 		>
 			{#snippet child({ props })}
-				<button
-					onclick={toggleExpansion}
+				<a
+					href={url}
 					style={`padding-left: ${0.5 + depth * 0.6}rem`}
 					{...props}
 				>
 					<span>{id}</span>
+				</a>
+				<button
+					onclick={toggleExpansion}
+					class="bg-background text-foreground hover:bg-secondary absolute top-0.5 right-0.5 bottom-0.5 flex w-8 items-center justify-center rounded-lg"
+				>
 					<ArrowRight
+						size="20"
 						style="transition: transform 200ms; transform: rotate({expanded
 							? '90deg'
 							: '0deg'});"
