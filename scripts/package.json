@@ -6,5 +6,7 @@
 	"scripts": {
 		"convert:tldr": "node convert-tldr.ts ../posts/Ink/Drawing/* -f svg -d --output ../posts/Ink/Exports/"
 	},
-	"dependencies": {}
+	"devDependencies": {
+		"rehype-github-alerts": "4.2.0"
+	}
 }

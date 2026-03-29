@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { Post } from '$lib/post';
+	import '../../../../node_modules/rehype-github-alerts/dist/styling/css/index.css';
 
 	interface Props {
 		post: Post | string;
