@@ -126,20 +126,7 @@ You can also link to headings: [[Sample Note#Headings]].
 
 And you can use an alias: [[Sample Note|This is an alias]].
 
-### Tags
-
-This is a tag: #demotag
-You can have #nested/tags too.
-
-### Highlighting
-
-==This text is highlighted.==
-
 ### Callouts / Admonitions
-
-:::important
-content
-:::
 
 > [!note]
 > This is a note callout.
@@ -147,23 +134,14 @@ content
 > [!tip]
 > This is a tip callout.
 
-> [!info]
-> This is an info callout.
+> [!important]
+> This is an important callout.
 
 > [!warning]
 > This is a warning callout.
 
-> [!danger]
-> This is a danger callout.
-
-> [!bug]
-> This is a bug callout.
-
-> [!example]
-> This is an example callout.
-
-> [!quote]
-> This is a quote callout.
+> [!caution]
+> This is a caution callout.
 
 ### Embeds / Transclusions
 
@@ -172,7 +150,3 @@ Embed an entire note:
 
 Embed a specific section of a note:
 ![[Sample Note#Headings]]
-
-### Comments
-
-This is a regular sentence. %%This is a comment and will not be rendered.%% This part is visible again.

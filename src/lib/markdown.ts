@@ -20,6 +20,7 @@ import inspectUrls from '@jsdevtools/rehype-url-inspector';
 import config from '../../.config/config';
 import type { Config } from './config';
 import rehypeMermaid from 'rehype-mermaid';
+import { rehypeGithubAlerts } from 'rehype-github-alerts';
 import rehypeSwapCodeWithImage, {
 	type RehypeCodeSwapOptions
 } from './rehype-code-swap';
@@ -100,6 +101,7 @@ export async function generateMarkdownPost(content: string) {
 		})
 		.use(rehypeSlug)
 		.use(rehypeAutolinkHeadings)
+		.use(rehypeGithubAlerts, {})
 		.use(inspectUrls, {
 			inspectEach({ url }) {
 				links.push(url);
