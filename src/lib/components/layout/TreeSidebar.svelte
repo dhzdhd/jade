@@ -16,8 +16,10 @@
 			const segments = file.split('/');
 			let currentLevel = tree;
 			let idx = 0;
+			let path = '';
 
 			for (const segment of segments) {
+				path = path ? `${path}/${segment}` : segment;
 				let existingNode = currentLevel.find(
 					(node) => node.id === segment
 				);
@@ -26,7 +28,7 @@
 						id: segment,
 						children: [],
 						depth: idx,
-						url: `/${file}`
+						url: `/${path}`
 					};
 					currentLevel.push(existingNode);
 				}
