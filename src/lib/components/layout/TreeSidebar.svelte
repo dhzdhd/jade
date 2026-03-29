@@ -7,7 +7,7 @@
 	}
 
 	const { files }: TreeSidebarProps = $props();
-	const fileTree = getFileTree(files);
+	const fileTree = $derived(getFileTree(files));
 
 	function getFileTree(files: string[]): TreeItem[] {
 		const tree: TreeItem[] = [];

@@ -14,8 +14,8 @@
 
 	const { data }: Props = $props();
 
-	let nodes = $state.raw(convertToFlowModelNodes(data.nodes));
-	let edges = $state.raw(convertToFlowModelEdges(data.edges));
+	let nodes = $derived(convertToFlowModelNodes(data.nodes));
+	let edges = $derived(convertToFlowModelEdges(data.edges));
 </script>
 
 <div class="canvas__ h-full w-full">

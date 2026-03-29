@@ -7,7 +7,7 @@
 
 	const { data }: BaseLayoutProps = $props();
 
-	const fileProperties = data.fileProperties;
+	const fileProperties = $derived(data.fileProperties);
 </script>
 
 <div>

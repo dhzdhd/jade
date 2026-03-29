@@ -23,7 +23,7 @@
 			: settings.current.tocVisibility
 	);
 
-	const closed = new PersistedState(storageKey, true);
+	const closed = $derived(new PersistedState(storageKey, true));
 	let container = $state<HTMLElement>()!;
 	onClickOutside(
 		() => container,
