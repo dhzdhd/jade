@@ -152,7 +152,13 @@ export const load: LayoutServerLoad = async () => {
 	return {
 		posts: posts,
 		files: files
-			.filter(([fileName]) => !isFileIndex(fileName))
+			.filter(
+				([fileName]) =>
+					!isFileIndex(fileName) &&
+					['.md', '.base', '.canvas'].some((val) =>
+						fileName.endsWith(val)
+					)
+			)
 			.map(([fileName]) => getSanitizedPath(fileName)),
 		config: cfg,
 		graphData: graphData,
