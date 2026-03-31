@@ -18,9 +18,9 @@
 	const settings = getSettings();
 
 	const keys = new PressedKeys();
-	const isCtrlAPressed = $derived(keys.has('Alt', 's'));
+	const isAltSPressed = $derived(keys.has('Alt', 's'));
 	$effect(() => {
-		if (isCtrlAPressed) {
+		if (isAltSPressed) {
 			open = untrack(() => !open);
 		}
 	});
@@ -175,7 +175,7 @@
 				>
 					Hides the top header which includes the title and all the
 					buttons, including the settings. Access the settings by
-					pressing <kbd>Ctrl ,</kbd>
+					pressing <kbd>Alt + s</kbd>
 				</span>
 			</Label>
 			<Switch

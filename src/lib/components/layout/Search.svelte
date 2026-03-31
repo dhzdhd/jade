@@ -20,9 +20,9 @@
 	};
 
 	const keys = new PressedKeys();
-	const isCtrlAPressed = $derived(keys.has('Alt', 'k'));
+	const isAltKPressed = $derived(keys.has('Alt', 'k'));
 	$effect(() => {
-		if (isCtrlAPressed) {
+		if (isAltKPressed) {
 			open = untrack(() => !open);
 		}
 	});
