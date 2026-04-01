@@ -4,6 +4,8 @@ import type { RequestHandler } from '@sveltejs/kit';
 import config from '../../../.config/config';
 import { getSanitizedPath } from '$lib';
 
+export const prerender = true;
+
 export const GET: RequestHandler = async () => {
 	const cfg = config as Config;
 	const files = Object.entries(
