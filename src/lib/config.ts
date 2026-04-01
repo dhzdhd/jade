@@ -74,7 +74,6 @@ interface ConfigData {
 		author: string;
 		title: string;
 		description: string;
-		link: string;
 		origin: string;
 	};
 }
