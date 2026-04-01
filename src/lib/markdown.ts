@@ -28,6 +28,8 @@ import { h } from 'hastscript';
 import fs from 'node:fs';
 import { fromHtml } from 'hast-util-from-html';
 import path from 'node:path';
+import toml from 'toml';
+import yaml from 'yaml';
 
 export function generateHeadings(content: string): Heading[] {
 	const parser = new jsdom.JSDOM(content.toString());
@@ -50,9 +52,12 @@ export function isFileIndex(fileName: string): boolean {
 	return ['index', 'landing'].includes(fileBaseName.toLowerCase());
 }
 
-export async function generateMarkdownPost(content: string) {
+export async function generateMarkdownPost(
+	content: string
+): Promise<any> {
 	const cfg = config as Config;
 	const links: string[] = [];
+	let frontmatter: Record<string, object> | undefined;
 
 	const processor = unified()
 		.use(remarkParse)
@@ -64,7 +69,30 @@ export async function generateMarkdownPost(content: string) {
 		})
 		.use(remarkMath)
 		.use(remarkToc)
-		.use(remarkFrontMatter)
+		.use(remarkFrontMatter, ['toml', 'yaml'])
+		.use(function () {
+			return function (tree) {
+				const frontmatterObj = (tree as any)['children']
+					.filter((e: any) => e.type === 'yaml' || e.type === 'toml')
+					.at(0);
+
+				if (typeof frontmatterObj === 'undefined') {
+					return;
+				}
+
+				try {
+					if (frontmatterObj.type === 'toml') {
+						frontmatter = toml.parse(frontmatterObj.value);
+					} else {
+						frontmatter = yaml.parse(frontmatterObj.value);
+					}
+				} catch (err) {
+					console.error(
+						`Failed to parse frontmatter for content -\n\t${content.substring(0, 25)}`
+					);
+				}
+			};
+		})
 		.use(remarkGfm)
 		.use(remarkDirective)
 		.use(remarkRehype)
@@ -115,6 +143,7 @@ export async function generateMarkdownPost(content: string) {
 	return {
 		md,
 		headings,
-		links
+		links,
+		frontmatter
 	};
 }
