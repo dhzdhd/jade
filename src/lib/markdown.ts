@@ -52,7 +52,9 @@ export function isFileIndex(fileName: string): boolean {
 	return ['index', 'landing'].includes(fileBaseName.toLowerCase());
 }
 
-export async function generateMarkdownPost(content: string) {
+export async function generateMarkdownPost(
+	content: string
+): Promise<any> {
 	const cfg = config as Config;
 	const links: string[] = [];
 	let frontmatter: Record<string, object> | undefined;

@@ -60,11 +60,22 @@ type BundledTheme =
 	| 'vitesse-dark'
 	| 'vitesse-light';
 
+type DeepPartial<T> = {
+	[P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];
+};
+
 interface ConfigData {
 	title: string;
 	description: string;
 	redirects: Record<string, string>;
 	codeblockTheme: BundledTheme;
 	basePath: string;
+	rss: {
+		author: string;
+		title: string;
+		description: string;
+		link: string;
+		origin: string;
+	};
 }
-export type Config = Partial<ConfigData>;
+export type Config = DeepPartial<ConfigData>;
