@@ -41,9 +41,9 @@ export const GET: RequestHandler = async () => {
 	const xml = `<?xml version="1.0" encoding="utf-8"?>
   <feed xmlns="http://www.w3.org/2005/Atom">
     <title>${feedTitle}</title>
-    <link href="${feedLink}/rss.xml" rel="self"/>
-    <link href="${feedLink}"/>
-    <id>${feedLink}/</id>
+    <link href="${feedLink}rss.xml" rel="self"/>
+    <link href="${feedLink}">
+    <id>${feedLink}</id>
     <updated>${feedUpdated}</updated>
     <author>
       <name>${feedAuthor}</name>
