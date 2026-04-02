@@ -3,7 +3,6 @@
 	import { Handle, Position, type NodeProps } from '@xyflow/svelte';
 
 	let { data }: NodeProps = $props();
-	$inspect(data);
 </script>
 
 {#if data.type === 'text'}
