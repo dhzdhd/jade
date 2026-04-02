@@ -3,7 +3,6 @@
 	import * as Sidebar from '$lib/components/ui/sidebar/index.js';
 	import {
 		cleanExtensions,
-		generateIncrementalSlugs,
 		getNameForExtension,
 		type TreeItem
 	} from '$lib';
@@ -14,11 +13,8 @@
 
 	let { id, children, depth, url }: TreeItem = $props();
 
-	// TODO: Move logic to parent as url isn't covered for every link & encode HTML properly
 	let isActive = $derived(
-		generateIncrementalSlugs(page.url.pathname).includes(
-			url.replaceAll(' ', '%20')
-		)
+		page.url.pathname === url.replaceAll(' ', '%20')
 	);
 	let expanded = $derived(isActive);
 
@@ -33,7 +29,10 @@
 {#if children.length !== 0}
 	<Sidebar.MenuItem>
 		<Sidebar.MenuButton
-			class="hover:bg-accent active:bg-accent relative flex h-fit cursor-pointer flex-row justify-between px-1 py-2"
+			class={cn([
+				'relative h-fit px-1 py-2',
+				isActive ? 'bg-secondary text-secondary-foreground' : ''
+			])}
 		>
 			{#snippet child({ props })}
 				<a
@@ -45,7 +44,12 @@
 				</a>
 				<button
 					onclick={toggleExpansion}
-					class="bg-background text-foreground hover:bg-secondary absolute top-0.5 right-0.5 bottom-0.5 flex w-8 items-center justify-center rounded-lg"
+					class={cn([
+						'absolute top-0.5 right-0.5 bottom-0.5 flex w-8 cursor-pointer items-center justify-center rounded-lg',
+						isActive
+							? 'text-secondary-foreground'
+							: 'text-foreground hover:bg-accent'
+					])}
 				>
 					<ArrowRight
 						size="20"
@@ -72,8 +76,8 @@
 	<Sidebar.MenuItem>
 		<Sidebar.MenuButton
 			class={cn([
-				'hover:bg-accent active:bg-accent h-fit px-1 py-2',
-				isActive ? 'bg-secondary' : ''
+				'relative h-fit px-1 py-2',
+				isActive ? 'bg-secondary text-secondary-foreground' : ''
 			])}
 		>
 			{#snippet child({ props })}
