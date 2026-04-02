@@ -35,7 +35,7 @@
 		}
 
 		a {
-			@apply text-accent no-underline hover:underline;
+			@apply text-secondary hover:underline;
 		}
 
 		p {
