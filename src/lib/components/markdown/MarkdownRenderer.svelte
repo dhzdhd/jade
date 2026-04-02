@@ -59,8 +59,8 @@
 			}
 		}
 
-		.katex-html {
-			@apply hidden;
+		.katex {
+			@apply inline-block max-w-full overflow-x-auto overflow-y-hidden py-1 align-[-0.6em];
 		}
 
 		pre {
@@ -83,6 +83,10 @@
 
 		span {
 			@apply font-mono;
+		}
+
+		math {
+			@apply px-2;
 		}
 
 		code[data-line-numbers] {
