@@ -43,12 +43,12 @@
 		}
 
 		code:not(pre > code) {
+			@apply bg-primary-foreground/60 rounded-sm px-2 py-1;
+
 			&::after,
 			&::before {
 				@apply hidden;
 			}
-
-			@apply bg-primary-foreground/60 rounded-sm px-2 py-1;
 		}
 
 		li {
@@ -66,7 +66,7 @@
 		pre {
 			overflow-x: auto;
 			padding: 1rem 0;
-			@apply bg-background! border-2;
+			@apply border-secondary border-[0.1rem];
 		}
 
 		pre [data-line] {

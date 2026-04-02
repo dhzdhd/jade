@@ -46,7 +46,7 @@
 		border: solid;
 		border-width: 0.1rem;
 		border-radius: 1rem;
-		border-color: var(--color-primary);
+		border-color: var(--color-secondary);
 	}
 
 	:global(.svelte-flow__edge-path) {

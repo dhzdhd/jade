@@ -13,7 +13,7 @@
 	<div class="markdown-node h-full rounded-3xl p-0.5">
 		<iframe
 			class="h-full w-full rounded-3xl"
-			title="hi"
+			title={getSanitizedPath(data.content.toString())}
 			src={`/iframe_embed/${getSanitizedPath(data.content.toString())}`}
 		>
 		</iframe>
