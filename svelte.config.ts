@@ -13,7 +13,8 @@ const config: Config = {
 		prerender: {
 			entries: ['*'],
 			handleHttpError: 'warn',
-			handleMissingId: 'warn'
+			handleMissingId: 'warn',
+			handleUnseenRoutes: 'warn'
 		},
 		paths: {
 			base: cfg.basePath === undefined ? '' : `/${cfg.basePath}`

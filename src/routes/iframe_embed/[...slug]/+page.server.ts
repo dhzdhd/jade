@@ -5,12 +5,16 @@ import type { EntryGenerator, PageServerLoad } from './$types';
 
 export const entries: EntryGenerator = async () => {
 	const rawPosts = Object.entries(
-		import.meta.glob<any>('../../../posts/**/*.md', { query: '?raw' })
+		import.meta.glob<any>('../../../../posts/**/*.md', {
+			query: '?raw'
+		})
 	);
 
 	const slugs = rawPosts
 		.map(([fileName]) => getSanitizedPath(fileName))
-		.flatMap((path) => generateIncrementalSlugs(path));
+		.flatMap((path) => generateIncrementalSlugs(path))
+		.map((path) => `iframe_embed/${path}`);
+
 	const uniqueSlugs = [...new Set(slugs)];
 
 	return uniqueSlugs.map((slug) => {
