@@ -23,10 +23,10 @@
 <header
 	class={cn([
 		settings.current.isHeaderVisible ? 'flex' : 'hidden',
-		'bg-background fixed z-50 h-16 w-screen items-center justify-between px-4'
+		'fixed z-50 h-16 w-screen items-center justify-between px-4'
 	])}
 >
-	<a href="/" class="font-title text-xl">{config.title ?? 'Jade'}</a>
+	<a href="/" class="text-xl">{config.title ?? 'Jade'}</a>
 	<div>
 		<Search {postsAndHeadings} />
 		<ForceGraph data={graphData} />

@@ -51,7 +51,7 @@
 	>
 		{#if post.data.kind === 'folder'}
 			<div class="flex flex-col gap-2">
-				<h1 class="font-title mb-6 text-4xl font-bold">
+				<h1 class="mb-6 text-4xl font-bold">
 					{getSegment(post.slug, 'last')}
 				</h1>
 				{#each (post.data as Folder).posts as child}

@@ -47,9 +47,7 @@
 		<div class="flex items-center justify-between space-x-2">
 			<Label for="necessary" class="flex flex-col space-y-1">
 				<span>Hide file tree sidebar</span>
-				<span
-					class="text-muted-foreground text-xs leading-snug font-normal"
-				>
+				<span class="text-muted-foreground text-xs leading-snug">
 					Hides the file tree sidebar on the left side of the page.
 				</span>
 			</Label>
@@ -64,9 +62,7 @@
 		<div class="flex items-center justify-between space-x-2">
 			<Label for="necessary" class="flex flex-col space-y-1">
 				<span>Hide file tree button</span>
-				<span
-					class="text-muted-foreground text-xs leading-snug font-normal"
-				>
+				<span class="text-muted-foreground text-xs leading-snug">
 					Hides the file tree button on the bottom left side of the
 					page.
 				</span>
@@ -83,9 +79,7 @@
 		<div class="flex items-center justify-between space-x-2">
 			<Label for="necessary" class="flex flex-col space-y-1">
 				<span>Hide table of contents sidebar</span>
-				<span
-					class="text-muted-foreground text-xs leading-snug font-normal"
-				>
+				<span class="text-muted-foreground text-xs leading-snug">
 					Hides the table of contents sidebar on the right side of the
 					page.
 				</span>
@@ -101,9 +95,7 @@
 		<div class="flex items-center justify-between space-x-2">
 			<Label for="necessary" class="flex flex-col space-y-1">
 				<span>Hide table of contents button</span>
-				<span
-					class="text-muted-foreground text-xs leading-snug font-normal"
-				>
+				<span class="text-muted-foreground text-xs leading-snug">
 					Hides the table of contents button on the bottom right side
 					of the page.
 				</span>
@@ -120,9 +112,7 @@
 		<div class="flex items-center justify-between space-x-2">
 			<Label for="necessary" class="flex flex-col space-y-1">
 				<span>Hide breadcrumb navigation</span>
-				<span
-					class="text-muted-foreground text-xs leading-snug font-normal"
-				>
+				<span class="text-muted-foreground text-xs leading-snug">
 					Hides the breadcrumb navigation at the top of the page.
 				</span>
 			</Label>
@@ -136,9 +126,7 @@
 		<div class="flex items-center justify-between space-x-2">
 			<Label for="necessary" class="flex flex-col space-y-1">
 				<span>Hide bottom navigation buttons</span>
-				<span
-					class="text-muted-foreground text-xs leading-snug font-normal"
-				>
+				<span class="text-muted-foreground text-xs leading-snug">
 					Hides the two navigation buttons at the bottom of the page.
 				</span>
 			</Label>
@@ -153,9 +141,7 @@
 		<div class="flex items-center justify-between space-x-2">
 			<Label for="necessary" class="flex flex-col space-y-1">
 				<span>Low contrast</span>
-				<span
-					class="text-muted-foreground text-xs leading-snug font-normal"
-				>
+				<span class="text-muted-foreground text-xs leading-snug">
 					Mutes the colors of the website to make it easier on the
 					eyes. This is a work in progress.
 				</span>
@@ -170,9 +156,7 @@
 		<div class="flex items-center justify-between space-x-2">
 			<Label for="necessary" class="flex flex-col space-y-1">
 				<span>Hide header</span>
-				<span
-					class="text-muted-foreground text-xs leading-snug font-normal"
-				>
+				<span class="text-muted-foreground text-xs leading-snug">
 					Hides the top header which includes the title and all the
 					buttons, including the settings. Access the settings by
 					pressing <kbd>Alt + s</kbd>

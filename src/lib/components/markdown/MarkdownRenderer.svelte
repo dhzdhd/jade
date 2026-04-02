@@ -22,7 +22,7 @@
 
 	article :global {
 		* {
-			@apply text-foreground font-normal;
+			@apply text-foreground;
 		}
 
 		h1,
@@ -31,7 +31,7 @@
 		h4,
 		h5,
 		h6 {
-			@apply font-title scroll-mt-16;
+			@apply scroll-mt-16;
 		}
 
 		a {
@@ -66,6 +66,7 @@
 		pre {
 			overflow-x: auto;
 			padding: 1rem 0;
+			@apply bg-background! border-2;
 		}
 
 		pre [data-line] {
